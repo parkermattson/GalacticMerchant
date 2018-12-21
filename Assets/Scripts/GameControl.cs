@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using TMPro;
 
 public class GameControl : MonoBehaviour {
 	
 	//Game variables
-	public int money;
+	
 	public string playerName;
+	public int money, race, avatar;
+	public int[] stats = {1,1,1,1};
 	
 	
 
@@ -23,6 +26,23 @@ public class GameControl : MonoBehaviour {
 		
 	}
 	
+	public void charCreate(GameObject nameText)
+	{
+		playerName = nameText.GetComponent<TextMeshPro>().text;
+	}
+	
+	public void statUp(int stat)
+	{
+		if (stats[stat] < 5)
+			stats[stat] ++;
+	}
+	
+	public void statDown(int stat)
+	{
+		if (stats[stat] > 1)
+			stats[stat] --;
+	}
+	
 	public void Save()
 	{
 		BinaryFormatter bf = new BinaryFormatter();
@@ -32,6 +52,9 @@ public class GameControl : MonoBehaviour {
 		//Assign local data to savedata here
 		saveData.money = money;
 		saveData.playerName = playerName;
+		saveData.stats = stats;
+		saveData.avatar = avatar;
+		saveData.race = race;
 		
 		bf.Serialize(file, saveData);
 		file.Close();
@@ -48,15 +71,20 @@ public class GameControl : MonoBehaviour {
 			file.Close();
 			
 			//Assign loaded data to local variables here
-			money = loadData.money;
-			playerName = loadData.playerName;
+				playerName = loadData.playerName;
+				money = loadData.money;
+				stats = loadData.stats;
+				avatar = loadData.avatar;
+				race = loadData.race;
+			
 		}
 	}
 	
 	[Serializable]
 	class GameData
 	{
-		public int money;
 		public string playerName;
+		public int money, race, avatar;
+		public int[] stats;
 		}
 	}

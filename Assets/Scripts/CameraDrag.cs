@@ -11,6 +11,7 @@ public class CameraDrag : MonoBehaviour {
     private Vector3 MouseStart;
     private Vector3 derp;
     public float speed = .0001f;
+	public Camera mapCam;
 
     void Start()
     {
@@ -19,13 +20,34 @@ public class CameraDrag : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0))
+        {
+            MouseStart = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y * speed, 0);
+
+        } 
+		
+        else if (Input.GetMouseButton(0))
+        {
+           var MouseMove = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y* speed, 0);
+            transform.position = transform.position - (MouseMove - MouseStart);
+			MouseStart = MouseMove;
+		}
+		
+		mapCam.orthographicSize = mapCam.orthographicSize - Input.GetAxis("Mouse ScrollWheel");
+		if (mapCam.orthographicSize > 2.5) mapCam.orthographicSize = 2.5f;
+		if (mapCam.orthographicSize < 0) mapCam.orthographicSize = 0;
+		speed = (float)(mapCam.orthographicSize /  700);
+
+        
+		
+        /* if (Input.GetMouseButtonDown(0))
         {
             MouseStart = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y * speed, Zdist);
             MouseStart = Camera.main.ScreenToWorldPoint(MouseStart);
             MouseStart.z = Zdist;
 
-        }
+        } 
+		
         else if (Input.GetMouseButton(0))
         {
             var MouseMove = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Zdist);
@@ -34,6 +56,6 @@ public class CameraDrag : MonoBehaviour {
             MouseMove.z = Zdist;
             transform.position = (MouseMove - MouseStart);
 
-        }
+        } */
     }
 }
