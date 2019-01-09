@@ -80,11 +80,18 @@ public class GameControl : MonoBehaviour {
 		}
 	}
 	
+	struct CrewMember
+	{
+		public string name;
+		public int race;
+		public int[] stats;
+	}
+	
 	[Serializable]
 	class GameData
 	{
 		public string playerName;
 		public int money, race, avatar;
 		public int[] stats;
-		}
 	}
+}
