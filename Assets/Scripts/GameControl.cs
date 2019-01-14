@@ -26,21 +26,13 @@ public class GameControl : MonoBehaviour {
 		
 	}
 	
-	public void charCreate(GameObject nameText)
+	public void NewChar(GameObject ccScreen)
 	{
-		playerName = nameText.GetComponent<TextMeshPro>().text;
-	}
-	
-	public void statUp(int stat)
-	{
-		if (stats[stat] < 5)
-			stats[stat] ++;
-	}
-	
-	public void statDown(int stat)
-	{
-		if (stats[stat] > 1)
-			stats[stat] --;
+		CharCreate ccScript = ccScreen.GetComponent<CharCreate>();
+		playerName = ccScript.GetPlayerName();
+		race = ccScript.GetRace();
+		avatar = ccScript.GetAvatar();
+		stats = ccScript.GetStats();
 	}
 	
 	public void Save()
