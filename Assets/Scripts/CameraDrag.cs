@@ -1,21 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraDrag : MonoBehaviour {
 
     //ripped from DrOmega, StackOverflow
     //https://stackoverflow.com/questions/43702017/unity-script-to-drag-camera
 
-    public float Zdist;
+    //public float Zdist;
     private Vector3 MouseStart;
     private Vector3 derp;
     public float speed = .0001f;
 	public Camera mapCam;
+    public RawImage mapscreen;
+    private Rect viewport;
 
     void Start()
     {
-        Zdist = transform.position.z;  // Distance camera is above map
+        //Zdist = transform.position.z;  // Distance camera is above map
+        float normFactor = Screen.currentResolution.width / 3840f;
+        viewport.size = mapscreen.rectTransform.rect.size*normFactor;
+        Vector2 unfuckedVect = new Vector2(transform.position.y, transform.position.x);
+        viewport.position = normFactor*(unfuckedVect + mapscreen.rectTransform.anchoredPosition);
+        
     }
 
     void LateUpdate()
@@ -23,13 +31,11 @@ public class CameraDrag : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0))
         {
             MouseStart = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y * speed, 0);
-
         } 
-		
-        else if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0) && viewport.Contains(Input.mousePosition))
         {
-           var MouseMove = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y* speed, 0);
-            transform.position = transform.position - (MouseMove - MouseStart);
+            var MouseMove = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y* speed, 0);
+            mapCam.transform.position = mapCam.transform.position - (MouseMove - MouseStart);
 			MouseStart = MouseMove;
 		}
 		
