@@ -8696,6 +8696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 903462219}
+  - component: {fileID: 903462220}
   m_Layer: 5
   m_Name: Crew Screen
   m_TagString: Untagged
@@ -8724,6 +8725,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &903462220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 903462218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d05a26a5b39b24fb10472a8497c562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 421591084}
+  crewBox:
+  - {fileID: 1194689306}
+  - {fileID: 1096636807}
+  - {fileID: 766639902}
+  - {fileID: 1115792851}
+  avatars:
+  - {fileID: 21300000, guid: 78039e0c301f55b4da5b06c05f2fb1b6, type: 3}
+  - {fileID: 21300000, guid: f8369ffc3a6710742b5ffcfb83ce7763, type: 3}
+  - {fileID: 21300000, guid: ee9a10cfcb4f70e418d541cb087bb64b, type: 3}
+  races:
+  - {fileID: 21300000, guid: 92ea5a56218cf904d8ce1c71ad71c708, type: 3}
+  - {fileID: 21300000, guid: 157ca06d237564f4e8934932ed1177f7, type: 3}
+  - {fileID: 21300000, guid: fe7fa06b7b27cd44987f939d0d5b10e1, type: 3}
 --- !u!1 &911191980
 GameObject:
   m_ObjectHideFlags: 0
@@ -9833,7 +9859,6 @@ GameObject:
   - component: {fileID: 969375135}
   - component: {fileID: 969375139}
   - component: {fileID: 969375138}
-  - component: {fileID: 969375136}
   m_Layer: 5
   m_Name: Crew List
   m_TagString: Untagged
@@ -9863,18 +9888,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &969375136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 969375134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155aa40c804e93d45adcfa6aedff16f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxTemplate: {fileID: 1194689306}
 --- !u!114 &969375138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13863,7 +13876,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.74, y: 0.7}
   m_AnchorMax: {x: 0.76, y: 0.9}
-  m_AnchoredPosition: {x: 0, y: 0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1349651754
@@ -17524,7 +17537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.94, y: 0.7}
   m_AnchorMax: {x: 0.96, y: 0.9}
-  m_AnchoredPosition: {x: 0, y: 0.00024414062}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1770668685
@@ -19676,7 +19689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.64, y: 0.7}
   m_AnchorMax: {x: 0.66, y: 0.9}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1987908089
@@ -20143,7 +20156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.84, y: 0.7}
   m_AnchorMax: {x: 0.86, y: 0.9}
-  m_AnchoredPosition: {x: 0, y: 0.00018310547}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2011137457

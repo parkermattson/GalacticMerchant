@@ -13,12 +13,18 @@ public class GameControl : MonoBehaviour {
 	public string playerName;
 	public int money, race, avatar;
 	public int[] stats = {1,1,1,1};
+	public CrewMember[] crewMembs = new CrewMember[4];
 	
 	
 
 	// Use this for initialization
 	void Awake () {
 		DontDestroyOnLoad(gameObject);
+		
+		for (int i = 0; i < 4; i++)
+		{
+			crewMembs[i] = new CrewMember();
+		}
 	}
 	
 	// Update is called once per frame
@@ -33,6 +39,11 @@ public class GameControl : MonoBehaviour {
 		race = ccScript.GetRace();
 		avatar = ccScript.GetAvatar();
 		stats = ccScript.GetStats();
+		crewMembs[0].enabled = true;
+		crewMembs[0].name = playerName;
+		crewMembs[0].race = race;
+		crewMembs[0].avatar = avatar;
+		crewMembs[0].stats = stats;
 	}
 	
 	public void Save()
@@ -72,11 +83,13 @@ public class GameControl : MonoBehaviour {
 		}
 	}
 	
-	struct CrewMember
+	public class CrewMember
 	{
-		public string name;
-		public int race;
-		public int[] stats;
+		public string name = "";
+		public int race = 0;
+		public int avatar = 0;
+		public int[] stats = {1,1,1,1};
+		public bool enabled = false;
 	}
 	
 	[Serializable]
