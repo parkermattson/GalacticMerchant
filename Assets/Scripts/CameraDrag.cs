@@ -26,22 +26,28 @@ public class CameraDrag : MonoBehaviour {
         
     }
 
-    void LateUpdate()
+    public void InitialMouse()
     {
-		if (Input.GetMouseButtonDown(0))
-        {
             MouseStart = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y * speed, 0);
-        } 
-        else if (Input.GetMouseButton(0) && viewport.Contains(Input.mousePosition))
+	}
+	
+	public void DragMouse()
         {
             var MouseMove = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y* speed, 0);
             mapCam.transform.position = mapCam.transform.position - (MouseMove - MouseStart);
 			MouseStart = MouseMove;
 		}
 		
+	void LateUpdate()
+	{
+		
 		mapCam.orthographicSize = mapCam.orthographicSize - Input.GetAxis("Mouse ScrollWheel");
 		if (mapCam.orthographicSize > 2.5) mapCam.orthographicSize = 2.5f;
 		if (mapCam.orthographicSize < 0) mapCam.orthographicSize = 0;
+		/*if (mapCam.transform.position.x > 3 / mapCam.orthographicSize) mapCam.transform.position= new Vector3((float)(3 / mapCam.orthographicSize), mapCam.transform.position.y, 0);
+		if (mapCam.transform.position.x < -3 / mapCam.orthographicSize) mapCam.transform.position = new Vector3((float)(-3 / mapCam.orthographicSize), mapCam.transform.position.y, 0);
+		if (mapCam.transform.position.y > 3.9 / mapCam.orthographicSize) mapCam.transform.position = new Vector3( mapCam.transform.position.x, (float)(3.9 / mapCam.orthographicSize), 0);
+		if (mapCam.transform.position.y > -3.9 / mapCam.orthographicSize) mapCam.transform.position = new Vector3( mapCam.transform.position.x, (float)(-3.9 / mapCam.orthographicSize), 0);*/
 		speed = (float)(mapCam.orthographicSize /  700);
 
         
