@@ -15,11 +15,13 @@ public class CameraDrag : MonoBehaviour {
 	public Camera mapCam;
     public RawImage mapscreen;
     private Rect viewport;
+    float normFactor;
 
     void Start()
     {
         //Zdist = transform.position.z;  // Distance camera is above map
-        float normFactor = Screen.currentResolution.width / 3840f;
+        normFactor = Screen.width / 1920f;
+        mapCam.orthographicSize = mapCam.orthographicSize * normFactor;
         viewport.size = mapscreen.rectTransform.rect.size*normFactor;
         Vector2 unfuckedVect = new Vector2(transform.position.y, transform.position.x);
         viewport.position = normFactor*(unfuckedVect + mapscreen.rectTransform.anchoredPosition);
@@ -37,18 +39,22 @@ public class CameraDrag : MonoBehaviour {
             mapCam.transform.position = mapCam.transform.position - (MouseMove - MouseStart);
 			MouseStart = MouseMove;
 		}
+
+    public void OnScroll()
+    {
+        mapCam.orthographicSize = mapCam.orthographicSize - Input.GetAxis("Mouse ScrollWheel");
+        if (mapCam.orthographicSize > 2.5 * normFactor) mapCam.orthographicSize = 2.5f * normFactor;
+        if (mapCam.orthographicSize < 0.1f * normFactor) mapCam.orthographicSize = 0.1f * normFactor;
+    }
 		
 	void LateUpdate()
 	{
 		
-		mapCam.orthographicSize = mapCam.orthographicSize - Input.GetAxis("Mouse ScrollWheel");
-		if (mapCam.orthographicSize > 2.5) mapCam.orthographicSize = 2.5f;
-		if (mapCam.orthographicSize < 0) mapCam.orthographicSize = 0;
-		/*if (mapCam.transform.position.x > 3 / mapCam.orthographicSize) mapCam.transform.position= new Vector3((float)(3 / mapCam.orthographicSize), mapCam.transform.position.y, 0);
-		if (mapCam.transform.position.x < -3 / mapCam.orthographicSize) mapCam.transform.position = new Vector3((float)(-3 / mapCam.orthographicSize), mapCam.transform.position.y, 0);
-		if (mapCam.transform.position.y > 3.9 / mapCam.orthographicSize) mapCam.transform.position = new Vector3( mapCam.transform.position.x, (float)(3.9 / mapCam.orthographicSize), 0);
-		if (mapCam.transform.position.y > -3.9 / mapCam.orthographicSize) mapCam.transform.position = new Vector3( mapCam.transform.position.x, (float)(-3.9 / mapCam.orthographicSize), 0);*/
-		speed = (float)(mapCam.orthographicSize /  700);
+        //if (mapCam.transform.localPosition.x > 3 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3((float)(3 / mapCam.orthographicSize), mapCam.transform.localPosition.y, 0);
+        //if (mapCam.transform.localPosition.x < -3 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3((float)(-3 / mapCam.orthographicSize), mapCam.transform.localPosition.y, 0);
+        //if (mapCam.transform.localPosition.y > 3.9 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3(mapCam.transform.localPosition.x, (float)(3.9 / mapCam.orthographicSize), 0);
+        //if (mapCam.transform.localPosition.y < -3.9 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3(mapCam.transform.localPosition.x, (float)(-3.9 / mapCam.orthographicSize), 0);
+        speed = (float)(mapCam.orthographicSize/(normFactor*735));
 
         
 		
