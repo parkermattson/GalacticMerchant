@@ -9,11 +9,14 @@ using TMPro;
 public class GameControl : MonoBehaviour {
 	
 	//Game variables
-	
 	public string playerName;
 	public int money, race, avatar;
 	public int[] stats = {1,1,1,1};
 	public CrewMember[] crewMembs = new CrewMember[4];
+    public int shipFuel;
+    public int cargo;
+    public int maxCargo;
+    public int spaceBucks;
 	
 	
 

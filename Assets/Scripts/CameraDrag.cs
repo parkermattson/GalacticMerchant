@@ -4,28 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CameraDrag : MonoBehaviour {
-
-    //ripped from DrOmega, StackOverflow
-    //https://stackoverflow.com/questions/43702017/unity-script-to-drag-camera
-
-    //public float Zdist;
+    
+    
     private Vector3 MouseStart;
     private Vector3 derp;
     public float speed = .0001f;
 	public Camera mapCam;
-    public RawImage mapscreen;
-    private Rect viewport;
-    float normFactor;
+    private float normFactor;
+    public float mapQuarterSize;
+    public RawImage viewport;
+    private float viewportAR;
+
 
     void Start()
     {
-        //Zdist = transform.position.z;  // Distance camera is above map
-        normFactor = Screen.width / 1920f;
-        mapCam.orthographicSize = mapCam.orthographicSize * normFactor;
-        viewport.size = mapscreen.rectTransform.rect.size*normFactor;
-        Vector2 unfuckedVect = new Vector2(transform.position.y, transform.position.x);
-        viewport.position = normFactor*(unfuckedVect + mapscreen.rectTransform.anchoredPosition);
-        
+        normFactor = Screen.width / 3840f; //normfactor reference is against 4k instead of 1920 for viewport calculations. 2f factors implemented for reversibility. 21 Jan 19 Z
+        mapCam.orthographicSize = 2f * mapCam.orthographicSize * normFactor;
+        mapCam.transform.position = transform.position;
+        viewportAR = viewport.rectTransform.rect.width / viewport.rectTransform.rect.height; 
     }
 
     public void InitialMouse()
@@ -43,37 +39,15 @@ public class CameraDrag : MonoBehaviour {
     public void OnScroll()
     {
         mapCam.orthographicSize = mapCam.orthographicSize - Input.GetAxis("Mouse ScrollWheel");
-        if (mapCam.orthographicSize > 2.5 * normFactor) mapCam.orthographicSize = 2.5f * normFactor;
-        if (mapCam.orthographicSize < 0.1f * normFactor) mapCam.orthographicSize = 0.1f * normFactor;
+        if (mapCam.orthographicSize > 5 * normFactor) mapCam.orthographicSize = 5.0f * normFactor;
+        if (mapCam.orthographicSize < 0.2f * normFactor) mapCam.orthographicSize = 0.2f * normFactor;
     }
 		
 	void LateUpdate()
 	{
-		
-        //if (mapCam.transform.localPosition.x > 3 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3((float)(3 / mapCam.orthographicSize), mapCam.transform.localPosition.y, 0);
-        //if (mapCam.transform.localPosition.x < -3 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3((float)(-3 / mapCam.orthographicSize), mapCam.transform.localPosition.y, 0);
-        //if (mapCam.transform.localPosition.y > 3.9 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3(mapCam.transform.localPosition.x, (float)(3.9 / mapCam.orthographicSize), 0);
-        //if (mapCam.transform.localPosition.y < -3.9 / mapCam.orthographicSize) mapCam.transform.localPosition = new Vector3(mapCam.transform.localPosition.x, (float)(-3.9 / mapCam.orthographicSize), 0);
-        speed = (float)(mapCam.orthographicSize/(normFactor*735));
-
-        
-		
-        /* if (Input.GetMouseButtonDown(0))
-        {
-            MouseStart = new Vector3(Input.mousePosition.x * speed, Input.mousePosition.y * speed, Zdist);
-            MouseStart = Camera.main.ScreenToWorldPoint(MouseStart);
-            MouseStart.z = Zdist;
-
-        } 
-		
-        else if (Input.GetMouseButton(0))
-        {
-            var MouseMove = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Zdist);
-            MouseMove = Camera.main.ScreenToWorldPoint(MouseMove);
-            MouseMove = new Vector3(-MouseMove.x * speed, -MouseMove.y * speed, MouseMove.z);
-            MouseMove.z = Zdist;
-            transform.position = (MouseMove - MouseStart);
-
-        } */
+        mapCam.transform.position = new Vector3(Mathf.Clamp(mapCam.transform.position.x, transform.position.x-mapQuarterSize+(viewportAR*mapCam.orthographicSize/2f), transform.position.x+mapQuarterSize- (viewportAR*mapCam.orthographicSize / 2f)),
+                                                Mathf.Clamp(mapCam.transform.position.y, transform.position.y-mapQuarterSize+ (mapCam.orthographicSize / 2f), transform.position.y+mapQuarterSize- (mapCam.orthographicSize / 2f)),
+                                                Mathf.Clamp(mapCam.transform.position.z, mapCam.transform.position.z, mapCam.transform.position.z));
+        speed = (float)(mapCam.orthographicSize/(normFactor*735*2f));
     }
 }
