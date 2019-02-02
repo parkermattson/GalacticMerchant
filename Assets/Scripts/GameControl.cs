@@ -108,6 +108,10 @@ public class GameControl : MonoBehaviour {
 		public int currentHull = 10;
 		public int currentFuel  = 100;
 		public int currentCargo = 0;
+		public int rawFuelEff = 1;
+		public float netFuelEff = 1;
+		public int rawSensorRange = 20;
+		public float netSensorRange = 20;
 	}
 	
 	[Serializable]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShipScript : MonoBehaviour {
 	
@@ -13,6 +14,18 @@ public class ShipScript : MonoBehaviour {
 	
 	[SerializeField]
 	private GameObject fuelBar;
+	
+	[SerializeField]
+	private TextMeshProUGUI cargoText;
+	
+	[SerializeField]
+	private TextMeshProUGUI fuelText;
+	
+	[SerializeField]
+	private TextMeshProUGUI sensorText;
+	
+	[SerializeField]
+	private GameObject[] crewBoxes = new GameObject[4];
 	
 	// Use this for initialization
 	void Start () {
@@ -26,13 +39,17 @@ public class ShipScript : MonoBehaviour {
 	
 	void OnEnable()
 	{
-		SetHullBar();
-		SetFuelBar();
+		GameControl gcScript = gameController.GetComponent<GameControl>();
+		SetHullBar(gcScript);
+		SetFuelBar(gcScript);
+		SetCargoSpace(gcScript);
+		SetFuelEfficiency(gcScript);
+		SetSensorRange(gcScript);
+		SetCrewBoxes(gcScript);
 	}
 	
-	void SetHullBar()
+	void SetHullBar(GameControl gcScript)
 	{
-		GameControl gcScript = gameController.GetComponent<GameControl>();
 		float hullPercent = (float)gcScript.ship.currentHull / (float)gcScript.ship.maxHull;
 		hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
 
@@ -45,10 +62,42 @@ public class ShipScript : MonoBehaviour {
 		
 	}
 	
-	void SetFuelBar()
+	void SetFuelBar(GameControl gcScript)
 	{
-		GameControl gcScript = gameController.GetComponent<GameControl>();
 		float fuelPercent = (float)gcScript.ship.currentFuel / (float)gcScript.ship.maxFuel;
 		fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
+	}
+	
+	void SetCargoSpace(GameControl gcScript)
+	{
+		cargoText.SetText("Cargo Space: {0} / {1}", gcScript.ship.currentCargo, gcScript.ship.maxCargo);
+	}
+	
+	void SetFuelEfficiency(GameControl gcScript)
+	{
+		fuelText.SetText("Fuel Efficiency: {0} CTU/FC", gcScript.ship.netFuelEff);
+	}
+	
+	void SetSensorRange(GameControl gcScript)
+	{
+		sensorText.SetText("Sensor Range: {0} CTUs", gcScript.ship.netSensorRange);
+	}
+	
+	void SetCrewBoxes(GameControl gcScript)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (gcScript.crewMembs[i].enabled)
+			{
+				crewBoxes[i].SetActive(true);
+				crewBoxes[i].transform.Find("NameText").GetComponent<TextMeshProUGUI>().SetText(gcScript.crewMembs[i].name);
+				crewBoxes[i].transform.Find("SocialText").GetComponent<TextMeshProUGUI>().SetText("{0}", gcScript.crewMembs[i].stats[0]);
+				crewBoxes[i].transform.Find("EngText").GetComponent<TextMeshProUGUI>().SetText("{0}", gcScript.crewMembs[i].stats[1]);
+				crewBoxes[i].transform.Find("CombatText").GetComponent<TextMeshProUGUI>().SetText("{0}", gcScript.crewMembs[i].stats[2]);
+				crewBoxes[i].transform.Find("SciText").GetComponent<TextMeshProUGUI>().SetText("{0}", gcScript.crewMembs[i].stats[3]);
+			}
+			else 
+				crewBoxes[i].SetActive(false);
+		}
 	}
 }
