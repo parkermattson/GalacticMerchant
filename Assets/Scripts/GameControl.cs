@@ -13,7 +13,7 @@ public class GameControl : MonoBehaviour {
 	public int money, race, avatar;
 	public int[] stats = {1,1,1,1};
 	public CrewMember[] crewMembs = new CrewMember[4];
-    public int shipFuel;
+    public Ship ship = new Ship();
     public int cargo;
     public int maxCargo;
     public int spaceBucks;
@@ -61,6 +61,8 @@ public class GameControl : MonoBehaviour {
 		saveData.stats = stats;
 		saveData.avatar = avatar;
 		saveData.race = race;
+		saveData.crewMembs = crewMembs;
+		saveData.ship = ship;
 		
 		bf.Serialize(file, saveData);
 		file.Close();
@@ -82,6 +84,8 @@ public class GameControl : MonoBehaviour {
 				stats = loadData.stats;
 				avatar = loadData.avatar;
 				race = loadData.race;
+				crewMembs = loadData.crewMembs;
+				ship = loadData.ship;
 			
 		}
 	}
@@ -95,11 +99,24 @@ public class GameControl : MonoBehaviour {
 		public bool enabled = false;
 	}
 	
+	public class Ship
+	{
+		public string name = "Default Ship";
+		public int maxHull = 10;
+		public int maxFuel = 100;
+		public int maxCargo = 1000;
+		public int currentHull = 10;
+		public int currentFuel  = 100;
+		public int currentCargo = 0;
+	}
+	
 	[Serializable]
 	class GameData
 	{
 		public string playerName;
 		public int money, race, avatar;
 		public int[] stats;
+		public CrewMember[] crewMembs;
+		public Ship ship;
 	}
 }
