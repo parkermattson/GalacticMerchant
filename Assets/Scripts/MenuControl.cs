@@ -7,6 +7,7 @@ using TMPro;
 public class MenuControl : MonoBehaviour {
 
 	public GameObject activeScreen;
+	public GameObject activeBar;
 	
 	public GameObject tooltip;
 	
@@ -17,6 +18,13 @@ public class MenuControl : MonoBehaviour {
 		activeScreen.SetActive(false);
 		activeScreen = newScreen;
 		activeScreen.SetActive(true);
+	}
+	
+	public void ButtonBarChange(GameObject newBar)
+	{
+		activeBar.SetActive(false);
+		activeBar = newBar;
+		activeBar.SetActive(true);
 	}
 	
 	public void ShowTooltip(Vector3 position, string description)
