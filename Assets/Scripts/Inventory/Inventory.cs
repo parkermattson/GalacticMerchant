@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour {
 	void Awake ()
 	{
 		instance = this;
+		
 	}
 	
 	public delegate void OnItemChanged();
