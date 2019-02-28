@@ -16,18 +16,28 @@ public class Inventory : MonoBehaviour {
 	public OnItemChanged onItemChangedCallback;
 
 	public List<Item> items = new List<Item>();
+	public Equipment[] shipEquipment = new Equipment[8];
 	
-	public void Add(Item item)
+	public void AddItem(Item item)
 	{
 		items.Add(item);
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
 	}
 	
-	public void Remove(Item item)
+	public void RemoveItem(Item item)
 	{
 		items.Remove(item);
 		
+		if (onItemChangedCallback != null)
+			onItemChangedCallback.Invoke();
+	}
+	
+	public void SwapEquipment(Equipment equipment, int slot)
+	{
+		items.Add(shipEquipment[slot]);
+		shipEquipment[slot] = equipment;
+		items.Remove(equipment);
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
 	}

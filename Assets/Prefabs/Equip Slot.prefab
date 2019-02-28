@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 224957457037276242}
   - component: {fileID: 222804992967675956}
   - component: {fileID: 114241613729467162}
-  - component: {fileID: 114254547162702292}
+  - component: {fileID: 114710414150500496}
   m_Layer: 5
-  m_Name: Slot
+  m_Name: Equip Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,18 +73,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114254547162702292
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1486477015420272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc652733fb4d8154389786a60cc2364c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 114398125994366134}
 --- !u!114 &114398125994366134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,6 +100,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114710414150500496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1486477015420272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd3e374b86ded14ca942000e676e3a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 114398125994366134}
 --- !u!222 &222012106062007642
 CanvasRenderer:
   m_ObjectHideFlags: 1

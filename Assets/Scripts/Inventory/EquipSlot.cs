@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour {
+public class EquipSlot : MonoBehaviour {
 
 	public Image icon;
 	
-	Item item;
+	public Equipment equipment;
 	
-	public void AddItem (Item newItem)
+	public void AddEquipment (Equipment newEquip)
 	{
-		item = newItem;
+		equipment = newEquip;
 		
-		icon.sprite = item.icon;
+		icon.sprite = equipment.icon;
 		icon.enabled = true;
 	}
 	
 	public void ClearSlot ()
 	{
-		item = null;
+		equipment = null;
 		
 		icon.sprite=null;
 		icon.enabled = false;
 	}
 	
-	public Item getItem()
+	public Equipment GetEquipment()
 	{
-		return item;
+		return equipment;
 	}
 }
