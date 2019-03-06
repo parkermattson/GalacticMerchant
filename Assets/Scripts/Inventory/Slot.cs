@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour {
+public class Slot : MonoBehaviour,  IPointerClickHandler{
 
 	public Image icon;
 	
@@ -25,8 +26,13 @@ public class Slot : MonoBehaviour {
 		icon.enabled = false;
 	}
 	
-	public Item getItem()
+	public Item GetItem()
 	{
 		return item;
+	}
+	
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		GetComponentInParent<CargoScreenScript>().SelectSlot(gameObject);
 	}
 }

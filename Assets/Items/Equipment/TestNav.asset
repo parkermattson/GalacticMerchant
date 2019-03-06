@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23934515ea016aa448be29ef0f135863, type: 3}
   m_Name: TestNav
   m_EditorClassIdentifier: 
-  itemName: Name
+  itemName: Test Nav 1
   icon: {fileID: 21300000, guid: 721f52c3bcb3f564ca9a2db29ac1063d, type: 3}
   itemValue: 0
   itemWeight: 0

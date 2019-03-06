@@ -10,8 +10,10 @@ public class InventoryUI : MonoBehaviour {
 	public Transform shipSlotPrefab;
 	public Transform cargoSlotBox;
 	public Transform shipEquipSlotBox;
+	public GameObject equipList;
 	
 	Slot[] cargoSlots;
+	EquipSlot[] equipSlots;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +21,7 @@ public class InventoryUI : MonoBehaviour {
 		inventory.onItemChangedCallback += UpdateUI;
 		
 		cargoSlots = cargoSlotBox.GetComponentsInChildren<Slot>();
+		equipSlots = shipEquipSlotBox.GetComponentsInChildren<EquipSlot>();
 		
 		inventory.onItemChangedCallback.Invoke();
 	}
@@ -65,5 +68,19 @@ public class InventoryUI : MonoBehaviour {
 		
 		//Ship Screen Update
 		
+		GameObject tempSlot;
+		
+		equipSlots = shipEquipSlotBox.GetComponentsInChildren<EquipSlot>();
+		for (int i = 0; i < equipSlots.Length; i++)
+		{
+			Destroy(shipEquipSlotBox.GetChild(i).gameObject);
+		}
+		
+		for (int i = 0; i < inventory.equipments.Count; i ++)
+		{
+			tempSlot = Instantiate(shipSlotPrefab, shipEquipSlotBox).gameObject;
+			tempSlot.GetComponent<EquipSlot>().AddEquipment(inventory.equipments[i]);
+			tempSlot.GetComponentInChildren<SlotDragScript>().newParent = equipList;
+		}
 	}
 }

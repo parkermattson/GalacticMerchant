@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-
-public class EquipSlotScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler {
+public class ShipSlot : EquipSlot, IPointerEnterHandler, IPointerExitHandler, IDropHandler {
 	
 	private MenuControl menuControl;
 	
@@ -36,16 +35,25 @@ public class EquipSlotScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
 		menuControl.HideTooltip();
 	}
 	
+	public void AddShipEquipment (Equipment newEquip)
+	{
+		equipment = newEquip;
+		
+		icon.sprite = equipment.icon;
+		icon.enabled = true;
+	}
+	
 	public void OnDrop (PointerEventData eventData)
 	{
-		GameObject draggedItem = SlotDragScript.itemBeingDragged;
-		if (!GetComponent<EquipSlot>().GetEquipment() && draggedItem.GetComponent<EquipSlot>().GetEquipment().equipSlot == slotType)
+		GameObject slotBox = SlotDragScript.slotBox;
+		EquipSlot draggedSlot = slotBox.GetComponent<EquipSlot>();
+		if (draggedSlot.GetEquipment().GetSlotType() == slotType)
 		{
-			inventory.SwapEquipment(draggedItem.GetComponent<EquipSlot>().GetEquipment(), slotNumber);
-			GetComponent<EquipSlot>().AddEquipment(draggedItem.GetComponent<EquipSlot>().GetEquipment());
-			transform.GetChild(0).gameObject.SetActive(true);
+			inventory.SwapEquipment(draggedSlot.GetEquipment(), slotNumber);
+			GetComponent<ShipSlot>().AddShipEquipment(draggedSlot.GetEquipment());
+			Debug.Log(SlotDragScript.slot.name);
+			Destroy(SlotDragScript.slot);
 		}
 	}
-
 	
 }

@@ -10,6 +10,16 @@ public class Equipment : Item {
 	public EquipmentSlot equipSlot = EquipmentSlot.Navigation;
 	
 	public int equipTier = 1;
+	
+	public EquipmentSlot GetSlotType()
+	{
+		return equipSlot;
+	}
+	
+	public int GetTier()
+	{
+		return equipTier;
+	}
 }
 
 

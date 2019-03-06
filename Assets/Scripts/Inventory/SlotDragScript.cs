@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class SlotDragScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 	
-	public static GameObject itemBeingDragged;
+	public static GameObject slotBox,  slot;
 	public  GameObject newParent;
 	Transform oldParent;
 	
@@ -13,24 +13,24 @@ public class SlotDragScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
 	public void OnBeginDrag (PointerEventData eventData)
 	{
-		itemBeingDragged = gameObject;
-		oldParent = itemBeingDragged.transform.parent;
-		itemBeingDragged.transform.SetParent(newParent.transform);
-		startPosition = transform.position;
-		GetComponent<CanvasGroup>().blocksRaycasts = false;
+		slotBox = gameObject;
+		slot = slotBox.transform.Find("Equip Slot").gameObject;
+		oldParent = slot.transform.parent;
+		slot.transform.SetParent(newParent.transform);
+		startPosition = slot.transform.position;
+		slot.GetComponent<CanvasGroup>().blocksRaycasts = false;
 	}
 	
 	public void OnDrag (PointerEventData eventData)
 	{
-		transform.position = Input.mousePosition;
+		slot.transform.position = Input.mousePosition;
 	}
 	
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		itemBeingDragged.transform.SetParent(oldParent);
-		itemBeingDragged = null;
-		transform.position = startPosition;
-		GetComponent<CanvasGroup>().blocksRaycasts = true;
+		slot.transform.SetParent(oldParent);
+		slot.transform.position = startPosition;
+		slot.GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 	
 	
