@@ -38,4 +38,9 @@ public class MenuControl : MonoBehaviour {
 	{
 		tooltip.SetActive(false);
 	}
+
+    public void MoveToolTipPivot(Vector2 xy)
+    {
+        tooltip.gameObject.GetComponent<RectTransform>().pivot = xy;
+    }
 }

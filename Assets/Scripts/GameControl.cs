@@ -17,7 +17,7 @@ public class GameControl : MonoBehaviour {
     public int cargo;
     public int maxCargo;
     public int spaceBucks;
-    public int location;
+    public Location playerLocation;
 	
 	
 
