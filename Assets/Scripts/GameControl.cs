@@ -10,13 +10,11 @@ public class GameControl : MonoBehaviour {
 	
 	//Game variables
 	public string playerName;
-	public int money, race, avatar;
-	public int[] stats = {1,1,1,1};
+	public int playerMoney, playerRace, playerAvatar;
+	public int[] playerStats = {1,1,1,1};
 	public CrewMember[] crewMembs = new CrewMember[4];
-    public Ship ship = new Ship();
-    public int cargo;
-    public int maxCargo;
-    public int spaceBucks;
+	public Ship playerShip = null;
+    public ShipState shipState = new ShipState();
     public Location playerLocation;
 	
 	
@@ -40,14 +38,15 @@ public class GameControl : MonoBehaviour {
 	{
 		CharCreate ccScript = ccScreen.GetComponent<CharCreate>();
 		playerName = ccScript.GetPlayerName();
-		race = ccScript.GetRace();
-		avatar = ccScript.GetAvatar();
-		stats = ccScript.GetStats();
+		playerRace = ccScript.GetRace();
+		playerAvatar = ccScript.GetAvatar();
+		playerStats = ccScript.GetStats();
+		playerMoney = 100;
 		crewMembs[0].enabled = true;
 		crewMembs[0].name = playerName;
-		crewMembs[0].race = race;
-		crewMembs[0].avatar = avatar;
-		crewMembs[0].stats = stats;
+		crewMembs[0].race = playerRace;
+		crewMembs[0].avatar = playerAvatar;
+		crewMembs[0].stats = playerStats;
 	}
 	
 	public void Save()
@@ -57,13 +56,14 @@ public class GameControl : MonoBehaviour {
 		
 		GameData saveData = new GameData();
 		//Assign local data to savedata here
-		saveData.money = money;
+		saveData.playerMoney = playerMoney;
 		saveData.playerName = playerName;
-		saveData.stats = stats;
-		saveData.avatar = avatar;
-		saveData.race = race;
+		saveData.playerStats = playerStats;
+		saveData.playerAvatar = playerAvatar;
+		saveData.playerRace = playerRace;
 		saveData.crewMembs = crewMembs;
-		saveData.ship = ship;
+		saveData.playerShip = playerShip;
+		saveData.shipState = shipState;
 		
 		bf.Serialize(file, saveData);
 		file.Close();
@@ -81,12 +81,13 @@ public class GameControl : MonoBehaviour {
 			
 			//Assign loaded data to local variables here
 				playerName = loadData.playerName;
-				money = loadData.money;
-				stats = loadData.stats;
-				avatar = loadData.avatar;
-				race = loadData.race;
+				playerMoney = loadData.playerMoney;
+				playerStats = loadData.playerStats;
+				playerAvatar = loadData.playerAvatar;
+				playerRace = loadData.playerRace;
 				crewMembs = loadData.crewMembs;
-				ship = loadData.ship;
+				playerShip = loadData.playerShip;
+				shipState = loadData.shipState;
 			
 		}
 	}
@@ -100,28 +101,25 @@ public class GameControl : MonoBehaviour {
 		public bool enabled = false;
 	}
 	
-	public class Ship
+	public class ShipState
 	{
-		public string name = "Default Ship";
-		public int maxHull = 10;
-		public int maxFuel = 100;
-		public int maxCargo = 1000;
+		public Ship playerShip;
 		public int currentHull = 10;
 		public int currentFuel  = 100;
 		public int currentCargo = 0;
-		public int rawFuelEff = 1;
 		public float netFuelEff = 1;
-		public int rawSensorRange = 20;
-		public float netSensorRange = 20;
+		public int netSensorRange = 20;
 	}
 	
 	[Serializable]
 	class GameData
 	{
 		public string playerName;
-		public int money, race, avatar;
-		public int[] stats;
+		public int playerMoney, playerRace, playerAvatar;
+		public int[] playerStats;
 		public CrewMember[] crewMembs;
-		public Ship ship;
+		public ShipState shipState;
+		public Ship playerShip;
+		public Location playerLocation;
 	}
 }

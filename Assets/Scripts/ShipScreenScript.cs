@@ -50,7 +50,7 @@ public class ShipScript : MonoBehaviour {
 	
 	void SetHullBar(GameControl gcScript)
 	{
-		float hullPercent = (float)gcScript.ship.currentHull / (float)gcScript.ship.maxHull;
+		float hullPercent = (float)gcScript.shipState.currentHull / (float)gcScript.shipState.playerShip.maxHull;
 		hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
 
 		if (hullPercent > .66)
@@ -64,23 +64,23 @@ public class ShipScript : MonoBehaviour {
 	
 	void SetFuelBar(GameControl gcScript)
 	{
-		float fuelPercent = (float)gcScript.ship.currentFuel / (float)gcScript.ship.maxFuel;
+		float fuelPercent = (float)gcScript.shipState.currentFuel / (float)gcScript.shipState.playerShip.maxFuel;
 		fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
 	}
 	
 	void SetCargoSpace(GameControl gcScript)
 	{
-		cargoText.SetText("Cargo Space: {0} / {1}", gcScript.ship.currentCargo, gcScript.ship.maxCargo);
+		cargoText.SetText("Cargo Space: {0} / {1}", gcScript.shipState.currentCargo, gcScript.shipState.playerShip.maxCargo);
 	}
 	
 	void SetFuelEfficiency(GameControl gcScript)
 	{
-		fuelText.SetText("Fuel Efficiency: {0} CTU/FC", gcScript.ship.netFuelEff);
+		fuelText.SetText("Fuel Efficiency: {0} CTU/FC", gcScript.shipState.netFuelEff);
 	}
 	
 	void SetSensorRange(GameControl gcScript)
 	{
-		sensorText.SetText("Sensor Range: {0} CTUs", gcScript.ship.netSensorRange);
+		sensorText.SetText("Sensor Range: {0} CTUs", gcScript.shipState.netSensorRange);
 	}
 	
 	void SetCrewBoxes(GameControl gcScript)
