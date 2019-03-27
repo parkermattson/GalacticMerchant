@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ShipScript : MonoBehaviour {
+public class ShipScreenScript : MonoBehaviour {
 	
 	[SerializeField]
 	private GameObject gameController;

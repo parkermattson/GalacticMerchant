@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CrewScript : MonoBehaviour {
+public class CrewScreenScript : MonoBehaviour {
 
 	public GameObject gameController;
 	public GameObject[] crewBox = new GameObject[4];
