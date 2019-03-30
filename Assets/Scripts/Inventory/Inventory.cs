@@ -5,6 +5,13 @@ using UnityEngine;
 public class Inventory : MonoBehaviour {
 	
 	public static Inventory instance;
+	public delegate void OnItemChanged();
+	public OnItemChanged onItemChangedCallback;
+	public OnItemChanged onEquipmentChangedCallback;
+
+	public List<Item> items = new List<Item>();
+	public List<Equipment> equipments = new List<Equipment>();
+	public Equipment[] shipEquipment = new Equipment[8];
 	
 	void Awake ()
 	{
@@ -12,12 +19,7 @@ public class Inventory : MonoBehaviour {
 		
 	}
 	
-	public delegate void OnItemChanged();
-	public OnItemChanged onItemChangedCallback;
-
-	public List<Item> items = new List<Item>();
-	public List<Equipment> equipments = new List<Equipment>();
-	public Equipment[] shipEquipment = new Equipment[8];
+	
 	
 	public void AddItem(Item item)
 	{
@@ -40,6 +42,8 @@ public class Inventory : MonoBehaviour {
 		
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
+		if (onEquipmentChangedCallback != null)
+			onEquipmentChangedCallback.Invoke();
 	}
 	
 	public void RemoveEquipment(Equipment equipment)
@@ -48,6 +52,8 @@ public class Inventory : MonoBehaviour {
 		
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
+		if (onEquipmentChangedCallback != null)
+			onEquipmentChangedCallback.Invoke();
 	}
 	
 	public void SwapEquipment(Equipment equipment, int slot)
@@ -58,5 +64,7 @@ public class Inventory : MonoBehaviour {
 		equipments.Remove(equipment);
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
+		if (onEquipmentChangedCallback != null)
+			onEquipmentChangedCallback.Invoke();
 	}
 }

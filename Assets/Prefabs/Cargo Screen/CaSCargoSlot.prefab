@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114241613729467162}
   - component: {fileID: 114254547162702292}
   m_Layer: 5
-  m_Name: Cargo Slot
+  m_Name: CaSCargoSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

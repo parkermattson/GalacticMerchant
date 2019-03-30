@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114055192957970704}
   - component: {fileID: 114306206264412952}
   m_Layer: 5
-  m_Name: EquipBox
+  m_Name: SSEquipBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

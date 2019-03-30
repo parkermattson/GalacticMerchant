@@ -13,8 +13,8 @@ public class GameControl : MonoBehaviour {
 	public int playerMoney, playerRace, playerAvatar;
 	public int[] playerStats = {1,1,1,1};
 	public CrewMember[] crewMembs = new CrewMember[4];
-	public Ship playerShip = null;
     public ShipState shipState = new ShipState();
+	public Ship defaultShip;
     public Location playerLocation;
 	
 	
@@ -27,6 +27,8 @@ public class GameControl : MonoBehaviour {
 		{
 			crewMembs[i] = new CrewMember();
 		}
+		
+		shipState.playerShip = defaultShip;
 	}
 	
 	// Update is called once per frame
@@ -55,6 +57,7 @@ public class GameControl : MonoBehaviour {
 		FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
 		
 		GameData saveData = new GameData();
+		
 		//Assign local data to savedata here
 		saveData.playerMoney = playerMoney;
 		saveData.playerName = playerName;
@@ -62,8 +65,8 @@ public class GameControl : MonoBehaviour {
 		saveData.playerAvatar = playerAvatar;
 		saveData.playerRace = playerRace;
 		saveData.crewMembs = crewMembs;
-		saveData.playerShip = playerShip;
 		saveData.shipState = shipState;
+		saveData.playerLocation = playerLocation;
 		
 		bf.Serialize(file, saveData);
 		file.Close();
@@ -86,8 +89,8 @@ public class GameControl : MonoBehaviour {
 				playerAvatar = loadData.playerAvatar;
 				playerRace = loadData.playerRace;
 				crewMembs = loadData.crewMembs;
-				playerShip = loadData.playerShip;
 				shipState = loadData.shipState;
+				playerLocation = loadData.playerLocation;
 			
 		}
 	}
@@ -119,7 +122,6 @@ public class GameControl : MonoBehaviour {
 		public int[] playerStats;
 		public CrewMember[] crewMembs;
 		public ShipState shipState;
-		public Ship playerShip;
 		public Location playerLocation;
 	}
 }

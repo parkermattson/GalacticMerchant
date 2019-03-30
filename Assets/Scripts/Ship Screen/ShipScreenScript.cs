@@ -25,11 +25,29 @@ public class ShipScreenScript : MonoBehaviour {
 	private TextMeshProUGUI sensorText;
 	
 	[SerializeField]
+	private Transform equipSlotBox;
+	
+	[SerializeField]
+	private GameObject equipList;
+	
+	[SerializeField]
+	private Transform shipSlotPrefab;
+	
+	Inventory inventory;
+	
+	[SerializeField]
 	private GameObject[] crewBoxes = new GameObject[4];
 	
+	GameControl gcScript;
+	EquipSlot[] equipSlots;
+	
+	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		inventory = Inventory.instance;
+		inventory.onEquipmentChangedCallback += EquipmentChangeUpdate;
 		
+		gcScript = gameController.GetComponent<GameControl>();
 	}
 	
 	// Update is called once per frame
@@ -39,7 +57,42 @@ public class ShipScreenScript : MonoBehaviour {
 	
 	void OnEnable()
 	{
-		GameControl gcScript = gameController.GetComponent<GameControl>();
+		DisplayEquipmentList();
+		SetHullBar(gcScript);
+		SetFuelBar(gcScript);
+		SetCargoSpace(gcScript);
+		SetFuelEfficiency(gcScript);
+		SetSensorRange(gcScript);
+		SetCrewBoxes(gcScript);
+	}
+	
+	void DisplayEquipmentList()
+	{
+		GameObject tempSlot;
+		
+		equipSlots = equipSlotBox.GetComponentsInChildren<EquipSlot>();
+		for (int i = 0; i < equipSlots.Length; i++)
+		{
+			Destroy(equipSlotBox.GetChild(i).gameObject);
+		}
+		
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < inventory.equipments.Count; i ++)
+			{
+				if ((int)inventory.equipments[i].equipSlot == j)
+				{
+					tempSlot = Instantiate(shipSlotPrefab, equipSlotBox).gameObject;
+					tempSlot.GetComponent<EquipSlot>().AddEquipment(inventory.equipments[i]);
+					tempSlot.GetComponentInChildren<SlotDragScript>().newParent = equipList;
+				}
+			}
+		}
+	}
+	
+	void EquipmentChangeUpdate()
+	{
+		DisplayEquipmentList();
 		SetHullBar(gcScript);
 		SetFuelBar(gcScript);
 		SetCargoSpace(gcScript);
