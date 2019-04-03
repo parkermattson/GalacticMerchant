@@ -13,10 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipName: Ship 3
   shipDesc: This is ship 3
-  icon: {fileID: 21300000, guid: d5d434a759b9c074c80253e0d963296f, type: 3}
+  graphic: {fileID: 21300000, guid: d5d434a759b9c074c80253e0d963296f, type: 3}
   price: 20000
   maxHull: 50
   maxFuel: 300
   maxCargo: 5000
   rawFuelEff: 1.2
   rawSensorRange: 75
+  rawSpeed: 1.5

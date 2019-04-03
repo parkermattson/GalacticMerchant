@@ -7,40 +7,50 @@ public class Ship : ScriptableObject {
 
 	public string shipName = "Ship Name";
 	public string shipDesc = "Ship description";
-	public Sprite icon = null;
+	public Sprite graphic = null;
 	public int price = 1000;
 	public int maxHull = 10;
 	public int maxFuel = 100;
 	public int maxCargo = 1000;
 	public float rawFuelEff = 1;
 	public int rawSensorRange = 20;
+	public float rawSpeed = 1;
 	
-	public string getName() {
+	public string GetName() {
 		return shipName;
 	}
 	
-	public string getDesc() {
+	public string GetDesc() {
 		return shipDesc;
 	}
 	
-	public int getHullMax() {
+	public int GetPrice()
+	{
+		return price;
+	}
+	
+	public int GetHullMax() {
 		return maxHull;
 	}
 	
-	public int getFuelMax() {
+	public int GetFuelMax() {
 		return maxFuel;
 	}
 	
-	public int getCargoMax() {
+	public int GetCargoMax() {
 		return maxCargo;
 	}
 	
-	public float getFuelEff() {
+	public float GetFuelEff() {
 		return rawFuelEff;
 	}
 	
-	public int getSensor() {
+	public int GetRange() {
 		return rawSensorRange;
+	}
+	
+	public float GetSpeed() {
+		return rawSpeed;
 	}
 	
 }

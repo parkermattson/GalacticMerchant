@@ -57,13 +57,7 @@ public class ShipScreenScript : MonoBehaviour {
 	
 	void OnEnable()
 	{
-		DisplayEquipmentList();
-		SetHullBar(gcScript);
-		SetFuelBar(gcScript);
-		SetCargoSpace(gcScript);
-		SetFuelEfficiency(gcScript);
-		SetSensorRange(gcScript);
-		SetCrewBoxes(gcScript);
+		EquipmentChangeUpdate();
 	}
 	
 	void DisplayEquipmentList()
@@ -93,15 +87,15 @@ public class ShipScreenScript : MonoBehaviour {
 	void EquipmentChangeUpdate()
 	{
 		DisplayEquipmentList();
-		SetHullBar(gcScript);
-		SetFuelBar(gcScript);
-		SetCargoSpace(gcScript);
-		SetFuelEfficiency(gcScript);
-		SetSensorRange(gcScript);
-		SetCrewBoxes(gcScript);
+		SetHullBar();
+		SetFuelBar();
+		SetCargoSpace();
+		SetFuelEfficiency();
+		SetSensorRange();
+		SetCrewBoxes();
 	}
 	
-	void SetHullBar(GameControl gcScript)
+	void SetHullBar()
 	{
 		float hullPercent = (float)gcScript.shipState.currentHull / (float)gcScript.shipState.playerShip.maxHull;
 		hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
@@ -115,28 +109,28 @@ public class ShipScreenScript : MonoBehaviour {
 		
 	}
 	
-	void SetFuelBar(GameControl gcScript)
+	void SetFuelBar()
 	{
 		float fuelPercent = (float)gcScript.shipState.currentFuel / (float)gcScript.shipState.playerShip.maxFuel;
 		fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
 	}
 	
-	void SetCargoSpace(GameControl gcScript)
+	void SetCargoSpace()
 	{
 		cargoText.SetText("Cargo Space: {0} / {1}", gcScript.shipState.currentCargo, gcScript.shipState.playerShip.maxCargo);
 	}
 	
-	void SetFuelEfficiency(GameControl gcScript)
+	void SetFuelEfficiency()
 	{
 		fuelText.SetText("Fuel Efficiency: {0} CTU/FC", gcScript.shipState.netFuelEff);
 	}
 	
-	void SetSensorRange(GameControl gcScript)
+	void SetSensorRange()
 	{
 		sensorText.SetText("Sensor Range: {0} CTUs", gcScript.shipState.netSensorRange);
 	}
 	
-	void SetCrewBoxes(GameControl gcScript)
+	void SetCrewBoxes()
 	{
 		for (int i = 0; i < 4; i++)
 		{
