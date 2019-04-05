@@ -7,10 +7,11 @@ using TMPro;
 public class EquipSlot : MonoBehaviour {
 
 	public Image icon;
-	public GameObject nameText;
-	public GameObject typeText;
-	public GameObject tierText;
-	public GameObject descText;
+	public TextMeshProUGUI nameText;
+	public TextMeshProUGUI typeText;
+	public TextMeshProUGUI tierText;
+	public TextMeshProUGUI descText;
+	public TextMeshProUGUI priceText;
 	
 	public Equipment equipment;
 	
@@ -20,13 +21,15 @@ public class EquipSlot : MonoBehaviour {
 		
 		icon.sprite = equipment.icon;
 		icon.enabled = true;
-		nameText.GetComponent<TextMeshProUGUI>().SetText(equipment.itemName);
+		nameText.text = equipment.GetName();
 		if (typeText != null)
-			typeText.GetComponent<TextMeshProUGUI>().text = "Type: " + equipment.equipSlot;
+			typeText.text = "Type: " + equipment.GetSlotType();
 		if (tierText != null)
-			tierText.GetComponent<TextMeshProUGUI>().text = "Tier: " + equipment.equipTier;
+			tierText.text = "Tier: " + equipment.GetTier();
 		if (descText != null)
-			descText.GetComponent<TextMeshProUGUI>().text = "Description: " + equipment.itemDesc;
+			descText.text = "Description: " + equipment.GetDescription();
+		if (priceText != null)
+			priceText.SetText("Price: {0}",equipment.GetValue());
 	}
 	
 	public void ClearSlot ()

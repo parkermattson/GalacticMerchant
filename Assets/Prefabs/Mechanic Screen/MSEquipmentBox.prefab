@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114094286024287120}
   - component: {fileID: 114444340147532446}
   m_Layer: 5
-  m_Name: Equipment box
+  m_Name: MSEquipmentBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -492,10 +492,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 114663261793081236}
-  nameText: {fileID: 1466710389465682}
-  typeText: {fileID: 1255912739939172}
-  tierText: {fileID: 1753864511683698}
-  descText: {fileID: 1854796755805358}
+  nameText: {fileID: 114939738009287374}
+  typeText: {fileID: 114198824930413876}
+  tierText: {fileID: 114954557396274478}
+  descText: {fileID: 114713369087135938}
+  priceText: {fileID: 114463312528100984}
   equipment: {fileID: 11400000, guid: 1e7d3d9941c8f01408987c28fc4969b2, type: 2}
 --- !u!114 &114460068061183146
 MonoBehaviour:

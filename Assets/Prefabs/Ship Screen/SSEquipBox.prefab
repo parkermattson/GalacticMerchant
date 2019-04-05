@@ -155,9 +155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 114036313477233380}
-  nameText: {fileID: 1052997244470878}
-  typeText: {fileID: 1209219088196800}
-  tierText: {fileID: 1471913567600684}
+  nameText: {fileID: 114583326178313320}
+  typeText: {fileID: 114318785851986030}
+  tierText: {fileID: 114516535088283392}
+  descText: {fileID: 0}
+  priceText: {fileID: 0}
   equipment: {fileID: 0}
 --- !u!114 &114144549684118474
 MonoBehaviour:
