@@ -7,8 +7,13 @@ public class AcademyScreenScript : MonoBehaviour {
 	public GameObject missionBox;
 	public GameObject missionPrefab;
 	
-	public List<MissionTable> potentialMissions;
-	List<Mission> availableMissions;
+	public MissionTable potentialMissions;
+	public List<Mission> availableMissions;
+	
+	void OnEnable()
+	{
+		UpdateMissionList();
+	}
 	
 
 	void UpdateMissionList()
@@ -20,10 +25,10 @@ public class AcademyScreenScript : MonoBehaviour {
 			Destroy(missionBox.transform.GetChild(i).gameObject);
 		}
 		
-		for (int i = 0; i  < 5; i++)
+		for (int i = 0; i  < availableMissions.Count; i++)
 		{
 			tempBox = Instantiate(missionPrefab, missionBox.transform);
-			//Make mission box script and use here
+			tempBox.GetComponent<MissionSlot>().AddMission(availableMissions[i]);
 		}
 		
 	}
