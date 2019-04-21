@@ -12,7 +12,7 @@ public class GameControl : MonoBehaviour {
 	public string playerName;
 	public int playerMoney, playerRace, playerAvatar;
 	public int[] playerStats = {1,1,1,1};
-	public CrewMember[] crewMembs = new CrewMember[4];
+	public Crew[] crewMembs;
     public ShipState shipState = new ShipState();
 	public Ship defaultShip;
     public Location playerLocation;
@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour {
 		
 		for (int i = 0; i < 4; i++)
 		{
-			crewMembs[i] = new CrewMember();
+			crewMembs[i] = null;
 		}
 		
 		shipState.playerShip = defaultShip;
@@ -44,11 +44,11 @@ public class GameControl : MonoBehaviour {
 		playerAvatar = ccScript.GetAvatar();
 		playerStats = ccScript.GetStats();
 		playerMoney = 100;
-		crewMembs[0].enabled = true;
-		crewMembs[0].name = playerName;
-		crewMembs[0].race = playerRace;
-		crewMembs[0].avatar = playerAvatar;
-		crewMembs[0].stats = playerStats;
+		crewMembs[0] = new Crew();
+		crewMembs[0].SetCrewName(playerName);
+		crewMembs[0].SetRace(playerRace);
+		crewMembs[0].SetAvatar(playerAvatar);
+		crewMembs[0].SetStats(playerStats);
 	}
 	
 	public void Save()
@@ -120,7 +120,7 @@ public class GameControl : MonoBehaviour {
 		public string playerName;
 		public int playerMoney, playerRace, playerAvatar;
 		public int[] playerStats;
-		public CrewMember[] crewMembs;
+		public Crew[] crewMembs;
 		public ShipState shipState;
 		public Location playerLocation;
 	}

@@ -16,7 +16,7 @@ public class CrewScreenScript : MonoBehaviour {
 		GameControl gameScript = gameController.GetComponent<GameControl>();
 		for (int i = 0; i < 4; i++)
 		{
-			if (gameScript.crewMembs[i].enabled)
+			if (gameScript.crewMembs[i] != null)
 			{
 				crewBox[i].SetActive(true);
 				crewBox[i].transform.Find("Portrait Image").GetComponent<Image>().sprite = avatars[gameScript.crewMembs[i].avatar];

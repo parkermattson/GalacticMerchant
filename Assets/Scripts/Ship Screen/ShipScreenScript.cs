@@ -134,7 +134,7 @@ public class ShipScreenScript : MonoBehaviour {
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if (gcScript.crewMembs[i].enabled)
+			if (gcScript.crewMembs[i] != null)
 			{
 				crewBoxes[i].SetActive(true);
 				crewBoxes[i].transform.Find("NameText").GetComponent<TextMeshProUGUI>().SetText(gcScript.crewMembs[i].name);

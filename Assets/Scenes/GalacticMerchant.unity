@@ -6342,10 +6342,14 @@ MonoBehaviour:
   missionBox: {fileID: 1588770646}
   missionPrefab: {fileID: 1650493123183290, guid: 7883db2a0603eca488febc55f53fd8a4,
     type: 2}
-  potentialMissions: {fileID: 0}
+  allMissions: {fileID: 0}
   availableMissions:
   - {fileID: 11400000, guid: c8a09d0105edb024a8a0b4bc24c735c6, type: 2}
   - {fileID: 11400000, guid: e5d151f3b00e9804f94a9807f6b532dd, type: 2}
+  recruitBox: {fileID: 0}
+  crewPrefab: {fileID: 0}
+  allCrew: {fileID: 0}
+  availableCrew: []
 --- !u!224 &267754826 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
@@ -10888,6 +10892,7 @@ MonoBehaviour:
   playerRace: 0
   playerAvatar: 0
   playerStats: 01000000010000000100000001000000
+  crewMembs: []
   defaultShip: {fileID: 11400000, guid: eca5bedb494c11d49ae25ca2844c1cd6, type: 2}
   playerLocation: {fileID: 0}
 --- !u!4 &421591086
