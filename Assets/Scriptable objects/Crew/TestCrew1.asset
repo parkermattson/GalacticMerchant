@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57e50826863fc649bbe94336b04a9ec, type: 3}
+  m_Name: TestCrew1
+  m_EditorClassIdentifier: 
+  crewName: Crew 1
+  race: 0
+  avatar: 0
+  stats: 01000000010000000100000001000000

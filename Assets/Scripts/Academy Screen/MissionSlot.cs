@@ -18,22 +18,32 @@ public class MissionSlot : MonoBehaviour {
 	
 	public void AddMission(Mission newMission)
 	{
-		string rewardString;
+		string rewardString = "";
 		mission = newMission;
 		icon = missionIcons[(int)mission.missionType];
 		nameText.text = mission.missionName;
 		descText.text = mission.missionDesc;
 		locationText.text = "Location not added yet";
-		rewardString = mission.rewardMoney.ToString() + " SB";
-		for (int i = 0; i < mission.rewardItems.Count; i++)
+		if (mission.rewardMoney > 0) {
+			rewardString = mission.rewardMoney.ToString() + " SB";
+			if (mission.rewardItems.Count > 0 || mission.rewardEquips.Count > 0)
+				rewardString = rewardString + ",  ";
+		}	
+		if (mission.rewardItems.Count > 0)
 		{
-			rewardString = rewardString + ", " + mission.rewardItems[i].GetName();
+			for (int i = 0; i < mission.rewardItems.Count; i++)
+			{
+				rewardString = rewardString + mission.rewardItems[i].GetName();
+			}
+			if (mission.rewardEquips.Count > 0)
+					rewardString = rewardString + ",  ";
 		}
 		for (int i = 0; i < mission.rewardEquips.Count; i++)
 		{
-			rewardString = rewardString + ", " + mission.rewardEquips[i].GetName();
+			rewardString = rewardString + mission.rewardEquips[i].GetName();
 		}
 		rewardText.text = rewardString;
+		
 	}
 	
 	public Mission GetMission()

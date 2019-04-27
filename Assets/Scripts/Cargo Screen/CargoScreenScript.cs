@@ -15,7 +15,7 @@ public class CargoScreenScript : MonoBehaviour {
 	
 	Slot[] cargoSlots;
 	
-	void Awake()
+	void Start()
 	{
 		inventory = Inventory.instance;
 		inventory.onItemChangedCallback += CargoScreenUpdate;
@@ -25,6 +25,7 @@ public class CargoScreenScript : MonoBehaviour {
 	
 	void OnEnable()
 	{
+		inventory = Inventory.instance;
 		CargoScreenUpdate();
 		
 		Slot slotScript = selectedSlot.GetComponent<Slot>();
@@ -32,7 +33,7 @@ public class CargoScreenScript : MonoBehaviour {
 		{
 			itemName.SetText(slotScript.GetItem().GetName());
 			itemDesc.SetText(slotScript.GetItem().GetDescription());
-			//itemValue.SetText("Qt: " + slotScript.GetItem().GetValue());
+			itemValue.SetText("Value: " + slotScript.GetItem().GetValue());
 			itemWeight.SetText("Wt: " + slotScript.GetItem().GetWeight());
 		}
 		else {
@@ -45,6 +46,7 @@ public class CargoScreenScript : MonoBehaviour {
 	
 	public void CargoScreenUpdate()
 	{
+		cargoSlots = cargoSlotBox.GetComponentsInChildren<Slot>();
 		if (inventory.items.Count + inventory.equipments.Count > 25)
 		{
 			while (cargoSlots.Length < inventory.items.Count + inventory.equipments.Count)

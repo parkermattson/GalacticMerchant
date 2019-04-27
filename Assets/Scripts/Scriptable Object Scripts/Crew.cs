@@ -22,8 +22,13 @@ public class Crew : ScriptableObject {
 		avatar = newAvatar;
 	}
 	
-	public void SetStats(int[] newStats) {
+	public void SetStats(int[] newStats)
+	{
 		stats = newStats;
+	}
+	
+	public void SetStat(int statNum, int newStat) {
+		stats[statNum] = newStat;
 	}
 	
 	public string GetCrewName(){
@@ -40,5 +45,9 @@ public class Crew : ScriptableObject {
 	
 	public int[] GetStats() {
 		return stats;
+	}
+	
+	public int GetStat(int statNum) {
+		return stats[statNum];
 	}
 }

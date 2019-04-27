@@ -8,18 +8,18 @@ using TMPro;
 public class CharCreate : MonoBehaviour {
 	
 	public int[] stats = {1, 1, 1, 1};
-	public GameObject[] statText = new GameObject[4];
+	public TextMeshProUGUI[] statText = new TextMeshProUGUI[4];
 	
-	public GameObject pointText;
+	public TextMeshProUGUI pointText;
 	int points = 3;
 	
-	public GameObject avatarImage;
-	public Sprite[] avatars;
+	public Image avatarImage;
 	int currentAvatar = 0;
 	
 	string playerName = "";
 	
 	int race = 0;
+	public TextMeshProUGUI raceText;
 	string[] raceDesc = {"Human description", "Dwarf description", "Reptile description"};
 	
 	//Getters
@@ -53,8 +53,8 @@ public class CharCreate : MonoBehaviour {
 			stats[statNum]++;
 			points --;
 		}
-		statText[statNum].GetComponent<TextMeshProUGUI>().SetText("{0}", stats[statNum]);
-		pointText.GetComponent<TextMeshProUGUI>().SetText("Available Points: {0}", points);
+		statText[statNum].SetText("{0}", stats[statNum]);
+		pointText.SetText("Available Points: {0}", points);
 	}
 	
 	public void StatTextDown(int statNum)
@@ -64,16 +64,16 @@ public class CharCreate : MonoBehaviour {
 			stats[statNum]--;
 			points++;
 		}
-		statText[statNum].GetComponent<TextMeshProUGUI>().SetText("{0}", stats[statNum]);
-		pointText.GetComponent<TextMeshProUGUI>().SetText("Available Points: {0}", points);
+		statText[statNum].SetText("{0}", stats[statNum]);
+		pointText.SetText("Available Points: {0}", points);
 	}
 	
 	public void AvatarRight()
 	{
-		if (currentAvatar < avatars.Length -1)
+		if (currentAvatar < GameControl.instance.avatars.Length -1)
 		{
 			currentAvatar++;
-			avatarImage.GetComponent<Image>().sprite = avatars[currentAvatar];
+			avatarImage.sprite = GameControl.instance.avatars[currentAvatar];
 		}
 	}
 	
@@ -82,20 +82,19 @@ public class CharCreate : MonoBehaviour {
 		if (currentAvatar > 0)
 		{
 			currentAvatar--;
-			avatarImage.GetComponent<Image>().sprite = avatars[currentAvatar];
+			avatarImage.sprite = GameControl.instance.avatars[currentAvatar];
 		}
 	}
 	
-	public void SetPlayerName(GameObject nameInputText)
+	public void SetPlayerName(TextMeshProUGUI nameInputText)
 	{
-		playerName = nameInputText.GetComponent<TextMeshProUGUI>().text;
+		playerName = nameInputText.text;
 	}
 	
 	public void SetRace(int newRace)
 	{
 		race = newRace;
-		GameObject raceText = GameObject.Find("Race Text");
-		raceText.GetComponent<TextMeshProUGUI>().SetText(raceDesc[race]);
+		raceText.SetText(raceDesc[race]);
 	}
 	
 }

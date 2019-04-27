@@ -4,23 +4,31 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameControl : MonoBehaviour {
+	
+	public static GameControl instance = null;
 	
 	//Game variables
 	public string playerName;
 	public int playerMoney, playerRace, playerAvatar;
 	public int[] playerStats = {1,1,1,1};
-	public Crew[] crewMembs;
+	public Crew[] crewMembs = new Crew[4];
     public ShipState shipState = new ShipState();
 	public Ship defaultShip;
     public Location playerLocation;
+	public Sprite[] avatars = new Sprite[3];
+	public Sprite[] races = new Sprite[3];
 	
 	
 
 	// Use this for initialization
 	void Awake () {
+		
+		instance = this;
+		
 		DontDestroyOnLoad(gameObject);
 		
 		for (int i = 0; i < 4; i++)
@@ -40,11 +48,12 @@ public class GameControl : MonoBehaviour {
 	{
 		CharCreate ccScript = ccScreen.GetComponent<CharCreate>();
 		playerName = ccScript.GetPlayerName();
+		Debug.Log(playerName);
 		playerRace = ccScript.GetRace();
 		playerAvatar = ccScript.GetAvatar();
 		playerStats = ccScript.GetStats();
 		playerMoney = 100;
-		crewMembs[0] = new Crew();
+		crewMembs[0] = ScriptableObject.CreateInstance<Crew>();
 		crewMembs[0].SetCrewName(playerName);
 		crewMembs[0].SetRace(playerRace);
 		crewMembs[0].SetAvatar(playerAvatar);
