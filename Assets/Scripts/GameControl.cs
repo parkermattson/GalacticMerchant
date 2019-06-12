@@ -4,28 +4,36 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameControl : MonoBehaviour {
+	
+	public static GameControl instance = null;
 	
 	//Game variables
 	public string playerName;
 	public int playerMoney, playerRace, playerAvatar;
 	public int[] playerStats = {1,1,1,1};
-	public CrewMember[] crewMembs = new CrewMember[4];
+	public Crew[] crewMembs = new Crew[4];
     public ShipState shipState = new ShipState();
 	public Ship defaultShip;
     public Location playerLocation;
+	public Sprite[] avatars = new Sprite[3];
+	public Sprite[] races = new Sprite[3];
 	
 	
 
 	// Use this for initialization
 	void Awake () {
+		
+		instance = this;
+		
 		DontDestroyOnLoad(gameObject);
 		
 		for (int i = 0; i < 4; i++)
 		{
-			crewMembs[i] = new CrewMember();
+			crewMembs[i] = null;
 		}
 		
 		shipState.playerShip = defaultShip;
@@ -40,15 +48,16 @@ public class GameControl : MonoBehaviour {
 	{
 		CharCreate ccScript = ccScreen.GetComponent<CharCreate>();
 		playerName = ccScript.GetPlayerName();
+		Debug.Log(playerName);
 		playerRace = ccScript.GetRace();
 		playerAvatar = ccScript.GetAvatar();
 		playerStats = ccScript.GetStats();
 		playerMoney = 100;
-		crewMembs[0].enabled = true;
-		crewMembs[0].name = playerName;
-		crewMembs[0].race = playerRace;
-		crewMembs[0].avatar = playerAvatar;
-		crewMembs[0].stats = playerStats;
+		crewMembs[0] = ScriptableObject.CreateInstance<Crew>();
+		crewMembs[0].SetCrewName(playerName);
+		crewMembs[0].SetRace(playerRace);
+		crewMembs[0].SetAvatar(playerAvatar);
+		crewMembs[0].SetStats(playerStats);
 	}
 	
 	public void Save()
@@ -120,7 +129,7 @@ public class GameControl : MonoBehaviour {
 		public string playerName;
 		public int playerMoney, playerRace, playerAvatar;
 		public int[] playerStats;
-		public CrewMember[] crewMembs;
+		public Crew[] crewMembs;
 		public ShipState shipState;
 		public Location playerLocation;
 	}
