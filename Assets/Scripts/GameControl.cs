@@ -11,6 +11,8 @@ public class GameControl : MonoBehaviour {
 	
 	public static GameControl instance = null;
 	
+	Inventory inventory;
+	
 	//Game variables
 	public string playerName;
 	public int playerMoney, playerRace, playerAvatar;
@@ -28,6 +30,8 @@ public class GameControl : MonoBehaviour {
 	void Awake () {
 		
 		instance = this;
+		
+		inventory = Inventory.instance;
 		
 		DontDestroyOnLoad(gameObject);
 		
@@ -76,6 +80,9 @@ public class GameControl : MonoBehaviour {
 		saveData.crewMembs = crewMembs;
 		saveData.shipState = shipState;
 		saveData.playerLocation = playerLocation;
+		saveData.items = inventory.items;
+		saveData.equipments = inventory.equipments;
+		saveData.shipEquipment = inventory.shipEquipment;
 		
 		bf.Serialize(file, saveData);
 		file.Close();
@@ -100,6 +107,9 @@ public class GameControl : MonoBehaviour {
 				crewMembs = loadData.crewMembs;
 				shipState = loadData.shipState;
 				playerLocation = loadData.playerLocation;
+				inventory.items = loadData.items;
+				inventory.equipments = loadData.equipments;
+				inventory.shipEquipment = loadData.shipEquipment;
 			
 		}
 	}
@@ -132,5 +142,8 @@ public class GameControl : MonoBehaviour {
 		public Crew[] crewMembs;
 		public ShipState shipState;
 		public Location playerLocation;
+		public List<Item> items;
+		public List<Equipment> equipments;
+		public Equipment[] shipEquipment;
 	}
 }

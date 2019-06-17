@@ -13,6 +13,7 @@ public class MechanicScreenScript : MonoBehaviour {
 	const int SIGNALCAP = 100;
 	
 	Inventory inventory;
+	public GameControl gameControl;
 	
 	public GameObject currentScreen;
 	
@@ -31,6 +32,8 @@ public class MechanicScreenScript : MonoBehaviour {
 	public List<Ship> shipList;
 	public int shipIndex = 0;
 	
+	public Button shipBuyButton;
+	public GameObject confirmBox;
 	public GameObject equipBoxPrefab;
 	public GameObject equipSellBox;
 	public GameObject equipBuyBox;
@@ -41,6 +44,7 @@ public class MechanicScreenScript : MonoBehaviour {
 	void Start()
 	{
 		inventory = Inventory.instance;
+		gameControl = GameControl.instance;
 		
 		GenerateStock();
 	}
@@ -69,6 +73,12 @@ public class MechanicScreenScript : MonoBehaviour {
 		SetSpeedText();
 		SetSignalBar();
 		SetPriceText();
+		
+		if (displayShip.GetPrice() > gameControl.playerMoney)
+		{
+			shipBuyButton.interactable= false;
+		}
+		else shipBuyButton.interactable = true;
 	}
 	
 	public void PrevShip() {
@@ -155,6 +165,8 @@ public class MechanicScreenScript : MonoBehaviour {
 			tempBox.GetComponent<EquipSlot>().AddEquipment(inventory.equipments[i]);
 		}
 		
+		
+		
 	}
 	
 	void GenerateStock()
@@ -168,6 +180,30 @@ public class MechanicScreenScript : MonoBehaviour {
 				equipBuyList.Add(stockList[i]);
 			}
 		}
+	}
+	
+	public void ShipConfirmation()
+	{
+		confirmBox.transform.Find("ConfirmationText").GetComponent<TextMeshProUGUI>().SetText("Are you sure you want to buy " + displayShip.GetName() + " for " + displayShip.GetPrice() + "?");
+		confirmBox.SetActive(true);
+	}
+	
+	public void BuyShip()
+	{
+		Ship tempShip;
+		gameControl.playerMoney -= displayShip.GetPrice();
+		tempShip = displayShip;
+		shipList.Remove(displayShip);
+		shipList.Add(gameControl.shipState.playerShip);
+		displayShip = gameControl.shipState.playerShip;
+		gameControl.shipState.playerShip = tempShip;
+		gameControl.shipState.currentHull = tempShip.GetHullMax();		//Need to make a method for updating ship state
+		gameControl.shipState.currentFuel = tempShip.GetFuelMax();
+		
+		shipIndex = 0;
+		displayShip = shipList[shipIndex];
+		UpdateShipStore();
+		
 	}
 	
 }
