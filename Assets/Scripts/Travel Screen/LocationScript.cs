@@ -3,28 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-    private MenuControl menuControl;
+    public Location location;
 
-    [TextArea]
-    [SerializeField]
-    private string locationDescription;
-    
-    void Start ()
-    {
-        menuControl = GameObject.FindObjectOfType(typeof(MenuControl)) as MenuControl;
-    }
+    public GameObject tooltip;
+    public GameObject hoverTooltip;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        menuControl.ShowTooltip(transform.position, locationDescription);
+        hoverTooltip.SetActive(true);
+        hoverTooltip.transform.position = transform.position;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        menuControl.HideTooltip();
+        hoverTooltip.SetActive(false);
     }
+
+    private void OnEnable()
+    {
+        transform.localPosition = location.mapPosition;
+        hoverTooltip.GetComponentInChildren<TextMeshProUGUI>().SetText("Click to Select\n"+location.GetName()+"\n"+location.GetDescription());
+    }
+
+    
 }
