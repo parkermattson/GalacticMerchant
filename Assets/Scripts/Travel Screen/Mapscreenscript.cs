@@ -17,7 +17,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void SelectLocation(GameObject newSelected)
     {
         selectedLocation = newSelected;
-        //locationTooltip.GetComponentInChildren<TextMeshProUGUI>().SetText()
+        locationTooltip.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(selectedLocation.GetComponent<LocationScript>().location.GetName() + "\n" + selectedLocation.GetComponent<LocationScript>().location.GetDescription());
+		locationTooltip.SetActive(true);
+		locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -54,13 +56,16 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();
         foreach (LocationScript l in locationList)
         {
-            l.transform.localScale *= 1f / l.transform.lossyScale.x;
+            l.transform.localScale *= .5f / l.transform.lossyScale.x;
         }
     }
 
     public void Update()
     {
-        locationTooltip.transform.position = selectedLocation.transform.position;
-        hoverTooltip.SetActive(false);
+		if (locationTooltip.activeSelf)
+		{
+			locationTooltip.transform.position = selectedLocation.transform.position;
+			hoverTooltip.SetActive(false);
+		}
     }
 }

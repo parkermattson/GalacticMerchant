@@ -27,7 +27,7 @@ public class ShipSlot : EquipSlot, IPointerEnterHandler, IPointerExitHandler, ID
 	}
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		menuControl.ShowTooltip(transform.position, slotDescription);
+		menuControl.ShowTooltip(transform.position, equipment.GetName() +"\nType: "+ equipment.GetTypeName() +"\n"+ equipment.GetDescription());
 	}
 	
 	public void OnPointerExit(PointerEventData eventData)

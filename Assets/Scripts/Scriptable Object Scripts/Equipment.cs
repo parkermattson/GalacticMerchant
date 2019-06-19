@@ -16,6 +16,14 @@ public class Equipment : Item {
 		return equipSlot;
 	}
 	
+	public string GetTypeName()
+	{
+		if (equipSlot == EquipmentSlot.Navigation) return "Navigation";
+		else if (equipSlot == EquipmentSlot.Weapons) return "Weapons";
+		else if (equipSlot == EquipmentSlot.Comms) return "Comms";
+		else return "Engine";
+	}
+	
 	public int GetTier()
 	{
 		return equipTier;

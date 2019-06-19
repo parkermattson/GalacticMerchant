@@ -16,4 +16,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   locationIndustry: 0
   locationRace: 0
-  mapPosition: {x: 1000, y: 1000}
+  mapPosition: {x: 250, y: 250}
