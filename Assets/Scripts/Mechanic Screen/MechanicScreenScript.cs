@@ -34,7 +34,8 @@ public class MechanicScreenScript : MonoBehaviour {
 	
 	public Button shipBuyButton;
 	public GameObject confirmBox;
-	public GameObject equipBoxPrefab;
+	public GameObject buyBoxPrefab;
+	public GameObject sellBoxPrefab;
 	public GameObject equipSellBox;
 	public GameObject equipBuyBox;
 	
@@ -150,8 +151,10 @@ public class MechanicScreenScript : MonoBehaviour {
 		
 		for (int i = 0; i < equipBuyList.Count; i++)
 		{
-			tempBox = Instantiate(equipBoxPrefab, equipBuyBox.transform);
+			tempBox = Instantiate(buyBoxPrefab, equipBuyBox.transform);
 			tempBox.GetComponent<EquipSlot>().AddEquipment(equipBuyList[i]);
+			tempBox.GetComponent<MechanicScreenBuySellButton>().SetMsScript(this);
+			if (gameControl.playerMoney < equipBuyList[i].GetValue()) tempBox.GetComponentInChildren<Button>().interactable = false;
 		}
 		
 		for (int i = 0; i < equipSellBox.transform.childCount; i++)
@@ -161,8 +164,10 @@ public class MechanicScreenScript : MonoBehaviour {
 		
 		for (int i = 0; i < inventory.equipments.Count; i ++)
 		{
-			tempBox = Instantiate(equipBoxPrefab, equipSellBox.transform);
+			tempBox = Instantiate(sellBoxPrefab, equipSellBox.transform);
 			tempBox.GetComponent<EquipSlot>().AddEquipment(inventory.equipments[i]);
+			tempBox.GetComponent<MechanicScreenBuySellButton>().SetMsScript(this);
+			
 		}
 		
 		
@@ -204,6 +209,22 @@ public class MechanicScreenScript : MonoBehaviour {
 		displayShip = shipList[shipIndex];
 		UpdateShipStore();
 		
+	}
+	
+	public void BuyEquipment(GameObject equipBox)
+	{
+		gameControl.playerMoney -= equipBox.GetComponent<EquipSlot>().equipment.GetValue();
+		inventory.equipments.Add(equipBox.GetComponent<EquipSlot>().equipment);
+		equipBuyList.Remove(equipBox.GetComponent<EquipSlot>().equipment);
+		UpdateEquipStore();
+	}
+	
+	public void SellEquipment(GameObject equipBox)
+	{
+		gameControl.playerMoney += equipBox.GetComponent<EquipSlot>().equipment.GetValue();
+		inventory.equipments.Remove(equipBox.GetComponent<EquipSlot>().equipment);
+		equipBuyList.Add(equipBox.GetComponent<EquipSlot>().equipment);
+		UpdateEquipStore();
 	}
 	
 }

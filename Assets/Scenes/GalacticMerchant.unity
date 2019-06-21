@@ -7582,11 +7582,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -9168,12 +9168,12 @@ RectTransform:
   - {fileID: 568603716}
   - {fileID: 1142004840}
   - {fileID: 1213176340}
-  m_Father: {fileID: 967732042}
-  m_RootOrder: 15
+  m_Father: {fileID: 1283906620}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.6, y: 0.5}
   m_AnchorMax: {x: 0.6, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -307.20007, y: 162}
   m_SizeDelta: {x: 1000, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &365931888
@@ -9588,7 +9588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: -0.000039160568}
   m_SizeDelta: {x: 0, y: -819.935}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &380803713
@@ -14170,7 +14170,7 @@ MonoBehaviour:
     lineCount: 5
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -17880,11 +17880,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -25097,7 +25097,6 @@ RectTransform:
   - {fileID: 267439626}
   - {fileID: 1925361801}
   - {fileID: 1185847436}
-  - {fileID: 365931887}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31672,6 +31671,7 @@ RectTransform:
   - {fileID: 1581017135}
   - {fileID: 1519180577}
   - {fileID: 1477673901}
+  - {fileID: 365931887}
   m_Father: {fileID: 1925361801}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42789,7 +42789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: -0.0001093725}
   m_SizeDelta: {x: 0, y: -819.935}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1675659412
@@ -46838,7 +46838,9 @@ MonoBehaviour:
   shipIndex: 0
   shipBuyButton: {fileID: 719404034}
   confirmBox: {fileID: 365931886}
-  equipBoxPrefab: {fileID: 1289994772454330, guid: afc1bff44b18c4048b81d789a7798cd7,
+  buyBoxPrefab: {fileID: 1289994772454330, guid: afc1bff44b18c4048b81d789a7798cd7,
+    type: 2}
+  sellBoxPrefab: {fileID: 1289994772454330, guid: 120da826789b5b54d9d783fdf7fd8fbf,
     type: 2}
   equipSellBox: {fileID: 380803711}
   equipBuyBox: {fileID: 1675659410}
