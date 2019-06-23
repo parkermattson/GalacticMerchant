@@ -11,8 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5367d467af69b64b8d153b4a688567f, type: 3}
   m_Name: TestItem
   m_EditorClassIdentifier: 
+  itemID: 1
   itemName: TestItem
   itemDesc: Item Description
   icon: {fileID: 21300000, guid: 46892bf5a5863bf40b13f390a2b7d918, type: 3}
+  itemTier: 1
+  itemType: 0
   itemValue: 10
   itemWeight: 1
+  itemQuantity: 1
+  isStackable: 1

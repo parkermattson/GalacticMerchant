@@ -9,8 +9,6 @@ public class Equipment : Item {
 	
 	public EquipmentSlot equipSlot = EquipmentSlot.Navigation;
 	
-	public int equipTier = 1;
-	
 	public EquipmentSlot GetSlotType()
 	{
 		return equipSlot;
@@ -22,11 +20,6 @@ public class Equipment : Item {
 		else if (equipSlot == EquipmentSlot.Weapons) return "Weapons";
 		else if (equipSlot == EquipmentSlot.Comms) return "Comms";
 		else return "Engine";
-	}
-	
-	public int GetTier()
-	{
-		return equipTier;
 	}
 }
 

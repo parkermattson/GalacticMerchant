@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class Slot : MonoBehaviour,  IPointerClickHandler{
 
 	public Image icon;
+	
+	public TextMeshProUGUI qtText;
 	
 	Item item;
 	
@@ -16,6 +19,8 @@ public class Slot : MonoBehaviour,  IPointerClickHandler{
 		
 		icon.sprite = item.icon;
 		icon.enabled = true;
+		qtText.SetText(item.GetQuantity().ToString());
+		qtText.transform.gameObject.SetActive(true);
 	}
 	
 	public void ClearSlot ()

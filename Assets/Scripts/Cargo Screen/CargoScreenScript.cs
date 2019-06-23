@@ -92,14 +92,19 @@ public class CargoScreenScript : MonoBehaviour {
 		{
 			itemName.SetText(slotScript.GetItem().GetName());
 			itemDesc.SetText(slotScript.GetItem().GetDescription());
-			//itemValue.SetText("Qt: " + slotScript.GetItem().GetValue());
-			//itemWeight.SetText("Wt: " + slotScript.GetItem().GetWeight());
+			int tempInt = slotScript.GetItem().GetValue() * slotScript.GetItem().GetQuantity();
+			itemValue.SetText("Value: " + tempInt);
+			tempInt = slotScript.GetItem().GetWeight() * slotScript.GetItem().GetQuantity();
+			itemWeight.SetText("Wt: " + tempInt);
+			tempInt = slotScript.GetItem().GetQuantity();
+			itemQuantity.SetText("Qt: " + tempInt);
 		} else
 		{
 			itemName.SetText("");
 			itemDesc.SetText("");
-			//itemValue.SetText("");
-			//itemWeight.SetText("");
+			itemValue.SetText("");
+			itemWeight.SetText("");
+			itemQuantity.SetText("");
 		}
 	}
 }

@@ -11,10 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23934515ea016aa448be29ef0f135863, type: 3}
   m_Name: TestWeap
   m_EditorClassIdentifier: 
+  itemID: 5
   itemName: Test Weapon 1
   itemDesc: Item Description
   icon: {fileID: 21300000, guid: 73e33f48681edb34fb4835c0a3f1aaf9, type: 3}
+  itemTier: 1
+  itemType: 6
   itemValue: 100
   itemWeight: 0
+  itemQuantity: 1
+  isStackable: 0
   equipSlot: 1
-  equipTier: 1

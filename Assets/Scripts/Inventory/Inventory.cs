@@ -23,14 +23,23 @@ public class Inventory : MonoBehaviour {
 	
 	public void AddItem(Item item)
 	{
-		items.Add(item);
+		if (items.Exists(x => x.itemID == item.itemID))
+		{
+			items.Find(x => x.itemID == item.itemID).AddQuantity(item.GetQuantity());
+		}
+		else {
+			items.Add(item);
+		}
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
 	}
 	
 	public void RemoveItem(Item item)
 	{
-		items.Remove(item);
+		int i = items.FindIndex(x => x.itemID == item.itemID);
+		if (items[i].GetQuantity() > item.GetQuantity())
+			items[i].AddQuantity(-item.GetQuantity());
+		else items.Remove(item);
 		
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();

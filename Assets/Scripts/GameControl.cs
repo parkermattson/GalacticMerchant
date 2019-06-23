@@ -33,8 +33,6 @@ public class GameControl : MonoBehaviour {
 		
 		inventory = Inventory.instance;
 		
-		DontDestroyOnLoad(gameObject);
-		
 		for (int i = 0; i < 4; i++)
 		{
 			crewMembs[i] = null;
