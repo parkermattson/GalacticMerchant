@@ -8,11 +8,26 @@ using TMPro;
 public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IScrollHandler {
 
     public Image mapImage;
+    public Image mapShipIcon;
     Vector3 mouseStart;
     public GameObject locationTooltip;
     public GameObject hoverTooltip;
     GameObject selectedLocation = null;
+    bool inTransit = false;
 
+    public void SetInTransit(bool transiting)
+    {
+        inTransit = transiting;
+    }
+
+    private void MoveShip()
+    {
+        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 0.5f);
+        if (Mathf.Abs((mapShipIcon.transform.localPosition-selectedLocation.transform.localPosition).magnitude)<=0.1f)
+        {
+            inTransit = false;
+        }
+    }
 
     public void SelectLocation(GameObject newSelected)
     {
@@ -53,11 +68,13 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         else if (mapImage.transform.localScale.x < 0.6) mapImage.transform.localScale = new Vector3(0.6f, 0.6f);
         CheckBoundary();
 
+        Canvas canvas = FindObjectOfType<Canvas>();
         LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();
         foreach (LocationScript l in locationList)
         {
-            l.transform.localScale *= .5f / l.transform.lossyScale.x;
+            l.transform.localScale *= canvas.transform.lossyScale.x/l.transform.lossyScale.x;
         }
+        
     }
 
     public void Update()
@@ -67,5 +84,6 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			locationTooltip.transform.position = selectedLocation.transform.position;
 			hoverTooltip.SetActive(false);
 		}
+        if (inTransit) MoveShip();
     }
 }
