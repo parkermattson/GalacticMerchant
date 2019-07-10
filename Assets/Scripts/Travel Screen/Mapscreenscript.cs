@@ -74,7 +74,8 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             l.transform.localScale *= canvas.transform.lossyScale.x/l.transform.lossyScale.x;
         }
-        
+
+        mapShipIcon.transform.localScale *= canvas.transform.lossyScale.x / mapShipIcon.transform.lossyScale.x;
     }
 
     public void Update()
