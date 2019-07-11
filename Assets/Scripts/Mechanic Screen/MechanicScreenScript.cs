@@ -153,7 +153,7 @@ public class MechanicScreenScript : MonoBehaviour {
 		{
 			tempBox = Instantiate(buyBoxPrefab, equipBuyBox.transform);
 			tempBox.GetComponent<EquipSlot>().AddEquipment(equipBuyList[i]);
-			tempBox.GetComponent<MechanicScreenBuySellButton>().SetMsScript(this);
+			tempBox.GetComponent<MechanicBuySellButton>().SetMsScript(this);
 			if (gameControl.playerMoney < equipBuyList[i].GetValue()) tempBox.GetComponentInChildren<Button>().interactable = false;
 		}
 		
@@ -166,7 +166,7 @@ public class MechanicScreenScript : MonoBehaviour {
 		{
 			tempBox = Instantiate(sellBoxPrefab, equipSellBox.transform);
 			tempBox.GetComponent<EquipSlot>().AddEquipment(inventory.equipments[i]);
-			tempBox.GetComponent<MechanicScreenBuySellButton>().SetMsScript(this);
+			tempBox.GetComponent<MechanicBuySellButton>().SetMsScript(this);
 			
 		}
 		
