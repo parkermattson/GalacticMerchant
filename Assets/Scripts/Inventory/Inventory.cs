@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour {
 	public OnItemChanged onItemChangedCallback;
 	public OnItemChanged onEquipmentChangedCallback;
 
-	public List<Item> items = new List<Item>();
+	public List<ItemStack> items = new List<ItemStack>();
 	public List<Equipment> equipments = new List<Equipment>();
 	public Equipment[] shipEquipment = new Equipment[8];
 	
@@ -21,28 +21,33 @@ public class Inventory : MonoBehaviour {
 	
 	
 	
-	public void AddItem(Item item)
+	public void AddItem(ItemStack newItem)
 	{
-		if (items.Exists(x => x.itemID == item.itemID))
+		if (items.Exists(x => x.item.GetID() == newItem.item.GetID()))
 		{
-			items.Find(x => x.itemID == item.itemID).AddQuantity(item.GetQuantity());
+			items.Find(x => x.item.GetID() == newItem.item.GetID()).AddQuantity(newItem.GetQuantity());
 		}
 		else {
-			items.Add(item);
+			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
+			tempStack.item = newItem.item;
+			tempStack.quantity = newItem.quantity;
+			items.Add(tempStack);
 		}
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
 	}
 	
-	public void RemoveItem(Item item)
+	public void RemoveItem(ItemStack remItem)
 	{
-		int i = items.FindIndex(x => x.itemID == item.itemID);
-		if (items[i].GetQuantity() > item.GetQuantity())
-			items[i].AddQuantity(-item.GetQuantity());
-		else items.Remove(item);
-		
-		if (onItemChangedCallback != null)
-			onItemChangedCallback.Invoke();
+		int index = items.FindIndex(x => x.item.GetID() == remItem.item.GetID());
+		if (index != -1)
+		{
+			if (items[index].GetQuantity() > remItem.GetQuantity())
+			{
+				items[index].AddQuantity(-remItem.GetQuantity());
+			}
+			else items.RemoveAt(index);
+		}
 	}
 	
 	public void AddEquipment(Equipment equipment)
@@ -67,7 +72,6 @@ public class Inventory : MonoBehaviour {
 	
 	public void SwapEquipment(Equipment equipment, int slot)
 	{
-		Debug.Log("Swapping equipment");
 		equipments.Add(shipEquipment[slot]);
 		shipEquipment[slot] = equipment;
 		equipments.Remove(equipment);

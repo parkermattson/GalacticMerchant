@@ -15,8 +15,12 @@ public class Item : ScriptableObject {
 	public ItemType itemType = ItemType.RawMat;
 	public int itemValue = 0;
 	public int itemWeight = 0;
-	public int itemQuantity = 1;
 	public bool isStackable = true;
+	
+	public int GetID()
+	{
+		return itemID;
+	}
 	
 	public string GetName()
 	{
@@ -41,20 +45,5 @@ public class Item : ScriptableObject {
 	public int GetWeight()
 	{
 		return itemWeight;
-	}
-	
-	public int GetQuantity()
-	{
-		return itemQuantity;
-	}
-	
-	public void SetQuantity(int quantity)
-	{
-		itemQuantity = quantity;
-	}
-	
-	public void AddQuantity(int quantity)
-	{
-		itemQuantity+=quantity;
 	}
 }

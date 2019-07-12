@@ -67,9 +67,13 @@ public class CargoScreenScript : MonoBehaviour {
 			cargoSlots = cargoSlotBox.GetComponentsInChildren<Slot>();
 		}
 		
+		
 		for (int i = 0; i < inventory.equipments.Count; i ++)
 		{
-			cargoSlots[i].AddItem(inventory.equipments[i]);
+			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
+			tempStack.item = inventory.equipments[i];
+			tempStack.quantity = 1;
+			cargoSlots[i].AddItem(tempStack);
 		}
 		for ( int i = inventory.equipments.Count; i < inventory.items.Count + inventory.equipments.Count; i++)
 		{
@@ -80,6 +84,8 @@ public class CargoScreenScript : MonoBehaviour {
 		{
 			cargoSlots[i].ClearSlot();
 		}
+		
+		SelectSlot(selectedSlot);
 	}
 	
 	public void SelectSlot(GameObject slot)
@@ -92,11 +98,11 @@ public class CargoScreenScript : MonoBehaviour {
 		{
 			itemName.SetText(slotScript.GetItem().GetName());
 			itemDesc.SetText(slotScript.GetItem().GetDescription());
-			int tempInt = slotScript.GetItem().GetValue() * slotScript.GetItem().GetQuantity();
+			int tempInt = slotScript.GetItem().GetValue() * slotScript.GetStack().GetQuantity();
 			itemValue.SetText("Value: " + tempInt);
-			tempInt = slotScript.GetItem().GetWeight() * slotScript.GetItem().GetQuantity();
+			tempInt = slotScript.GetItem().GetWeight() * slotScript.GetStack().GetQuantity();
 			itemWeight.SetText("Wt: " + tempInt);
-			tempInt = slotScript.GetItem().GetQuantity();
+			tempInt = slotScript.GetStack().GetQuantity();
 			itemQuantity.SetText("Qt: " + tempInt);
 		} else
 		{

@@ -140,7 +140,7 @@ public class GameControl : MonoBehaviour {
 		public Crew[] crewMembs;
 		public ShipState shipState;
 		public Location playerLocation;
-		public List<Item> items;
+		public List<ItemStack> items;
 		public List<Equipment> equipments;
 		public Equipment[] shipEquipment;
 	}

@@ -11,29 +11,37 @@ public class Slot : MonoBehaviour,  IPointerClickHandler{
 	
 	public TextMeshProUGUI qtText;
 	
-	Item item;
+	[SerializeField]
+	ItemStack stack;
 	
-	public void AddItem (Item newItem)
+	public void AddItem (ItemStack newStack)
 	{
-		item = newItem;
+		stack = newStack;
 		
-		icon.sprite = item.icon;
+		icon.sprite = stack.item.icon;
 		icon.enabled = true;
-		qtText.SetText(item.GetQuantity().ToString());
+		qtText.SetText(stack.GetQuantity().ToString());
 		qtText.transform.gameObject.SetActive(true);
 	}
 	
 	public void ClearSlot ()
 	{
-		item = null;
+		stack = null;
 		
 		icon.sprite=null;
 		icon.enabled = false;
 	}
 	
+	public ItemStack GetStack()
+	{
+		return stack;
+	}
+	
 	public Item GetItem()
 	{
-		return item;
+		if (stack != null)
+			return stack.item;
+		else return null;
 	}
 	
 	public void OnPointerClick(PointerEventData eventData)

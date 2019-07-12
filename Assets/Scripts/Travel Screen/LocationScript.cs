@@ -16,6 +16,7 @@ public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         hoverTooltip.SetActive(true);
+		hoverTooltip.GetComponentInChildren<TextMeshProUGUI>().SetText("Click to Select\n"+location.GetName()+"\n"+location.GetDescription());
         hoverTooltip.transform.position = transform.position;
     }
 
@@ -27,7 +28,6 @@ public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void OnEnable()
     {
         transform.localPosition = location.mapPosition;
-        hoverTooltip.GetComponentInChildren<TextMeshProUGUI>().SetText("Click to Select\n"+location.GetName()+"\n"+location.GetDescription());
     }
 
     
