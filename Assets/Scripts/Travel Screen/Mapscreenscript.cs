@@ -14,10 +14,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public GameObject hoverTooltip;
     GameObject selectedLocation = null;
     bool inTransit = false;
-    GameControl gcScript;
 
     [SerializeField]
-    private GameObject gameController;
+    private GameControl gcScript;
 
     [SerializeField]
     private GameObject hullBar;
@@ -31,11 +30,6 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField]
     private TextMeshProUGUI moneyText;
 
-    void Awake()
-    {
-        gcScript = gameController.GetComponent<GameControl>();
-    }
-
     public void SetInTransit(bool transiting)
     {
         inTransit = transiting;
@@ -44,11 +38,13 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void MoveShip()
     {
         locationTooltip.SetActive(false);
-        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 0.5f);
+        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 1f);
         if (Mathf.Abs((mapShipIcon.transform.localPosition-selectedLocation.transform.localPosition).magnitude)<=0.1f)
         {
             inTransit = false;
-            gcScript.playerLocation = selectedLocation.GetComponentInParent<LocationScript>().location;
+			gcScript.shipState.currentFuel -= (int)(Vector2.Distance(gcScript.playerLocation.GetMapPos(), selectedLocation.GetComponent<LocationScript>().location.GetMapPos())/50);
+			SetFuelBar();
+            gcScript.playerLocation = selectedLocation.GetComponent<LocationScript>().location;
         }
     }
 
@@ -116,6 +112,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     void OnEnable()
     {
+		mapShipIcon.transform.localPosition = gcScript.playerLocation.GetMapPos();
         SetHullBar();
         SetFuelBar();
         SetCargoSpace();
@@ -132,12 +129,16 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             hullBar.GetComponent<Image>().color = Color.yellow;
         else
             hullBar.GetComponent<Image>().color = Color.red;
+		
+		hullBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Hull: {0}/{1}", gcScript.shipState.currentHull, gcScript.shipState.playerShip.maxHull);
 
     }
     void SetFuelBar()
     {
         float fuelPercent = (float)gcScript.shipState.currentFuel / (float)gcScript.shipState.playerShip.maxFuel;
         fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
+		
+		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", gcScript.shipState.currentFuel, gcScript.shipState.playerShip.maxFuel);
     }
     void SetCargoSpace()
     {
