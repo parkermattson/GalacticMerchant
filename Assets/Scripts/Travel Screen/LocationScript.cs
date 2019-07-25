@@ -6,13 +6,14 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 
-public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
     public Location location;
 
-    public GameObject tooltip;
-    public GameObject hoverTooltip;
-
+    GameObject tooltip;
+    GameObject hoverTooltip;
+	Mapscreenscript mapScript;
+	
     public void OnPointerEnter(PointerEventData eventData)
     {
         hoverTooltip.SetActive(true);
@@ -25,10 +26,17 @@ public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         hoverTooltip.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        transform.localPosition = location.mapPosition;
-    }
+    public void OnPointerClick(PointerEventData eventData)
+	{
+		mapScript.SelectLocation(transform.gameObject);
+	}
+	
+	public void SetGeneralVars(GameObject newTooltip, GameObject newHoverTooltip, Mapscreenscript newMapScript)
+	{
+		tooltip = newTooltip;
+		hoverTooltip = newHoverTooltip;
+		mapScript = newMapScript;
+	}
 
     
 }

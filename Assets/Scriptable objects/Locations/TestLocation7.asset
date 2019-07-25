@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbe6ced08e409ae41b33383089160813, type: 3}
-  m_Name: TestLocation3
+  m_Name: TestLocation7
   m_EditorClassIdentifier: 
-  locationName: Test Location 3
-  locationDesc: This is Test Location 3
+  locationName: Test Location 7
+  locationDesc: This is Test Location 7
   icon: {fileID: 0}
-  locationIndustry: 2
+  locationIndustry: 1
   locationRace: 0
-  mapPosition: {x: 0, y: -300}
+  mapPosition: {x: 300, y: 0}

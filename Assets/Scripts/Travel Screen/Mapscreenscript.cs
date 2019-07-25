@@ -14,6 +14,12 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public GameObject hoverTooltip;
     GameObject selectedLocation = null;
     bool inTransit = false;
+	
+	[SerializeField]
+	private GameObject locationPrefab;
+	
+	[SerializeField]
+	private List<Location> stations;
 
     [SerializeField]
     private GameControl gcScript;
@@ -112,12 +118,32 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     void OnEnable()
     {
+		PlaceLocations();
 		mapShipIcon.transform.localPosition = gcScript.playerLocation.GetMapPos();
         SetHullBar();
         SetFuelBar();
         SetCargoSpace();
         SetMoney();
     }
+	
+	void PlaceLocations()
+	{
+		LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();
+        foreach (LocationScript l in locationList)
+        {
+           Destroy(l);
+        }
+		
+		foreach (Location l in stations)
+		{
+			GameObject tempLocation;
+			tempLocation = Instantiate(locationPrefab, mapImage.transform);
+			tempLocation.GetComponent<LocationScript>().SetGeneralVars(locationTooltip, hoverTooltip, this);
+			tempLocation.GetComponent<LocationScript>().location = l;
+			tempLocation.transform.localPosition = l.mapPosition;
+		}
+	}
+	
     void SetHullBar()
     {
         float hullPercent = (float)gcScript.shipState.currentHull / (float)gcScript.shipState.playerShip.maxHull;

@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StationType {Mining, Slum, Populous, Paradise, Research, Manufacturing, Farming, Military, Frontier, Refinery}
+
 [CreateAssetMenu(fileName = "New Location", menuName = "Location")]
 public class Location : ScriptableObject {
 
     public string locationName = "Name";
     public string locationDesc = "Location Description";
     public Sprite icon = null;
-    public int locationIndustry = 0;
+    public StationType locationIndustry = StationType.Mining;
     public int locationRace = 0;
     public Vector2 mapPosition;
 
@@ -22,7 +24,7 @@ public class Location : ScriptableObject {
         return locationDesc;
     }
 
-    public int GetIndustry()
+    public StationType GetIndustry()
     {
         return locationIndustry;
     }
