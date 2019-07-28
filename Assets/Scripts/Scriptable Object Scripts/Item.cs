@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType {RawMat, RefMat, Component, IndGood, ConsGood, ExoticGood,Equipment}
+public enum ItemType {RawMat, RefMat, Component, IndGood, ConsGood, Agricultural, Pharma, ExoticGood, Artifact, Combat, Equipment}
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
 public class Item : ScriptableObject {

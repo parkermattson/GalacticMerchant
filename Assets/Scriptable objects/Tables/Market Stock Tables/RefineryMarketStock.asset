@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ebd9bb4cff68d64aa2b2a9f51f88e09, type: 3}
+  m_Name: RefineryMarketStock
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: 2f625d5cb50bb3c4496db4ac6ae8aefc, type: 2}
+  - {fileID: 11400000, guid: 80c0350a85b514543ad97441b2aac8c5, type: 2}
+  - {fileID: 11400000, guid: 16bd0e942e95491499df897e686a2378, type: 2}
+  availableChance:
+  - 1
+  - 0.75
+  - 0.4
+  minQuantity: f4010000640000001e000000
+  maxQuantity: f4010000960000002d000000

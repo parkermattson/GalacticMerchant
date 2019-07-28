@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ebd9bb4cff68d64aa2b2a9f51f88e09, type: 3}
+  m_Name: MiningMarketStock
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
+  - {fileID: 11400000, guid: 5ce5ed507e2186b4b8dbc7d81ca2c51b, type: 2}
+  - {fileID: 11400000, guid: 54c0daa67495c6c4a94ef2fe025bf1c1, type: 2}
+  availableChance:
+  - 1
+  - 0.7
+  - 0.5
+  minQuantity: f40100009600000032000000
+  maxQuantity: f40100005e01000064000000
