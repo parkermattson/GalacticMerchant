@@ -14,6 +14,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public GameObject hoverTooltip;
     GameObject selectedLocation = null;
     bool inTransit = false;
+	float fuelCounter = 0;
 	
 	[SerializeField]
 	private GameObject locationPrefab;
@@ -36,6 +37,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField]
     private TextMeshProUGUI moneyText;
 	
+	[SerializeField]
+	private TextMeshProUGUI timeText;
+	
 	public Location GetLocation(GameObject locationObject)
 	{
 		return locationObject.GetComponent<LocationScript>().location;
@@ -50,11 +54,18 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         locationTooltip.SetActive(false);
         mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 5f);
+		gcScript.gameTime = gcScript.gameTime.AddHours(.25);
+		SetTime();
+		fuelCounter+=.1f;
+		if (fuelCounter >= 1)
+		{
+			fuelCounter = 0;
+			gcScript.shipState.currentFuel --;
+			SetFuelBar();
+		}
         if (Mathf.Abs((mapShipIcon.transform.localPosition-selectedLocation.transform.localPosition).magnitude)<=0.1f)
         {
             inTransit = false;
-			gcScript.shipState.currentFuel -= (int)(Vector2.Distance(gcScript.playerLocation.GetMapPos(), GetLocation(selectedLocation).GetMapPos())/50);
-			SetFuelBar();
             gcScript.playerLocation = GetLocation(selectedLocation);
         }
     }
@@ -143,6 +154,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         SetFuelBar();
         SetCargoSpace();
         SetMoney();
+		SetTime();
     }
 	
 	void PlaceLocations()
@@ -193,4 +205,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         moneyText.SetText("Spacebucks: {0}", gcScript.playerMoney);
     }
+	
+	void SetTime()
+	{
+		timeText.SetText("Time: " + gcScript.gameTime.ToString("HH:mm, MM/dd/yyyy"));
+	}
 }
