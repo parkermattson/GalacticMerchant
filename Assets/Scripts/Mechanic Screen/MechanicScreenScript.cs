@@ -167,11 +167,7 @@ public class MechanicScreenScript : MonoBehaviour {
 			tempBox = Instantiate(sellBoxPrefab, equipSellBox.transform);
 			tempBox.GetComponent<EquipSlot>().AddEquipment(inventory.equipments[i]);
 			tempBox.GetComponent<MechanicBuySellButton>().SetMsScript(this);
-			
 		}
-		
-		
-		
 	}
 	
 	void GenerateStock()
