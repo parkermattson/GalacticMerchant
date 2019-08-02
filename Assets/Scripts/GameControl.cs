@@ -21,6 +21,8 @@ public class GameControl : MonoBehaviour {
     public ShipState shipState = new ShipState();
 	public Ship defaultShip;
     public Location playerLocation;
+	public DateTime gameTime;
+	
 	public Sprite[] avatars = new Sprite[3];
 	public Sprite[] races = new Sprite[3];
 	
@@ -39,6 +41,8 @@ public class GameControl : MonoBehaviour {
 		}
 		
 		shipState.playerShip = defaultShip;
+		
+		gameTime = new DateTime(3000, 1, 1, 9, 0, 0);
 	}
 	
 	// Update is called once per frame
