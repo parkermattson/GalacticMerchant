@@ -141,7 +141,8 @@ GameObject:
   - component: {fileID: 224902441452605430}
   - component: {fileID: 222963739760249712}
   - component: {fileID: 114657958793470336}
-  - component: {fileID: 114147732900135766}
+  - component: {fileID: 114195901783077604}
+  - component: {fileID: 114831059333254226}
   m_Layer: 5
   m_Name: MarketSellBox
   m_TagString: Untagged
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114147732900135766}
+      - m_Target: {fileID: 114831059333254226}
         m_MethodName: SellButton
         m_Mode: 2
         m_Arguments:
@@ -365,17 +366,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114147732900135766
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1748710109512068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c59e505af52ea4fa0a979754bb12ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114175100668639336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -403,6 +393,25 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114195901783077604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1748710109512068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d8ca09af961efd4e816e4369d1c807d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 114175100668639336}
+  nameText: {fileID: 114866794773713572}
+  priceText: {fileID: 114889968626771310}
+  quantityText: {fileID: 114292041735457482}
+  descText: {fileID: 114203368901964028}
+  tierText: {fileID: 114754368880693918}
+  typeText: {fileID: 114643518355544722}
+  itemStack: {fileID: 0}
 --- !u!114 &114203368901964028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1022,6 +1031,17 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114831059333254226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1748710109512068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6153017107ea5344ba7a2b419036f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114866794773713572
 MonoBehaviour:
   m_ObjectHideFlags: 1
