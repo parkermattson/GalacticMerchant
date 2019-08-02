@@ -22,6 +22,7 @@ public class MarketSlot : MonoBehaviour {
         icon.sprite = itemStack.item.icon;
         icon.enabled = true;
         nameText.text = itemStack.item.GetName();
+		quantityText.text = itemStack.quantity.ToString();
         if (typeText != null)
             typeText.text = "Type: " + itemStack.item.itemType.ToString();
         if (tierText != null)

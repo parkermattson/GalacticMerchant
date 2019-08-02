@@ -25454,10 +25454,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b976403a74745e34087e1af3aefbd6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buyBoxPrefab: {fileID: 0}
-  sellBoxPrefab: {fileID: 0}
+  buyBoxPrefab: {fileID: 1156773753938760, guid: c883d2b6c9f60224f8d253e4213c435b,
+    type: 2}
+  sellBoxPrefab: {fileID: 1748710109512068, guid: 17d1e9281f5daa1458d7e2c560edf68b,
+    type: 2}
   marketBuyBox: {fileID: 1785453409}
   marketSellBox: {fileID: 695953111}
+  marketStock: {fileID: 11400000, guid: 19c33f0637e6d4d41956ec1b5217e529, type: 2}
+  gameControl: {fileID: 421591085}
 --- !u!1 &1068760712
 GameObject:
   m_ObjectHideFlags: 0
