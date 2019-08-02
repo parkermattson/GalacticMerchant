@@ -20,7 +20,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	private GameObject locationPrefab;
 	
 	[SerializeField]
-	private List<Location> stations;
+	private List<Station> stations;
 
     [SerializeField]
     private GameControl gcScript;
@@ -162,10 +162,10 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();
         foreach (LocationScript l in locationList)
         {
-           Destroy(l);
+           Destroy(l.gameObject);
         }
 		
-		foreach (Location l in stations)
+		foreach (Station l in stations)
 		{
 			GameObject tempLocation;
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);

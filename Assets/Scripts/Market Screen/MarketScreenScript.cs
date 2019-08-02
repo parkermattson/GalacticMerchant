@@ -11,7 +11,6 @@ public class MarketScreenScript : MonoBehaviour {
     public GameObject marketBuyBox;
     public GameObject marketSellBox;
     Inventory inventory;
-    public MarketStockTable marketStock;
     List<ItemStack> buyList;
     public GameControl gameControl;
 
@@ -96,6 +95,7 @@ public class MarketScreenScript : MonoBehaviour {
 
     void GenerateStock()
 	{
-       buyList = marketStock.GenerateStock();
+		Station station = (Station)gameControl.playerLocation;
+       buyList = station.GetStockTable().GenerateStock();
 	}
 }

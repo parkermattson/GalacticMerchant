@@ -8,12 +8,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe6ced08e409ae41b33383089160813, type: 3}
-  m_Name: TestLocation9
+  m_Script: {fileID: 11500000, guid: 4d3c9f218f6bd66498a41f270e2b797a, type: 3}
+  m_Name: TestStation10
   m_EditorClassIdentifier: 
-  locationName: Test Location 9
-  locationDesc: This is Test Location 9
+  locationName: Refinery Station
+  locationDesc: This is a refinery station
   icon: {fileID: 0}
-  locationIndustry: 8
-  locationRace: 0
   mapPosition: {x: 100, y: 0}
+  stationType: 9
+  stockTable: {fileID: 11400000, guid: 3a697e0631d52b647b6161f3a9a4016f, type: 2}
+  race: 0

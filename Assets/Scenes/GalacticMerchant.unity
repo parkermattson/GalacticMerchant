@@ -4072,7 +4072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &205991207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4112,16 +4112,16 @@ MonoBehaviour:
   locationPrefab: {fileID: 1122972392675246, guid: 49c3c9b10dd78ea48b4b47f629a692e4,
     type: 2}
   stations:
-  - {fileID: 11400000, guid: e003fa806e8a26c419faacb5220f9cea, type: 2}
-  - {fileID: 11400000, guid: c940b3dfc911262409b3306e15bf8a6d, type: 2}
-  - {fileID: 11400000, guid: 7b62d29fee102d247af21cb0c8b5091b, type: 2}
-  - {fileID: 11400000, guid: 97fd931a4e798474e92d9baf95e2cb3d, type: 2}
-  - {fileID: 11400000, guid: 78081c10cd5f57a4d8060b538fc8d0a7, type: 2}
-  - {fileID: 11400000, guid: 940692632b58b61419ca32360b7e4ae3, type: 2}
-  - {fileID: 11400000, guid: 54ab3903dfb58d246b3a821a5d3ecfd8, type: 2}
-  - {fileID: 11400000, guid: 016eda7b6ad59bc4cbc5cd6fc5ed7b0b, type: 2}
-  - {fileID: 11400000, guid: 2d5c87aa1b9638d4b8a4d94f6107548d, type: 2}
-  - {fileID: 11400000, guid: 101f4460612de4b4db7da4f5c54de3db, type: 2}
+  - {fileID: 11400000, guid: b005e5213e370cc428851455d48f42d6, type: 2}
+  - {fileID: 11400000, guid: cf4f66c67c4df9e40b36c8176e489a5c, type: 2}
+  - {fileID: 11400000, guid: 4799ee0b0b786e34c89fda066b14852d, type: 2}
+  - {fileID: 11400000, guid: 45b2a8d940208d64d979297ffae7f508, type: 2}
+  - {fileID: 11400000, guid: 075042c952dd41e45b7551b5f8bbf711, type: 2}
+  - {fileID: 11400000, guid: 60d051676580dce45927d887035d9a96, type: 2}
+  - {fileID: 11400000, guid: ce599f4290338fb42bedd0f563570f05, type: 2}
+  - {fileID: 11400000, guid: 4f604a7bd92c85844a2896d94b2e75ac, type: 2}
+  - {fileID: 11400000, guid: b0c24a0ff65b3b14b9a2a9e212d758ea, type: 2}
+  - {fileID: 11400000, guid: 7ff06265c7f9e0c4c9656f11084e8a02, type: 2}
   gcScript: {fileID: 421591085}
   hullBar: {fileID: 1801211268}
   fuelBar: {fileID: 1377673010}
@@ -10071,7 +10071,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   defaultShip: {fileID: 11400000, guid: eca5bedb494c11d49ae25ca2844c1cd6, type: 2}
-  playerLocation: {fileID: 11400000, guid: e003fa806e8a26c419faacb5220f9cea, type: 2}
+  playerLocation: {fileID: 11400000, guid: b005e5213e370cc428851455d48f42d6, type: 2}
   avatars:
   - {fileID: 21300000, guid: 78039e0c301f55b4da5b06c05f2fb1b6, type: 3}
   - {fileID: 21300000, guid: f8369ffc3a6710742b5ffcfb83ce7763, type: 3}
@@ -16344,7 +16344,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -1836}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &695953113
 MonoBehaviour:
@@ -25416,7 +25416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1065812548
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25460,7 +25460,6 @@ MonoBehaviour:
     type: 2}
   marketBuyBox: {fileID: 1785453409}
   marketSellBox: {fileID: 695953111}
-  marketStock: {fileID: 11400000, guid: 19c33f0637e6d4d41956ec1b5217e529, type: 2}
   gameControl: {fileID: 421591085}
 --- !u!1 &1068760712
 GameObject:
@@ -30315,11 +30314,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -31849,11 +31848,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -32004,11 +32003,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -32863,11 +32862,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -36788,11 +36787,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -41625,7 +41624,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -1836}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1785453411
 MonoBehaviour:

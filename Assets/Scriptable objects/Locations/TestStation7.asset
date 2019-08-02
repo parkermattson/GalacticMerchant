@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3c9f218f6bd66498a41f270e2b797a, type: 3}
+  m_Name: TestStation7
+  m_EditorClassIdentifier: 
+  locationName: Farming Station
+  locationDesc: This is a farming station
+  icon: {fileID: 0}
+  mapPosition: {x: -250, y: -250}
+  stationType: 6
+  stockTable: {fileID: 11400000, guid: 6ad4fdc5150d52f4a867b1b40d10b327, type: 2}
+  race: 0
