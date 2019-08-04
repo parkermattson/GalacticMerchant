@@ -169,7 +169,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		{
 			GameObject tempLocation;
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);
-			tempLocation.GetComponent<LocationScript>().SetGeneralVars(locationTooltip, hoverTooltip, this);
+			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
 			tempLocation.GetComponent<LocationScript>().location = l;
 			tempLocation.transform.localPosition = l.mapPosition;
 		}

@@ -42,7 +42,7 @@ public class MechanicScreenScript : MonoBehaviour {
 	public EquipmentStockTable equipStock;
 	List<Equipment> equipBuyList = new List<Equipment>();
 	
-	void Start()
+	void Awake()
 	{
 		inventory = Inventory.instance;
 		gameControl = GameControl.instance;
@@ -52,7 +52,6 @@ public class MechanicScreenScript : MonoBehaviour {
 	
 	void OnEnable()
 	{
-		inventory = Inventory.instance;
 		UpdateShipStore();
 		UpdateEquipStore();
 	}

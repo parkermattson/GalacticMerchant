@@ -10,7 +10,6 @@ public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public Location location;
 
-    GameObject tooltip;
     GameObject hoverTooltip;
 	Mapscreenscript mapScript;
 	
@@ -31,9 +30,8 @@ public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		mapScript.SelectLocation(transform.gameObject);
 	}
 	
-	public void SetGeneralVars(GameObject newTooltip, GameObject newHoverTooltip, Mapscreenscript newMapScript)
+	public void SetGeneralVars(GameObject newHoverTooltip, Mapscreenscript newMapScript)
 	{
-		tooltip = newTooltip;
 		hoverTooltip = newHoverTooltip;
 		mapScript = newMapScript;
 	}

@@ -6,21 +6,26 @@ using TMPro;
 
 public class MarketScreenScript : MonoBehaviour {
 
-    public GameObject buyBoxPrefab;
+	Inventory inventory;
+	GameControl gameControl;
+    
+	public TextMeshProUGUI playerMoneyText, merchantMoneyText;
+	public GameObject buyBoxPrefab;
     public GameObject sellBoxPrefab;
     public GameObject marketBuyBox;
     public GameObject marketSellBox;
-    Inventory inventory;
+    
     List<ItemStack> buyList;
-    public GameControl gameControl;
+    
+	
 
-    private void Start()
+    private void Awake()
     {
         inventory = Inventory.instance;
+		gameControl = GameControl.instance;
     }
     private void OnEnable()
     {
-		inventory = Inventory.instance;
         GenerateStock();
         UpdateMarketStore();
     }
@@ -66,6 +71,8 @@ public class MarketScreenScript : MonoBehaviour {
 
     public void UpdateMarketStore()
     {
+		playerMoneyText.text = "Your Money: " + gameControl.playerMoney.ToString();
+		
         GameObject tempBox;
         for (int i = 0; i < marketBuyBox.transform.childCount; i++)
         {
