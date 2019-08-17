@@ -14,6 +14,7 @@ public class Ship : ScriptableObject {
 	public int maxCargo = 1000;
 	public float rawFuelEff = 1;
 	public int rawSensorRange = 20;
+	public int rawWarpRange = 350;
 	public float rawSpeed = 1;
 	
 	public string GetName() {

@@ -14,7 +14,7 @@ MonoBehaviour:
   locationName: Research Station
   locationDesc: This is a research station
   icon: {fileID: 0}
-  mapPosition: {x: 250, y: -250}
+  mapPosition: {x: 500, y: -500}
   stationType: 4
   stockTable: {fileID: 11400000, guid: 7a92d2b16f711be40b25cee464902947, type: 2}
   race: 0

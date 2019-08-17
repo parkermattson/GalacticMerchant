@@ -14,7 +14,7 @@ MonoBehaviour:
   locationName: Slum Station
   locationDesc: This is a slum station
   icon: {fileID: 0}
-  mapPosition: {x: 0, y: 300}
+  mapPosition: {x: 0, y: 750}
   stationType: 1
   stockTable: {fileID: 11400000, guid: 1bdf2ffd455c2504cb9713c8b7a4a591, type: 2}
   race: 0

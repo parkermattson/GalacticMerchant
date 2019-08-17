@@ -6,12 +6,14 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 
-public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
+public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler{
 
     public Location location;
 
     GameObject hoverTooltip;
 	Mapscreenscript mapScript;
+	
+	Vector3 mouseStart;
 	
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -28,6 +30,19 @@ public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerClick(PointerEventData eventData)
 	{
 		mapScript.SelectLocation(transform.gameObject);
+	}
+	
+	public void OnBeginDrag(PointerEventData eventData)		//For tweaking locations more easily
+	{
+		//mouseStart = Input.mousePosition;
+	}
+	
+	public void OnDrag(PointerEventData eventData)
+	{
+		/*Vector3 mouseChange = Input.mousePosition - mouseStart;
+		transform.position += mouseChange;
+		location.mapPosition = (Vector2)transform.localPosition;
+		mouseStart = Input.mousePosition; */
 	}
 	
 	public void SetGeneralVars(GameObject newHoverTooltip, Mapscreenscript newMapScript)

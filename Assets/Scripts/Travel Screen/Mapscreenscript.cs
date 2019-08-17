@@ -9,6 +9,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public Image mapImage;
     public Image mapShipIcon;
+	public Image warpRangeImage;
     Vector3 mouseStart;
     public GameObject locationTooltip;
     public GameObject hoverTooltip;
@@ -21,6 +22,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
 	[SerializeField]
 	private List<Station> stations;
+	
+	[SerializeField]
+	private List<Location> locations;
 
     [SerializeField]
     private GameControl gcScript;
@@ -47,6 +51,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void SetInTransit(bool transiting)
     {
+		warpRangeImage.gameObject.SetActive(false);
         inTransit = transiting;
     }
 
@@ -67,6 +72,8 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             inTransit = false;
             gcScript.playerLocation = GetLocation(selectedLocation);
+			warpRangeImage.transform.localPosition = mapShipIcon.transform.localPosition;
+			warpRangeImage.gameObject.SetActive(true);
         }
     }
 
@@ -83,6 +90,8 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				locationTooltip.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\t\tFuel Cost: " + (int)(distance/50));
 				locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
 				if ((int)(distance/50) > gcScript.shipState.currentFuel)
+					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
+				else if (distance > gcScript.shipState.netWarpRange)
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
 				else
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable=true;
@@ -150,6 +159,8 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
 		PlaceLocations();
 		mapShipIcon.transform.localPosition = gcScript.playerLocation.GetMapPos();
+		warpRangeImage.transform.localPosition = gcScript.playerLocation.GetMapPos() ;
+		warpRangeImage.transform.localPosition -= new Vector3(25, 0);
         SetHullBar();
         SetFuelBar();
         SetCargoSpace();
@@ -165,12 +176,22 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
            Destroy(l.gameObject);
         }
 		
+		foreach (Location l in locations)
+		{
+			GameObject tempLocation;
+			tempLocation = Instantiate(locationPrefab, mapImage.transform);
+			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
+			tempLocation.GetComponent<LocationScript>().location = l;
+			tempLocation.transform.localPosition = l.mapPosition;
+		}
+		
 		foreach (Station l in stations)
 		{
 			GameObject tempLocation;
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);
 			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
 			tempLocation.GetComponent<LocationScript>().location = l;
+			tempLocation.GetComponent<Image>().color = Color.red;
 			tempLocation.transform.localPosition = l.mapPosition;
 		}
 	}

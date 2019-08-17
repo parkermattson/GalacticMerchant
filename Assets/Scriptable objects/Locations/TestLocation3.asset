@@ -14,6 +14,4 @@ MonoBehaviour:
   locationName: Test Location 3
   locationDesc: This is Test Location 3
   icon: {fileID: 0}
-  locationIndustry: 2
-  locationRace: 0
-  mapPosition: {x: 0, y: -300}
+  mapPosition: {x: -200, y: -750}

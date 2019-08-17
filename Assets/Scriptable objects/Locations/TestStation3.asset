@@ -14,7 +14,7 @@ MonoBehaviour:
   locationName: Populous Station
   locationDesc: Populous Station
   icon: {fileID: 0}
-  mapPosition: {x: 250, y: 250}
+  mapPosition: {x: 500, y: 500}
   stationType: 2
   stockTable: {fileID: 11400000, guid: f9ca16880cef4ec4b8c3d47730e99614, type: 2}
   race: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   locationName: Farming Station
   locationDesc: This is a farming station
   icon: {fileID: 0}
-  mapPosition: {x: -250, y: -250}
+  mapPosition: {x: -500, y: -500}
   stationType: 6
   stockTable: {fileID: 11400000, guid: 6ad4fdc5150d52f4a867b1b40d10b327, type: 2}
   race: 0

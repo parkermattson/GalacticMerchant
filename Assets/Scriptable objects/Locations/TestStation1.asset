@@ -14,7 +14,7 @@ MonoBehaviour:
   locationName: Mining Station
   locationDesc: This is a mining station
   icon: {fileID: 0}
-  mapPosition: {x: -250, y: 250}
+  mapPosition: {x: -500, y: 500}
   stationType: 0
   stockTable: {fileID: 11400000, guid: d70629aafd5fbd0458b0fb5a6042f7e1, type: 2}
   race: 0

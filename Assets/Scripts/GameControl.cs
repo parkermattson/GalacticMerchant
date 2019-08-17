@@ -133,6 +133,8 @@ public class GameControl : MonoBehaviour {
 		public int currentCargo = 0;
 		public float netFuelEff = 1;
 		public int netSensorRange = 20;
+		public int netWarpRange = 350;
+		public int netSpeed = 1;
 	}
 	
 	[Serializable]
