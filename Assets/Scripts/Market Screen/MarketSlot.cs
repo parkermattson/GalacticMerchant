@@ -19,18 +19,18 @@ public class MarketSlot : MonoBehaviour {
     {
         itemStack = newItem;
         
-        icon.sprite = itemStack.item.icon;
+        icon.sprite = itemStack.GetItem().icon;
         icon.enabled = true;
-        nameText.text = itemStack.item.GetName();
-		quantityText.text = itemStack.quantity.ToString();
+        nameText.text = itemStack.GetItem().GetName();
+		quantityText.text = itemStack.GetQuantity().ToString();
         if (typeText != null)
-            typeText.text = "Type: " + itemStack.item.itemType.ToString();
+            typeText.text = "Type: " + itemStack.GetItem().itemType.ToString();
         if (tierText != null)
-            tierText.text = "Tier: " + itemStack.item.GetTier();
+            tierText.text = "Tier: " + itemStack.GetItem().GetTier();
         if (descText != null)
-            descText.text = "Description: " + itemStack.item.GetDescription();
+            descText.text = "Description: " + itemStack.GetItem().GetDescription();
         if (priceText != null)
-            priceText.SetText("Price: {0}", itemStack.item.GetValue());
+            priceText.SetText("Price: {0}", itemStack.GetItem().GetValue());
     }
     
     public ItemStack GetItemStack()

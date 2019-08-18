@@ -11,6 +11,7 @@ public class Recipe : ScriptableObject {
 	public List<int> ingredientQuantities;
 	public Item product;
 	public int productQuantity;
+	public int completionTime;
 	
 	public string GetName() {
 		return recipeName;

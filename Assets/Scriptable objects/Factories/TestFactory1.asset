@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071e20e34157eca4282b1a6a312ecd8d, type: 3}
+  m_Name: TestFactory1
+  m_EditorClassIdentifier: 
+  factoryIcon: {fileID: 0}
+  factoryName: Factory 1
+  factoryDescription: This is factory 1
+  recipeList:
+  - {fileID: 11400000, guid: f4893a3e831ed024d9a9bd9c1f16f821, type: 2}
+  - {fileID: 11400000, guid: d160696dee3852848a07fe1bb686238d, type: 2}
+  - {fileID: 11400000, guid: fcf7099d82f7f2f4da54048f84e5a2c9, type: 2}
+  queueRecipe: []
+  queueAmt: 

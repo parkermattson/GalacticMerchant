@@ -18,7 +18,7 @@ public class Slot : MonoBehaviour,  IPointerClickHandler{
 	{
 		stack = newStack;
 		
-		icon.sprite = stack.item.icon;
+		icon.sprite = stack.GetItem().icon;
 		icon.enabled = true;
 		qtText.SetText(stack.GetQuantity().ToString());
 		qtText.transform.gameObject.SetActive(true);
@@ -40,7 +40,7 @@ public class Slot : MonoBehaviour,  IPointerClickHandler{
 	public Item GetItem()
 	{
 		if (stack != null)
-			return stack.item;
+			return stack.GetItem();
 		else return null;
 	}
 	

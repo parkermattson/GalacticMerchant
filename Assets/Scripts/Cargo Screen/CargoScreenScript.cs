@@ -71,8 +71,7 @@ public class CargoScreenScript : MonoBehaviour {
 		for (int i = 0; i < inventory.equipments.Count; i ++)
 		{
 			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
-			tempStack.item = inventory.equipments[i];
-			tempStack.quantity = 1;
+			tempStack.Init(inventory.equipments[i], 1);
 			cargoSlots[i].AddItem(tempStack);
 		}
 		for ( int i = inventory.equipments.Count; i < inventory.items.Count + inventory.equipments.Count; i++)

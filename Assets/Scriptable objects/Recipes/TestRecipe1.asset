@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63a4cc8bd0981f41adf35b8a6c0dbf9, type: 3}
+  m_Name: TestRecipe1
+  m_EditorClassIdentifier: 
+  recipeName: Refine Xenospar
+  recipeDescription: Refine xenospar into rigidium
+  ingredients:
+  - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
+  - {fileID: 11400000, guid: 6478c21bdb04b394fa883ac5ec2af684, type: 2}
+  ingredientQuantities: 1400000001000000
+  product: {fileID: 11400000, guid: 2f625d5cb50bb3c4496db4ac6ae8aefc, type: 2}
+  productQuantity: 15
+  completionTime: 5

@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Factory", menuName = "Factory")]
 public class Factory : ScriptableObject {
 
-    private string factoryName;
-    private string factoryDescription;
-    private List<Recipe> recipteList;
-    private List<Recipe> queueRecipe;
-    private List<int> queueAmt;
-    private int currentQueueTime;
-    private bool isOwned;
+	public Sprite factoryIcon;
+    public string factoryName;
+    public string factoryDescription;
+    public List<Recipe> recipeList;
+    public List<Recipe> queueRecipe;
+    public List<int> queueAmt;
+    int currentQueueTime = 0;
+    bool isOwned = false;
     
 
 

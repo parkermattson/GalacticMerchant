@@ -32,17 +32,15 @@ public class MarketScreenScript : MonoBehaviour {
 
     public void BuyItem(GameObject itemBox)
     {
-        gameControl.playerMoney -= itemBox.GetComponent<MarketSlot>().itemStack.item.itemValue;
+        gameControl.playerMoney -= itemBox.GetComponent<MarketSlot>().itemStack.GetItem().itemValue;
 		ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
-		tempStack.item = itemBox.GetComponent<MarketSlot>().itemStack.item;
-        tempStack.quantity = 1;
-        inventory.AddItem(tempStack);
-        int index = buyList.FindIndex(x => x.item == itemBox.GetComponent<MarketSlot>().itemStack.item);
+        inventory.AddItem(tempStack.Init(itemBox.GetComponent<MarketSlot>().itemStack.GetItem(), 1));
+        int index = buyList.FindIndex(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem());
 		if (index != -1)
 		{
 			if (buyList[index].GetQuantity() > 1)
 			{
-				buyList[index].quantity--;
+				buyList[index].AddQuantity(-1);
 			}
 			else buyList.RemoveAt(index);
 		}
@@ -51,20 +49,16 @@ public class MarketScreenScript : MonoBehaviour {
 
     public void SellItem(GameObject itemBox)
     {
-        gameControl.playerMoney += itemBox.GetComponent<MarketSlot>().itemStack.item.itemValue;
+        gameControl.playerMoney += itemBox.GetComponent<MarketSlot>().itemStack.GetItem().itemValue;
         ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
-		tempStack.item = itemBox.GetComponent<MarketSlot>().itemStack.item;
-        tempStack.quantity = 1;
-        inventory.RemoveItem(tempStack);
-		if (buyList.Exists(x => x.item == itemBox.GetComponent<MarketSlot>().itemStack.item))
+        inventory.RemoveItem(tempStack.Init(itemBox.GetComponent<MarketSlot>().itemStack.GetItem(), 1));
+		if (buyList.Exists(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem()))
 		{
-			buyList.Find(x => x.item == itemBox.GetComponent<MarketSlot>().itemStack.item).AddQuantity(itemBox.GetComponent<MarketSlot>().itemStack.GetQuantity());
+			buyList.Find(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem()).AddQuantity(itemBox.GetComponent<MarketSlot>().itemStack.GetQuantity());
 		}
 		else {
 			ItemStack tempStack2 = ScriptableObject.CreateInstance<ItemStack>();
-			tempStack2.item = itemBox.GetComponent<MarketSlot>().itemStack.item;
-			tempStack2.quantity = itemBox.GetComponent<MarketSlot>().itemStack.quantity;
-			buyList.Add(tempStack2);
+			buyList.Add(tempStack2.Init(itemBox.GetComponent<MarketSlot>().itemStack.GetItem(), itemBox.GetComponent<MarketSlot>().itemStack.GetQuantity()));
 		}
         UpdateMarketStore();
     }
@@ -84,7 +78,7 @@ public class MarketScreenScript : MonoBehaviour {
             tempBox = Instantiate(buyBoxPrefab, marketBuyBox.transform);
             tempBox.GetComponent<MarketSlot>().AddItemStack(buyList[i]);
             tempBox.GetComponent<MarketBuySellButton>().SetMksScript(this);
-            if (gameControl.playerMoney < buyList[i].item.itemValue) tempBox.GetComponentInChildren<Button>().interactable = false;
+            if (gameControl.playerMoney < buyList[i].GetItem().itemValue) tempBox.GetComponentInChildren<Button>().interactable = false;
         }
 
         for (int i = 0; i < marketSellBox.transform.childCount; i++)

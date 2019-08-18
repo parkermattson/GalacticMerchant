@@ -17,9 +17,7 @@ public class MarketStockTable : ScriptableObject {
 			if (Random.value < availableChance[i])
 			{
 				ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
-				tempStack.item = items[i];
-				tempStack.quantity = minQuantity[i] + (int)(Random.value * maxQuantity[i]);
-				stock.Add(tempStack);
+				stock.Add(tempStack.Init(items[i], minQuantity[i] + (int)(Random.value * maxQuantity[i])));
 			}
 		}
 		return stock;

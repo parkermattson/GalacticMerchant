@@ -23,14 +23,13 @@ public class Inventory : MonoBehaviour {
 	
 	public void AddItem(ItemStack newItem)
 	{
-		if (items.Exists(x => x.item.GetID() == newItem.item.GetID()))
+		if (items.Exists(x => x.GetItem().GetID() == newItem.GetItem().GetID()))
 		{
-			items.Find(x => x.item.GetID() == newItem.item.GetID()).AddQuantity(newItem.GetQuantity());
+			items.Find(x => x.GetItem().GetID() == newItem.GetItem().GetID()).AddQuantity(newItem.GetQuantity());
 		}
 		else {
 			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
-			tempStack.item = newItem.item;
-			tempStack.quantity = newItem.quantity;
+			tempStack.Init(newItem.GetItem(), newItem.GetQuantity());
 			items.Add(tempStack);
 		}
 		if (onItemChangedCallback != null)
@@ -39,7 +38,7 @@ public class Inventory : MonoBehaviour {
 	
 	public void RemoveItem(ItemStack remItem)
 	{
-		int index = items.FindIndex(x => x.item.GetID() == remItem.item.GetID());
+		int index = items.FindIndex(x => x.GetItem().GetID() == remItem.GetItem().GetID());
 		if (index != -1)
 		{
 			if (items[index].GetQuantity() > remItem.GetQuantity())
