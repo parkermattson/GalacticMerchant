@@ -53,13 +53,9 @@ public class MarketScreenScript : MonoBehaviour {
         ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
         inventory.RemoveItem(tempStack.Init(itemBox.GetComponent<MarketSlot>().itemStack.GetItem(), 1));
 		if (buyList.Exists(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem()))
-		{
-			buyList.Find(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem()).AddQuantity(itemBox.GetComponent<MarketSlot>().itemStack.GetQuantity());
-		}
-		else {
-			ItemStack tempStack2 = ScriptableObject.CreateInstance<ItemStack>();
-			buyList.Add(tempStack2.Init(itemBox.GetComponent<MarketSlot>().itemStack.GetItem(), itemBox.GetComponent<MarketSlot>().itemStack.GetQuantity()));
-		}
+			buyList.Find(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem()).AddQuantity(1);
+		else buyList.Add(tempStack);
+		
         UpdateMarketStore();
     }
 
