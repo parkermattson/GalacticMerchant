@@ -4087,17 +4087,6 @@ MonoBehaviour:
   hoverTooltip: {fileID: 492863001}
   locationPrefab: {fileID: 1122972392675246, guid: 49c3c9b10dd78ea48b4b47f629a692e4,
     type: 2}
-  stations:
-  - {fileID: 11400000, guid: b005e5213e370cc428851455d48f42d6, type: 2}
-  - {fileID: 11400000, guid: cf4f66c67c4df9e40b36c8176e489a5c, type: 2}
-  - {fileID: 11400000, guid: 4799ee0b0b786e34c89fda066b14852d, type: 2}
-  - {fileID: 11400000, guid: 45b2a8d940208d64d979297ffae7f508, type: 2}
-  - {fileID: 11400000, guid: 075042c952dd41e45b7551b5f8bbf711, type: 2}
-  - {fileID: 11400000, guid: 60d051676580dce45927d887035d9a96, type: 2}
-  - {fileID: 11400000, guid: ce599f4290338fb42bedd0f563570f05, type: 2}
-  - {fileID: 11400000, guid: 4f604a7bd92c85844a2896d94b2e75ac, type: 2}
-  - {fileID: 11400000, guid: b0c24a0ff65b3b14b9a2a9e212d758ea, type: 2}
-  - {fileID: 11400000, guid: 7ff06265c7f9e0c4c9656f11084e8a02, type: 2}
   locations:
   - {fileID: 11400000, guid: e003fa806e8a26c419faacb5220f9cea, type: 2}
   - {fileID: 11400000, guid: 59a63b8bb4d75b041a17e470dc5a7d47, type: 2}
@@ -9656,6 +9645,18 @@ MonoBehaviour:
   - {fileID: 0}
   defaultShip: {fileID: 11400000, guid: eca5bedb494c11d49ae25ca2844c1cd6, type: 2}
   playerLocation: {fileID: 11400000, guid: b005e5213e370cc428851455d48f42d6, type: 2}
+  initStations:
+  - {fileID: 11400000, guid: b005e5213e370cc428851455d48f42d6, type: 2}
+  - {fileID: 11400000, guid: cf4f66c67c4df9e40b36c8176e489a5c, type: 2}
+  - {fileID: 11400000, guid: 4799ee0b0b786e34c89fda066b14852d, type: 2}
+  - {fileID: 11400000, guid: 45b2a8d940208d64d979297ffae7f508, type: 2}
+  - {fileID: 11400000, guid: 075042c952dd41e45b7551b5f8bbf711, type: 2}
+  - {fileID: 11400000, guid: 60d051676580dce45927d887035d9a96, type: 2}
+  - {fileID: 11400000, guid: ce599f4290338fb42bedd0f563570f05, type: 2}
+  - {fileID: 11400000, guid: 4f604a7bd92c85844a2896d94b2e75ac, type: 2}
+  - {fileID: 11400000, guid: b0c24a0ff65b3b14b9a2a9e212d758ea, type: 2}
+  - {fileID: 11400000, guid: 7ff06265c7f9e0c4c9656f11084e8a02, type: 2}
+  stations: []
   avatars:
   - {fileID: 21300000, guid: 78039e0c301f55b4da5b06c05f2fb1b6, type: 3}
   - {fileID: 21300000, guid: f8369ffc3a6710742b5ffcfb83ce7763, type: 3}
@@ -26873,10 +26874,6 @@ MonoBehaviour:
   factoryDescText: {fileID: 1353165627}
   queueText: {fileID: 60646360}
   rmScript: {fileID: 658877391}
-  factoryList:
-  - {fileID: 11400000, guid: 1c65fbc125b8e844591e82e0cd34c558, type: 2}
-  - {fileID: 11400000, guid: 9f589f166634d5346a292e9a2cec2781, type: 2}
-  - {fileID: 11400000, guid: d73d84fb94cc1e44399df98435ccb463, type: 2}
 --- !u!224 &1153730245 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224957457037276242, guid: 74ec9857278714b42a9766769737edb3,

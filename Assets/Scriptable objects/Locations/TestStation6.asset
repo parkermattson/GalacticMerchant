@@ -13,8 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Manufacturing Station
   locationDesc: This is a manufacturing station
+  locationType: 0
   icon: {fileID: 0}
   mapPosition: {x: 0, y: -750}
   stationType: 5
   stockTable: {fileID: 11400000, guid: 19c33f0637e6d4d41956ec1b5217e529, type: 2}
   race: 0
+  initFactories: []
+  factories: []

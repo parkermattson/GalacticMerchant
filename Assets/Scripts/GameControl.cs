@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ public class GameControl : MonoBehaviour {
 	public Ship defaultShip;
     public Location playerLocation;
 	public DateTime gameTime;
+	public List<Station> initStations, stations;
 	
 	public Sprite[] avatars = new Sprite[3];
 	public Sprite[] races = new Sprite[3];
@@ -43,6 +45,14 @@ public class GameControl : MonoBehaviour {
 		shipState.playerShip = defaultShip;
 		
 		gameTime = new DateTime(3000, 1, 1, 9, 0, 0);
+		
+		foreach (Station s in initStations)
+		{
+			stations.Add(Instantiate(s));
+			stations.Last().FactoryInit();
+		}
+		
+		playerLocation = stations[0];
 	}
 	
 	// Update is called once per frame
@@ -85,6 +95,7 @@ public class GameControl : MonoBehaviour {
 		saveData.items = inventory.items;
 		saveData.equipments = inventory.equipments;
 		saveData.shipEquipment = inventory.shipEquipment;
+		saveData.stations = stations;
 		
 		bf.Serialize(file, saveData);
 		file.Close();
@@ -112,6 +123,7 @@ public class GameControl : MonoBehaviour {
 				inventory.items = loadData.items;
 				inventory.equipments = loadData.equipments;
 				inventory.shipEquipment = loadData.shipEquipment;
+				stations = loadData.stations;
 			
 		}
 	}
@@ -149,5 +161,6 @@ public class GameControl : MonoBehaviour {
 		public List<ItemStack> items;
 		public List<Equipment> equipments;
 		public Equipment[] shipEquipment;
+		public List<Station> stations;
 	}
 }

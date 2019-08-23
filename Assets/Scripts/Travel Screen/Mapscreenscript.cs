@@ -21,9 +21,6 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	private GameObject locationPrefab;
 	
 	[SerializeField]
-	private List<Station> stations;
-	
-	[SerializeField]
 	private List<Location> locations;
 
     [SerializeField]
@@ -72,6 +69,13 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             inTransit = false;
             gcScript.playerLocation = GetLocation(selectedLocation);
+			if (gcScript.playerLocation.locationType == LocationType.Station)
+			{
+				Station tempStation = (Station)gcScript.playerLocation;
+				tempStation.RefreshFactories();
+				
+			}
+			
 			warpRangeImage.transform.localPosition = mapShipIcon.transform.localPosition;
 			warpRangeImage.gameObject.SetActive(true);
         }
@@ -185,7 +189,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			tempLocation.transform.localPosition = l.mapPosition;
 		}
 		
-		foreach (Station l in stations)
+		foreach (Station l in gcScript.stations)
 		{
 			GameObject tempLocation;
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);

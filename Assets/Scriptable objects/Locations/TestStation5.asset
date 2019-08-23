@@ -13,8 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Research Station
   locationDesc: This is a research station
+  locationType: 0
   icon: {fileID: 0}
   mapPosition: {x: 500, y: -500}
   stationType: 4
   stockTable: {fileID: 11400000, guid: 7a92d2b16f711be40b25cee464902947, type: 2}
   race: 0
+  initFactories: []
+  factories: []

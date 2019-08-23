@@ -9,13 +9,20 @@ public class IndustryScreenScript : MonoBehaviour {
 	public TextMeshProUGUI factoryNameText, factoryDescText, queueText;
 	
 	public RecipeMenuScript rmScript;
-	
-	public List<Factory> factoryList;
+	GameControl gcScript;
+	Station station;
 	
 	Factory selectedFactory= null;
 	
+	void Awake()
+	{
+		gcScript = GameControl.instance;
+		station = (Station)gcScript.playerLocation;
+	}
+	
 	void OnEnable()
 	{
+		station = (Station)gcScript.playerLocation;
 		UpdateFactoryArea();
 	}
 	
@@ -28,19 +35,21 @@ public class IndustryScreenScript : MonoBehaviour {
 				Destroy(child.gameObject);
 		}
 		
-		for (int i = 0; i < factoryList.Count; i++)
+		for (int i = 0; i < station.factories.Count; i++)
 		{
 			tempBox = Instantiate(factoryBoxPrefab, factoryArea.transform);
-			tempBox.GetComponent<FactoryBox>().SetFactory(factoryList[i], this);
+			tempBox.GetComponent<FactoryBox>().SetFactory(station.factories[i], this);
 		}
 		
-		SelectFactory(factoryList[0]);
+		SelectFactory(station.factories[0]);
+		UpdateDescriptionArea();
 	}
 	
 	public void UpdateDescriptionArea()
 	{
 		factoryNameText.SetText(selectedFactory.factoryName);
 		factoryDescText.SetText(selectedFactory.factoryDescription);
+		queueText.SetText("Recipes in queue: " + selectedFactory.queueRecipe.Count.ToString());
 		
 		GameObject tempBox;
 		
@@ -69,6 +78,6 @@ public class IndustryScreenScript : MonoBehaviour {
 		selectedFactory = newFactory;
 		UpdateDescriptionArea();
 	}
-	
 
+	
 }

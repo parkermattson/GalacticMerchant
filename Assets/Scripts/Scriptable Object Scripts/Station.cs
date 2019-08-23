@@ -10,6 +10,7 @@ public class Station : Location {
 	public StationType stationType = StationType.Mining;
 	public MarketStockTable stockTable;
 	public int race = 0;
+	public List<Factory> initFactories, factories;
 	
 	public StationType GetStationType()
 	{
@@ -24,5 +25,21 @@ public class Station : Location {
 	public int GetRace()
 	{
 		return race;
+	}
+	
+	public void FactoryInit()
+	{
+		foreach (Factory f in initFactories)
+		{
+			factories.Add(Instantiate(f));
+		}
+	}
+	
+	public void RefreshFactories()
+	{
+		foreach (Factory f in factories)
+		{
+			f.Refresh(GameControl.instance.gameTime);
+		}
 	}
 }

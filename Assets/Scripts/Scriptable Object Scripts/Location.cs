@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LocationType {Station, Empty}
+
 [CreateAssetMenu(fileName = "New Location", menuName = "Location")]
 public class Location : ScriptableObject {
 
     public string locationName = "Name";
     public string locationDesc = "Location Description";
+	public LocationType locationType = LocationType.Empty;
     public Sprite icon = null;
 
     public Vector2 mapPosition;

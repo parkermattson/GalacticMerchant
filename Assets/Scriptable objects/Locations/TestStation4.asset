@@ -13,8 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Paradise Station
   locationDesc: This is a paradise Station
+  locationType: 0
   icon: {fileID: 0}
   mapPosition: {x: 750, y: 0}
   stationType: 3
   stockTable: {fileID: 11400000, guid: fc5f5ed0ca79a164f8e3ab4db89e5a24, type: 2}
   race: 0
+  initFactories: []
+  factories: []
