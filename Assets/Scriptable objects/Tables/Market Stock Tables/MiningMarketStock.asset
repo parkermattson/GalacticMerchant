@@ -15,9 +15,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
   - {fileID: 11400000, guid: 5ce5ed507e2186b4b8dbc7d81ca2c51b, type: 2}
   - {fileID: 11400000, guid: 54c0daa67495c6c4a94ef2fe025bf1c1, type: 2}
-  availableChance:
-  - 1
-  - 0.7
-  - 0.5
-  minQuantity: f40100009600000032000000
+  eqQuantity: e803000058020000fa000000
   maxQuantity: f40100005e01000064000000

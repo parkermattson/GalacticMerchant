@@ -49,7 +49,7 @@ public class GameControl : MonoBehaviour {
 		foreach (Station s in initStations)
 		{
 			stations.Add(Instantiate(s));
-			stations.Last().FactoryInit();
+			stations.Last().Init();
 		}
 		
 		playerLocation = stations[0];

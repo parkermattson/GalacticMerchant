@@ -26,7 +26,8 @@ public class MarketScreenScript : MonoBehaviour {
     }
     private void OnEnable()
     {
-        GenerateStock();
+        Station station = (Station)gameControl.playerLocation;
+		buyList = station.marketInv;
         UpdateMarketStore();
     }
 
@@ -89,10 +90,4 @@ public class MarketScreenScript : MonoBehaviour {
             tempBox.GetComponent<MarketBuySellButton>().SetMksScript(this);
         }
     }
-
-    void GenerateStock()
-	{
-		Station station = (Station)gameControl.playerLocation;
-       buyList = station.GetStockTable().GenerateStock();
-	}
 }

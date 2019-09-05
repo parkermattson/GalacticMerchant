@@ -6,19 +6,15 @@ using UnityEngine;
 public class MarketStockTable : ScriptableObject {
 	
 	public List<Item> items;
-	public List<float> availableChance;
-	public List<int> minQuantity, maxQuantity;
+	public List<int> eqQuantity, maxQuantity;
 	
 	public List<ItemStack> GenerateStock()
 	{
 		List<ItemStack> stock = new List<ItemStack>();
 		for (int i =0; i < items.Count; i++)
 		{
-			if (Random.value < availableChance[i])
-			{
-				ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
-				stock.Add(tempStack.Init(items[i], minQuantity[i] + (int)(Random.value * maxQuantity[i])));
-			}
+			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
+			stock.Add(tempStack.Init(items[i], eqQuantity[i] + (int)(Random.value * maxQuantity[i])));
 		}
 		return stock;
 	}

@@ -11,6 +11,7 @@ public class Station : Location {
 	public MarketStockTable stockTable;
 	public int race = 0;
 	public List<Factory> initFactories, factories;
+	public List<ItemStack> marketInv;
 	
 	public StationType GetStationType()
 	{
@@ -27,8 +28,9 @@ public class Station : Location {
 		return race;
 	}
 	
-	public void FactoryInit()
+	public void Init()
 	{
+		marketInv = stockTable.GenerateStock();
 		foreach (Factory f in initFactories)
 		{
 			factories.Add(Instantiate(f));
