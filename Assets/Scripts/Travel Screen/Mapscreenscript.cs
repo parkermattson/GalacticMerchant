@@ -172,6 +172,11 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		SetTime();
     }
 	
+	void OnDisable()
+	{
+		locationTooltip.SetActive(false);
+	}
+	
 	void PlaceLocations()
 	{
 		LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();

@@ -12,13 +12,15 @@ public class Factory : ScriptableObject {
     public List<Recipe> recipeList;
     public List<Recipe> queueRecipe;
     public List<int> queueAmt;
-    int currentQueueTime = 0;
+    public int currentQueueTime = 0;
     bool isOwned = false;
 	DateTime lastTime = new DateTime(3000, 1, 1, 9, 0, 0);
     
 	public void Refresh(DateTime newTime)
 	{
-		int deltaTime = (int)newTime.Subtract(lastTime).TotalMinutes;
+		int deltaTime = (int)(newTime.Subtract(lastTime).TotalHours);
+		Debug.Log(deltaTime);
+		Debug.Log(currentQueueTime);
 		while (deltaTime> 0)
 		{
 			if (currentQueueTime > deltaTime)
@@ -27,11 +29,16 @@ public class Factory : ScriptableObject {
 				deltaTime = 0;
 			}
 			else {
+				if (queueRecipe.Count > 0)
+				{
 				deltaTime -= currentQueueTime;
 				FinishNextOrder();
+				}
+				else deltaTime = 0;
 			}
 			
 		}
+		lastTime = newTime;
 	}
 	
 	void FinishNextOrder()
@@ -40,7 +47,8 @@ public class Factory : ScriptableObject {
 		Inventory.instance.AddItem(newItem.Init(queueRecipe[0].product, queueRecipe[0].productQuantity * queueAmt[0]));
 		queueRecipe.RemoveAt(0);
 		queueAmt.RemoveAt(0);
-		currentQueueTime = queueRecipe[0].completionTime * queueAmt[0];
+		if (queueRecipe.Count > 0)
+			currentQueueTime = queueRecipe[0].completionTime * queueAmt[0];
 	}
 
 }

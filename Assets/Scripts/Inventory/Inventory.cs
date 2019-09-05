@@ -49,6 +49,25 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 	
+	public bool FindItem(ItemStack refItem)
+	{
+		int index = items.FindIndex(x => x.GetItem() == refItem.GetItem());
+		if (index != -1)
+		{
+			Debug.Log("Item found");
+			if (items[index].GetQuantity() >= refItem.GetQuantity())
+			{
+				Debug.Log("Sufficient Quantity");
+				return true;
+			}
+			else return false;
+		}
+		else {
+			Debug.Log("No item found");
+			return false;
+		}
+	}
+	
 	public void AddEquipment(Equipment equipment)
 	{
 		equipments.Add(equipment);

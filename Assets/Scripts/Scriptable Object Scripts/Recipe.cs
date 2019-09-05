@@ -25,7 +25,7 @@ public class Recipe : ScriptableObject {
 		return ingredients;
 	}
 	
-	public List<int> GetIngredientQuantites() {
+	public List<int> GetIngredientQuantities() {
 		return ingredientQuantities;
 	}
 	

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class IndustryScreenScript : MonoBehaviour {
 
-	public GameObject factoryArea, factoryBoxPrefab, queueArea, queueBoxPrefab;
+	public GameObject factoryArea, factoryBoxPrefab, queueArea, queueBoxPrefab, orderButton, buyButton;
 	public TextMeshProUGUI factoryNameText, factoryDescText, queueText;
 	
 	public RecipeMenuScript rmScript;
@@ -41,28 +42,43 @@ public class IndustryScreenScript : MonoBehaviour {
 			tempBox.GetComponent<FactoryBox>().SetFactory(station.factories[i], this);
 		}
 		
-		SelectFactory(station.factories[0]);
+		if (station.factories.Count > 0)
+			SelectFactory(station.factories[0]);
+		else SelectFactory(null);
 		UpdateDescriptionArea();
 	}
 	
 	public void UpdateDescriptionArea()
 	{
-		factoryNameText.SetText(selectedFactory.factoryName);
-		factoryDescText.SetText(selectedFactory.factoryDescription);
-		queueText.SetText("Recipes in queue: " + selectedFactory.queueRecipe.Count.ToString());
-		
-		GameObject tempBox;
-		
-		foreach (Transform child in queueArea.transform)
+		if (selectedFactory != null)
 		{
-			if (child != transform)
-				Destroy(child.gameObject);
-		}
-		
-		for (int i = 0; i < selectedFactory.queueRecipe.Count; i++)
-		{
-			tempBox = Instantiate(queueBoxPrefab, queueArea.transform);
-			tempBox.GetComponent<QueueBox>().SetQueue(selectedFactory, selectedFactory.queueRecipe[i], selectedFactory.queueAmt[i], i,this);
+			orderButton.GetComponent<Button>().interactable = true;
+			buyButton.GetComponent<Button>().interactable = true;
+			factoryNameText.SetText(selectedFactory.factoryName);
+			factoryDescText.SetText(selectedFactory.factoryDescription);
+			if (selectedFactory.queueRecipe.Count > 0)
+				queueText.SetText("Current Order Complete in: {0} Hours", selectedFactory.currentQueueTime);
+			else queueText.SetText("No orders in queue.");
+			
+			GameObject tempBox;
+			
+			foreach (Transform child in queueArea.transform)
+			{
+				if (child != transform)
+					Destroy(child.gameObject);
+			}
+			
+			for (int i = 0; i < selectedFactory.queueRecipe.Count; i++)
+			{
+				tempBox = Instantiate(queueBoxPrefab, queueArea.transform);
+				tempBox.GetComponent<QueueBox>().SetQueue(selectedFactory, selectedFactory.queueRecipe[i], selectedFactory.queueAmt[i], i,this);
+			}
+		} else {
+			factoryNameText.SetText("");
+			factoryDescText.SetText("");
+			queueText.SetText("");
+			orderButton.GetComponent<Button>().interactable = false;
+			buyButton.GetComponent<Button>().interactable = false;
 		}
 		
 	}
