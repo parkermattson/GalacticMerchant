@@ -30,6 +30,11 @@ public class ItemStack : ScriptableObject {
 	{
 		quantity+=newQuantity;
 	}
+	
+	public int GetPrice()
+	{
+		return item.CalculatePrice(quantity);
+	}
 
 	
 }

@@ -16,6 +16,7 @@ public class Item : ScriptableObject {
 	public int itemValue = 0;
 	public int itemWeight = 0;
 	public bool isStackable = true;
+	public int priceRange, medianQuant, quantityRange;
 	
 	public int GetID()
 	{
@@ -32,6 +33,11 @@ public class Item : ScriptableObject {
 		return itemDesc;
 	}
 	
+	public ItemType GetItemType()
+	{
+		return itemType;
+	}
+	
 	public int GetTier()
 	{
 		return itemTier;
@@ -46,4 +52,15 @@ public class Item : ScriptableObject {
 	{
 		return itemWeight;
 	}
+	
+	public int CalculatePrice(int quantity)
+	{
+		Debug.Log(quantityRange/5);
+		Debug.Log(priceRange);
+		Debug.Log(medianQuant);
+		Debug.Log(quantity);
+		int price = (int)(itemValue + priceRange/(1+Mathf.Pow(3,(float)(medianQuant - quantity)/(quantityRange/5f))));
+		Debug.Log(price);
+		return price;
+	} 
 }

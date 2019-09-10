@@ -20,3 +20,6 @@ MonoBehaviour:
   itemValue: 150000
   itemWeight: 1
   isStackable: 1
+  priceRange: 0
+  medianQuant: 0
+  quantityRange: 1

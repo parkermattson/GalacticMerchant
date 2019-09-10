@@ -18,6 +18,8 @@ MonoBehaviour:
   mapPosition: {x: -500, y: -500}
   stationType: 6
   stockTable: {fileID: 11400000, guid: 6ad4fdc5150d52f4a867b1b40d10b327, type: 2}
+  priceTable: {fileID: 11400000, guid: 44eed12202899e24388bbe1a1fe37999, type: 2}
   race: 0
   initFactories: []
   factories: []
+  marketInv: []

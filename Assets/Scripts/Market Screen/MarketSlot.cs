@@ -14,11 +14,14 @@ public class MarketSlot : MonoBehaviour {
     public TextMeshProUGUI tierText;
     public TextMeshProUGUI typeText;
     public ItemStack itemStack;
+	public int price = 1;
     
-    public void AddItemStack(ItemStack newItem)
+    public void AddItemStack(ItemStack newItem, Station station)
     {
         itemStack = newItem;
-        
+        price = station.priceTable.AdjustPrice(itemStack);
+		
+		
         icon.sprite = itemStack.GetItem().icon;
         icon.enabled = true;
         nameText.text = itemStack.GetItem().GetName();
@@ -30,7 +33,7 @@ public class MarketSlot : MonoBehaviour {
         if (descText != null)
             descText.text = "Description: " + itemStack.GetItem().GetDescription();
         if (priceText != null)
-            priceText.SetText("Price: {0}", itemStack.GetItem().GetValue());
+            priceText.SetText("Price: {0}", price);
     }
     
     public ItemStack GetItemStack()

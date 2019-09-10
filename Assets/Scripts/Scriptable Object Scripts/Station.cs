@@ -9,6 +9,7 @@ public class Station : Location {
 
 	public StationType stationType = StationType.Mining;
 	public MarketStockTable stockTable;
+	public MarketPriceTable priceTable;
 	public int race = 0;
 	public List<Factory> initFactories, factories;
 	public List<ItemStack> marketInv;

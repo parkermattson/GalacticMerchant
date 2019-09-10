@@ -16,6 +16,7 @@ public class MarketScreenScript : MonoBehaviour {
     public GameObject marketSellBox;
     
     List<ItemStack> buyList;
+	Station station;
     
 	
 
@@ -26,7 +27,7 @@ public class MarketScreenScript : MonoBehaviour {
     }
     private void OnEnable()
     {
-        Station station = (Station)gameControl.playerLocation;
+        station = (Station)gameControl.playerLocation;
 		buyList = station.marketInv;
         UpdateMarketStore();
     }
@@ -73,7 +74,7 @@ public class MarketScreenScript : MonoBehaviour {
         for (int i = 0; i < buyList.Count; i++)
         {
             tempBox = Instantiate(buyBoxPrefab, marketBuyBox.transform);
-            tempBox.GetComponent<MarketSlot>().AddItemStack(buyList[i]);
+            tempBox.GetComponent<MarketSlot>().AddItemStack(buyList[i], station);
             tempBox.GetComponent<MarketBuySellButton>().SetMksScript(this);
             if (gameControl.playerMoney < buyList[i].GetItem().itemValue) tempBox.GetComponentInChildren<Button>().interactable = false;
         }
@@ -86,7 +87,7 @@ public class MarketScreenScript : MonoBehaviour {
         for (int i = 0; i < inventory.items.Count; i++)
         {
             tempBox = Instantiate(sellBoxPrefab, marketSellBox.transform);
-            tempBox.GetComponent<MarketSlot>().AddItemStack(inventory.items[i]);
+            tempBox.GetComponent<MarketSlot>().AddItemStack(inventory.items[i], station);
             tempBox.GetComponent<MarketBuySellButton>().SetMksScript(this);
         }
     }
