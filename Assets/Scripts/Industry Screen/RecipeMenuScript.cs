@@ -102,4 +102,36 @@ public class RecipeMenuScript : MonoBehaviour {
 		}
 	}
 	
+	public void PlusMinusButton(bool plus)
+	{
+		int addQuant = 1;
+		if (plus)
+		{
+			if (Input.GetKey(KeyCode.LeftControl))
+			{
+				addQuant *= 10;
+			}
+			if (Input.GetKey(KeyCode.LeftShift))
+			{
+				addQuant *= 100;
+			}
+		} else 
+		{
+			addQuant *= -1;
+			if (Input.GetKey(KeyCode.LeftControl))
+			{
+				addQuant *= 10;
+			}
+			if (Input.GetKey(KeyCode.LeftShift))
+			{
+				addQuant *= 100;
+			}
+		}
+		
+		orderQuantity += addQuant;
+		if (orderQuantity < 0) orderQuantity = 0;
+		quantityInput.text = orderQuantity.ToString();
+		UpdateOrder();
+	}
+	
 }

@@ -55,12 +55,7 @@ public class Item : ScriptableObject {
 	
 	public int CalculatePrice(int quantity)
 	{
-		Debug.Log(quantityRange/5);
-		Debug.Log(priceRange);
-		Debug.Log(medianQuant);
-		Debug.Log(quantity);
 		int price = (int)(itemValue + priceRange/(1+Mathf.Pow(3,(float)(medianQuant - quantity)/(quantityRange/5f))));
-		Debug.Log(price);
 		return price;
 	} 
 }
