@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum LocationType {Station, Empty}
 
-[CreateAssetMenu(fileName = "New Location", menuName = "Location")]
+[CreateAssetMenu(fileName = "New Location", menuName = "Locations/Location")]
 public class Location : ScriptableObject {
 
     public string locationName = "Name";

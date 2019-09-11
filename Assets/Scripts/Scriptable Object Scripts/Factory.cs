@@ -12,13 +12,13 @@ public class Factory : ScriptableObject {
     public List<Recipe> recipeList;
     public List<Recipe> queueRecipe;
     public List<int> queueAmt;
-    public int currentQueueTime = 0;
+    public float currentQueueTime = 0;
     bool isOwned = false;
 	DateTime lastTime = new DateTime(3000, 1, 1, 9, 0, 0);
     
 	public void Refresh(DateTime newTime)
 	{
-		int deltaTime = (int)(newTime.Subtract(lastTime).TotalHours);
+		float deltaTime = (float)(newTime.Subtract(lastTime).TotalHours);
 		Debug.Log(deltaTime);
 		Debug.Log(currentQueueTime);
 		while (deltaTime> 0)

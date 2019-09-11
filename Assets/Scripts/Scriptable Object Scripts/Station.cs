@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum StationType {Mining, Slum, Populous, Paradise, Research, Manufacturing, Farming, Military, Frontier, Refinery}
 
-[CreateAssetMenu(fileName = "New Station", menuName = "Station")]
+[CreateAssetMenu(fileName = "New Station", menuName = "Locations/Station")]
 public class Station : Location {
 
 	public StationType stationType = StationType.Mining;
