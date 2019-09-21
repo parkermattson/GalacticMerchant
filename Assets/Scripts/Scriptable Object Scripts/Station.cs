@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class Station : Location {
 	public int race = 0;
 	public List<Factory> initFactories, factories;
 	public List<ItemStack> marketInv;
+	public List<StationModule> modules;
+	DateTime lastTime = new DateTime(3000, 1, 1, 9, 0, 0);
 	
 	public StationType GetStationType()
 	{
@@ -38,11 +41,19 @@ public class Station : Location {
 		}
 	}
 	
-	public void RefreshFactories()
+	public void RefreshStation()
 	{
+		DateTime newTime = GameControl.instance.gameTime;
+		float deltaTime = (float)(newTime.Subtract(lastTime).TotalHours);
+		
+		foreach (StationModule m in modules)
+		{
+			m.Refresh(marketInv, deltaTime);
+		}
+		
 		foreach (Factory f in factories)
 		{
-			f.Refresh(GameControl.instance.gameTime);
+			f.Refresh(deltaTime);
 		}
 	}
 }

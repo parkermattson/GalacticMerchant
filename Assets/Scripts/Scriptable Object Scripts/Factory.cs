@@ -14,13 +14,9 @@ public class Factory : ScriptableObject {
     public List<int> queueAmt;
     public float currentQueueTime = 0;
     bool isOwned = false;
-	DateTime lastTime = new DateTime(3000, 1, 1, 9, 0, 0);
     
-	public void Refresh(DateTime newTime)
+	public void Refresh(float deltaTime)
 	{
-		float deltaTime = (float)(newTime.Subtract(lastTime).TotalHours);
-		Debug.Log(deltaTime);
-		Debug.Log(currentQueueTime);
 		while (deltaTime> 0)
 		{
 			if (currentQueueTime > deltaTime)
@@ -38,7 +34,6 @@ public class Factory : ScriptableObject {
 			}
 			
 		}
-		lastTime = newTime;
 	}
 	
 	void FinishNextOrder()

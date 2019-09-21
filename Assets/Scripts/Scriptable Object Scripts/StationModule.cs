@@ -11,6 +11,9 @@ public class StationModule : ScriptableObject {
 	public List<int> drainBase, drainInc, gainBase, gainInc, eqBase, eqInc;
 	
 
-
+	public Refresh(List<ItemStack> marketInv, float deltaTime)
+	{
+		
+	}
 	
 }

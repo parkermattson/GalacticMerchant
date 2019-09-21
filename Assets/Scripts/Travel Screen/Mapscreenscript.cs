@@ -72,7 +72,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			if (gcScript.playerLocation.locationType == LocationType.Station)
 			{
 				Station tempStation = (Station)gcScript.playerLocation;
-				tempStation.RefreshFactories();
+				tempStation.RefreshStation();
 				
 			}
 			

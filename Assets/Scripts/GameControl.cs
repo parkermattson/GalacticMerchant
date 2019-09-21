@@ -64,7 +64,6 @@ public class GameControl : MonoBehaviour {
 	{
 		CharCreate ccScript = ccScreen.GetComponent<CharCreate>();
 		playerName = ccScript.GetPlayerName();
-		Debug.Log(playerName);
 		playerRace = ccScript.GetRace();
 		playerAvatar = ccScript.GetAvatar();
 		playerStats = ccScript.GetStats();

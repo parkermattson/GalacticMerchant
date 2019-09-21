@@ -19,50 +19,19 @@ public class Inventory : MonoBehaviour {
 		
 	}
 	
-	
-	
-	public void AddItem(ItemStack newItem)
+	public void AddItem(ItemStack stack)
 	{
-		if (items.Exists(x => x.GetItem().GetID() == newItem.GetItem().GetID()))
-		{
-			items.Find(x => x.GetItem().GetID() == newItem.GetItem().GetID()).AddQuantity(newItem.GetQuantity());
-		}
-		else {
-			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
-			tempStack.Init(newItem.GetItem(), newItem.GetQuantity());
-			items.Add(tempStack);
-		}
-		if (onItemChangedCallback != null)
-			onItemChangedCallback.Invoke();
+		stack.AddToList(items);
 	}
 	
-	public void RemoveItem(ItemStack remItem)
+	public void RemoveItem(ItemStack stack)
 	{
-		int index = items.FindIndex(x => x.GetItem().GetID() == remItem.GetItem().GetID());
-		if (index != -1)
-		{
-			if (items[index].GetQuantity() > remItem.GetQuantity())
-			{
-				items[index].AddQuantity(-remItem.GetQuantity());
-			}
-			else items.RemoveAt(index);
-		}
+		stack.RemoveFromList(items);
 	}
 	
-	public bool FindItem(ItemStack refItem)
+	public bool FindItem(ItemStack stack)
 	{
-		int index = items.FindIndex(x => x.GetItem() == refItem.GetItem());
-		if (index != -1)
-		{
-			if (items[index].GetQuantity() >= refItem.GetQuantity())
-			{
-				return true;
-			}
-			else return false;
-		}
-		else {
-			return false;
-		}
+		return stack.FindInList(items);
 	}
 	
 	public void AddEquipment(Equipment equipment)

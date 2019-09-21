@@ -35,6 +35,48 @@ public class ItemStack : ScriptableObject {
 	{
 		return item.CalculatePrice(quantity);
 	}
+	
+	public void AddToList(List<ItemStack> itemList)
+	{
+		if (itemList.Exists(x => x.GetItem() == item))
+		{
+			itemList.Find(x => x.GetItem() == item).AddQuantity(quantity);
+		}
+		else {
+			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
+			tempStack.Init(item, quantity);
+			itemList.Add(tempStack);
+		}
+	}
+		
+	public void RemoveFromList(List<ItemStack> itemList)
+	{
+		int index = itemList.FindIndex(x => x.GetItem() == item);
+		if (index != -1)
+		{
+			if (itemList[index].GetQuantity() > quantity)
+			{
+				itemList[index].AddQuantity(-quantity);
+			}
+			else itemList.RemoveAt(index);
+		}
+	}
+	
+	public bool FindInList(List<ItemStack> itemList)
+	{
+		int index = itemList.FindIndex(x => x.GetItem() == item);
+		if (index != -1)
+		{
+			if (itemList[index].GetQuantity() >= quantity)
+			{
+				return true;
+			}
+			else return false;
+		}
+		else {
+			return false;
+		}
+	}
 
 	
 }
