@@ -14,6 +14,7 @@ public class Station : Location {
 	public int race = 0;
 	public List<Factory> initFactories, factories;
 	public List<ItemStack> marketInv;
+	public int stationMoney = 10000;
 	public List<StationModule> modules;
 	DateTime lastTime = new DateTime(3000, 1, 1, 9, 0, 0);
 	
@@ -46,14 +47,19 @@ public class Station : Location {
 		DateTime newTime = GameControl.instance.gameTime;
 		float deltaTime = (float)(newTime.Subtract(lastTime).TotalHours);
 		
-		foreach (StationModule m in modules)
-		{
-			m.Refresh(marketInv, deltaTime);
-		}
-		
 		foreach (Factory f in factories)
 		{
 			f.Refresh(deltaTime);
 		}
+		
+		for (int i = 0; i < deltaTime/24; i++)
+		{
+			foreach (StationModule m in modules)
+			{
+				m.Refresh(this);
+			}
+		}
+		
+		
 	}
 }

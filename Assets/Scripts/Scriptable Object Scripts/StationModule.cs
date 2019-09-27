@@ -11,9 +11,35 @@ public class StationModule : ScriptableObject {
 	public List<int> drainBase, drainInc, gainBase, gainInc, eqBase, eqInc;
 	
 
-	public Refresh(List<ItemStack> marketInv, float deltaTime)
+	public void Refresh(Station station)
 	{
+		int moneyNeeded = 0;
+		ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
+		for (int i =0; i < drainItems.Count; i++)
+		{
+			tempStack.Init(drainItems[i], drainBase[i] + drainInc[i] * (int)moduleLevel);
+			if (!tempStack.FindInList(station.marketInv))
+			{
+				moneyNeeded += drainItems[i].GetValue() * tempStack.GetQuantity();
+			}
+		}
 		
+		if (moneyNeeded <= station.stationMoney)
+		{
+			station.stationMoney-=moneyNeeded;
+			for (int i =0; i < drainItems.Count; i++)
+			{
+				tempStack.Init(drainItems[i], drainBase[i] + drainInc[i] * (int)moduleLevel);
+				tempStack.RemoveFromList(station.marketInv);
+			}
+			for (int i =0; i < gainItems.Count; i++)
+			{
+				tempStack.Init(gainItems[i], gainBase[i] + gainInc[i] * (int)moduleLevel);
+				tempStack.AddToList(station.marketInv);
+			}
+			moduleLevel+=.25f;
+		}
+		else if (moduleLevel > 1) moduleLevel-=.25f;
 	}
 	
 }
