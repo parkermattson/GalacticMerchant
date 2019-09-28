@@ -35,6 +35,7 @@ public class MarketScreenScript : MonoBehaviour {
     public void BuyItem(GameObject itemBox)
     {
         gameControl.playerMoney -= Mathf.CeilToInt(itemBox.GetComponent<MarketSlot>().price * itemBox.GetComponent<MarketSlot>().slotQuant);
+		station.stationMoney += Mathf.CeilToInt(itemBox.GetComponent<MarketSlot>().price * itemBox.GetComponent<MarketSlot>().slotQuant);
 		ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
         inventory.AddItem(tempStack.Init(itemBox.GetComponent<MarketSlot>().itemStack.GetItem(), itemBox.GetComponent<MarketSlot>().slotQuant));
         int index = buyList.FindIndex(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem());
@@ -52,6 +53,7 @@ public class MarketScreenScript : MonoBehaviour {
     public void SellItem(GameObject itemBox)
     {
         gameControl.playerMoney += Mathf.CeilToInt(itemBox.GetComponent<MarketSlot>().price * itemBox.GetComponent<MarketSlot>().slotQuant);
+		station.stationMoney -= Mathf.CeilToInt(itemBox.GetComponent<MarketSlot>().price * itemBox.GetComponent<MarketSlot>().slotQuant);
         ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
         inventory.RemoveItem(tempStack.Init(itemBox.GetComponent<MarketSlot>().itemStack.GetItem(), itemBox.GetComponent<MarketSlot>().slotQuant));
 		if (buyList.Exists(x => x.GetItem() == itemBox.GetComponent<MarketSlot>().itemStack.GetItem()))
@@ -64,6 +66,7 @@ public class MarketScreenScript : MonoBehaviour {
     public void UpdateMarketStore()
     {
 		playerMoneyText.text = "Your Money: " + gameControl.playerMoney.ToString();
+		merchantMoneyText.text = "Station Money: " + station.stationMoney.ToString();
 		
         GameObject tempBox;
         for (int i = 0; i < marketBuyBox.transform.childCount; i++)

@@ -177,6 +177,11 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		locationTooltip.SetActive(false);
 	}
 	
+	public void WaitOneYear()
+	{
+		gcScript.gameTime = gcScript.gameTime.AddYears(1);
+	}
+	
 	void PlaceLocations()
 	{
 		LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();

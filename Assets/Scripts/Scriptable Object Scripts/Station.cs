@@ -46,6 +46,7 @@ public class Station : Location {
 	{
 		DateTime newTime = GameControl.instance.gameTime;
 		float deltaTime = (float)(newTime.Subtract(lastTime).TotalHours);
+		List<Item> drainList = new List<Item>();
 		
 		foreach (Factory f in factories)
 		{
@@ -58,7 +59,14 @@ public class Station : Location {
 			{
 				m.Refresh(this);
 			}
+			foreach (ItemStack stack in marketInv)
+			{
+				stationMoney += (int)(stack.GetQuantity() * stack.GetItem().GetValue() * .2f);
+				stack.AddQuantity((int)(stack.GetQuantity() * -.2f));
+			}
 		}
+		
+		lastTime = GameControl.instance.gameTime;
 		
 		
 	}

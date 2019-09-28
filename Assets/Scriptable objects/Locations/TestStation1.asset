@@ -25,3 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9f589f166634d5346a292e9a2cec2781, type: 2}
   factories: []
   marketInv: []
+  stationMoney: 100000
+  modules:
+  - {fileID: 11400000, guid: 0d9c9a592bc3ec14d82e380b266e4283, type: 2}
+  - {fileID: 11400000, guid: 3194dbb67be91c744aaa782d7c559ca0, type: 2}
+  - {fileID: 11400000, guid: 1683220438fc44a4a92cf67821515f58, type: 2}

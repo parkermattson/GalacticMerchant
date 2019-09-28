@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
+  m_Name: TestModule2
+  m_EditorClassIdentifier: 
+  moduleLevel: 1
+  moneyBase: -1000
+  moneyInc: -95
+  drainItems:
+  - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
+  gainItems: []
+  drainBase: 64000000
+  drainInc: 0a000000
+  gainBase: 
+  gainInc: 
+  eqBase: 2c010000
+  eqInc: 1e000000
