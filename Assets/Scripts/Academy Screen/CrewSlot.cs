@@ -20,11 +20,9 @@ public class CrewSlot : MonoBehaviour {
 	public void AddCrew(Crew newCrew)
 	{
 		GameControl gameController = GameControl.instance;
-		int price;
 		int[] stats = new int[4];
 		crew = newCrew;
 		stats = crew.GetStats();
-		price = (int)Mathf.Pow(10000, (1+(float)stats.Sum()/50));
 		avatar.sprite = gameController.avatars[crew.GetAvatar()];
 		race.sprite = gameController.races[crew.GetRace()];
 		nameText.SetText(crew.GetCrewName());
@@ -33,6 +31,15 @@ public class CrewSlot : MonoBehaviour {
 		statText3.SetText(stats[2].ToString());
 		statText4.SetText(stats[3].ToString());
 		if (salaryText != null)
-			salaryText.text = "Salary: " + price.ToString() + " SB Weekly";
+			salaryText.text = crew.GetPrice().ToString() + " SB";
+	}
+	
+	public void HireCrew()
+	{
+		Station station = (Station)GameControl.instance.playerLocation;
+		GameControl.instance.HireCrew(crew);
+		station.GetCrewTable().GetCrewList().Remove(crew);
+		station.GetAvailableCrew().Remove(crew);
+		GetComponentInParent<AcademyScreenScript>().UpdateRecruitmentList();
 	}
 }

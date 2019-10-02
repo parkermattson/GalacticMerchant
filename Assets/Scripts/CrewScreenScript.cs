@@ -6,17 +6,17 @@ using TMPro;
 
 public class CrewScreenScript : MonoBehaviour {
 
-	public GameObject gameController;
 	public GameObject[] crewSlots = new GameObject[4];
 
 	void OnEnable()
 	{
-		Crew[] crew = gameController.GetComponent<GameControl>().crewMembs;
+		Crew[] crew = GameControl.instance.crewMembs;
 		for (int i = 0; i < 4; i++)
 		{
 			if (crew[i] != null)
 			{
 				crewSlots[i].GetComponent<CrewSlot>().AddCrew(crew[i]);
+				crewSlots[i].SetActive(true);
 			}
 			else crewSlots[i].SetActive(false);
 		}

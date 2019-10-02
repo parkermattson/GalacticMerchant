@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,15 @@ public class Crew : ScriptableObject {
 	public int race = 0;
 	public int avatar = 0;
 	public int[] stats = {1,1,1,1};
+	
+	public Crew Copy(Crew c)
+	{
+		crewName = c.GetCrewName();
+		race = c.GetRace();
+		avatar = c.GetAvatar();
+		stats = c.GetStats();
+		return this;
+	}
 	
 	public void SetCrewName(string newName){
 		crewName = newName;
@@ -49,5 +59,10 @@ public class Crew : ScriptableObject {
 	
 	public int GetStat(int statNum) {
 		return stats[statNum];
+	}
+	
+	public int GetPrice()
+	{
+		return (int)Mathf.Pow(10000, (1+(float)stats.Sum()/50));
 	}
 }

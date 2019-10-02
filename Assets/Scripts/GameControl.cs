@@ -22,7 +22,7 @@ public class GameControl : MonoBehaviour {
     public ShipState shipState = new ShipState();
 	public Ship defaultShip;
     public Location playerLocation;
-	public DateTime gameTime;
+	public DateTime gameTime, lastWeek;
 	public List<Station> initStations, stations;
 	
 	public Sprite[] avatars = new Sprite[3];
@@ -45,6 +45,7 @@ public class GameControl : MonoBehaviour {
 		shipState.playerShip = defaultShip;
 		
 		gameTime = new DateTime(3000, 1, 1, 9, 0, 0);
+		lastWeek = new DateTime(3000, 1, 1, 9, 0, 0);
 		
 		foreach (Station s in initStations)
 		{
@@ -125,6 +126,37 @@ public class GameControl : MonoBehaviour {
 				stations = loadData.stations;
 			
 		}
+	}
+	
+	public void PassTime(float hours)
+	{
+		gameTime = gameTime.AddHours(hours);
+		while (gameTime > lastWeek.AddDays(7))
+		{
+			for (int i = 1; i < 4; i++)
+			{
+				if (crewMembs[i] != null)
+					playerMoney-= crewMembs[i].GetPrice();
+			}
+			lastWeek = lastWeek.AddDays(7);
+		}
+	}
+	
+	public void HireCrew(Crew crew)
+	{
+		for (int i = 0; i < crewMembs.Length; i ++)
+		{
+			if (crewMembs[i] == null)
+			{
+				crewMembs[i] = crew;
+				break;
+			}
+			if (i == crewMembs.Length - 1)
+			{
+				Debug.Log("Crew couldnt be hired");
+			}
+		}
+		
 	}
 	
 	public class CrewMember

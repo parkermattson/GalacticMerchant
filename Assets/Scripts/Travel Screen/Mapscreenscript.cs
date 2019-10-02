@@ -24,9 +24,6 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	private List<Location> locations;
 
     [SerializeField]
-    private GameControl gcScript;
-
-    [SerializeField]
     private GameObject hullBar;
 
     [SerializeField]
@@ -56,22 +53,22 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         locationTooltip.SetActive(false);
         mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 5f);
-		gcScript.gameTime = gcScript.gameTime.AddHours(.25);
+		GameControl.instance.PassTime(.25f);
 		SetTime();
 		fuelCounter+=.1f;
 		if (fuelCounter >= 1)
 		{
 			fuelCounter = 0;
-			gcScript.shipState.currentFuel --;
+			GameControl.instance.shipState.currentFuel --;
 			SetFuelBar();
 		}
         if (Mathf.Abs((mapShipIcon.transform.localPosition-selectedLocation.transform.localPosition).magnitude)<=0.1f)
         {
             inTransit = false;
-            gcScript.playerLocation = GetLocation(selectedLocation);
-			if (gcScript.playerLocation.locationType == LocationType.Station)
+            GameControl.instance.playerLocation = GetLocation(selectedLocation);
+			if (GameControl.instance.playerLocation.locationType == LocationType.Station)
 			{
-				Station tempStation = (Station)gcScript.playerLocation;
+				Station tempStation = (Station)GameControl.instance.playerLocation;
 				tempStation.RefreshStation();
 				
 			}
@@ -83,19 +80,19 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void SelectLocation(GameObject newSelected)
     {
-        if (!inTransit && GetLocation(newSelected) != gcScript.playerLocation)
+        if (!inTransit && GetLocation(newSelected) != GameControl.instance.playerLocation)
         {
 			if (newSelected != selectedLocation || !locationTooltip.activeSelf)
 			{
 				selectedLocation = newSelected;
-				float distance = Vector2.Distance(gcScript.playerLocation.GetMapPos(), GetLocation(selectedLocation).GetMapPos());
+				float distance = Vector2.Distance(GameControl.instance.playerLocation.GetMapPos(), GetLocation(selectedLocation).GetMapPos());
 				locationTooltip.SetActive(true);
 				locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
 				locationTooltip.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\t\tFuel Cost: " + (int)(distance/50));
 				locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
-				if ((int)(distance/50) > gcScript.shipState.currentFuel)
+				if ((int)(distance/50) > GameControl.instance.shipState.currentFuel)
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
-				else if (distance > gcScript.shipState.netWarpRange)
+				else if (distance > GameControl.instance.shipState.netWarpRange)
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
 				else
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable=true;
@@ -162,8 +159,8 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     void OnEnable()
     {
 		PlaceLocations();
-		mapShipIcon.transform.localPosition = gcScript.playerLocation.GetMapPos();
-		warpRangeImage.transform.localPosition = gcScript.playerLocation.GetMapPos() ;
+		mapShipIcon.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
+		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos() ;
 		warpRangeImage.transform.localPosition -= new Vector3(25, 0);
         SetHullBar();
         SetFuelBar();
@@ -179,7 +176,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
 	public void WaitOneYear()
 	{
-		gcScript.gameTime = gcScript.gameTime.AddYears(1);
+		GameControl.instance.gameTime = GameControl.instance.gameTime.AddYears(1);
 	}
 	
 	void PlaceLocations()
@@ -199,7 +196,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			tempLocation.transform.localPosition = l.mapPosition;
 		}
 		
-		foreach (Station l in gcScript.stations)
+		foreach (Station l in GameControl.instance.stations)
 		{
 			GameObject tempLocation;
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);
@@ -212,7 +209,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
     void SetHullBar()
     {
-        float hullPercent = (float)gcScript.shipState.currentHull / (float)gcScript.shipState.playerShip.maxHull;
+        float hullPercent = (float)GameControl.instance.shipState.currentHull / (float)GameControl.instance.shipState.playerShip.maxHull;
         hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
 
         if (hullPercent > .66)
@@ -222,27 +219,27 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         else
             hullBar.GetComponent<Image>().color = Color.red;
 		
-		hullBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Hull: {0}/{1}", gcScript.shipState.currentHull, gcScript.shipState.playerShip.maxHull);
+		hullBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Hull: {0}/{1}", GameControl.instance.shipState.currentHull, GameControl.instance.shipState.playerShip.maxHull);
 
     }
     void SetFuelBar()
     {
-        float fuelPercent = (float)gcScript.shipState.currentFuel / (float)gcScript.shipState.playerShip.maxFuel;
+        float fuelPercent = (float)GameControl.instance.shipState.currentFuel / (float)GameControl.instance.shipState.playerShip.maxFuel;
         fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
 		
-		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", gcScript.shipState.currentFuel, gcScript.shipState.playerShip.maxFuel);
+		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", GameControl.instance.shipState.currentFuel, GameControl.instance.shipState.playerShip.maxFuel);
     }
     void SetCargoSpace()
     {
-        cargoText.SetText("Cargo Space: {0} / {1}", gcScript.shipState.currentCargo, gcScript.shipState.playerShip.maxCargo);
+        cargoText.SetText("Cargo Space: {0} / {1}", GameControl.instance.shipState.currentCargo, GameControl.instance.shipState.playerShip.maxCargo);
     }
     void SetMoney()
     {
-        moneyText.SetText("Spacebucks: {0}", gcScript.playerMoney);
+        moneyText.SetText("Spacebucks: {0}", GameControl.instance.playerMoney);
     }
 	
 	void SetTime()
 	{
-		timeText.SetText("Time: " + gcScript.gameTime.ToString("HH:mm, MM/dd/yyyy"));
+		timeText.SetText("Time: " + GameControl.instance.gameTime.ToString("HH:mm, MM/dd/yyyy"));
 	}
 }

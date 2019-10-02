@@ -19,7 +19,11 @@ MonoBehaviour:
   stationType: 5
   stockTable: {fileID: 11400000, guid: 19c33f0637e6d4d41956ec1b5217e529, type: 2}
   priceTable: {fileID: 11400000, guid: 2c0303140f696d041906aac42d02fb0a, type: 2}
+  initCrewPool: {fileID: 11400000, guid: 9ac8ecfa595877143812805a48f4d8e8, type: 2}
+  crewPool: {fileID: 0}
   race: 0
   initFactories: []
   factories: []
   marketInv: []
+  stationMoney: 10000
+  modules: []

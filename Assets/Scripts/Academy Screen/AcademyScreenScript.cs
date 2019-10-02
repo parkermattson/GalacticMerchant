@@ -11,13 +11,12 @@ public class AcademyScreenScript : MonoBehaviour {
 	
 	public GameObject recruitBox;
 	public GameObject crewPrefab;
-	public CrewTable allCrew;
-	List<Crew> availableCrew;
+	Station station;
 	
 	void OnEnable()
 	{
+		station = (Station)GameControl.instance.playerLocation;
 		UpdateMissionList();
-		GenerateCrewList();
 		UpdateRecruitmentList();
 	}
 	
@@ -39,9 +38,11 @@ public class AcademyScreenScript : MonoBehaviour {
 		
 	}
 	
-	void UpdateRecruitmentList()
+	public void UpdateRecruitmentList()
 	{
+		Debug.Log("Updating recruitment list");
 		GameObject tempBox;
+		List<Crew> availableCrew = station.GetAvailableCrew();
 		
 		for (int i = 0; i < recruitBox.transform.childCount; i ++)
 		{
@@ -54,15 +55,5 @@ public class AcademyScreenScript : MonoBehaviour {
 			tempBox.GetComponent<CrewSlot>().AddCrew(availableCrew[i]);
 		}
 		
-	}
-	
-	void GenerateCrewList()
-	{
-		availableCrew = new List<Crew>();
-		int crewNum = (int)Random.Range(0f, 3f);
-		for (int i = 0; i < crewNum; i++)
-		{
-			availableCrew.Add(allCrew.GetCrewList()[(int)Random.Range(0f,(float)allCrew.GetCrewList().Count-1)]);
-		}
 	}
 }

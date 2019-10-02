@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: TestModule3
   m_EditorClassIdentifier: 
-  moduleLevel: 1
+  initLevel: 1
   moneyBase: 4800
-  moneyInc: 510
+  moneyInc: 950
   drainItems: []
   gainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}

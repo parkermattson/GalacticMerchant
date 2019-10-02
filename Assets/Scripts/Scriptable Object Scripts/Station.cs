@@ -11,12 +11,14 @@ public class Station : Location {
 	public StationType stationType = StationType.Mining;
 	public MarketStockTable stockTable;
 	public MarketPriceTable priceTable;
+	public CrewTable initCrewPool, crewPool;
 	public int race = 0;
 	public List<Factory> initFactories, factories;
 	public List<ItemStack> marketInv;
 	public int stationMoney = 10000;
 	public List<StationModule> modules;
 	DateTime lastTime = new DateTime(3000, 1, 1, 9, 0, 0);
+	List<Crew> availableCrew;
 	
 	public StationType GetStationType()
 	{
@@ -36,9 +38,15 @@ public class Station : Location {
 	public void Init()
 	{
 		marketInv = stockTable.GenerateStock();
+		crewPool = Instantiate(initCrewPool);
+		GenerateCrewList();
 		foreach (Factory f in initFactories)
 		{
 			factories.Add(Instantiate(f));
+		}
+		foreach (StationModule m in modules)
+		{
+			m.Init();
 		}
 	}
 	
@@ -46,7 +54,8 @@ public class Station : Location {
 	{
 		DateTime newTime = GameControl.instance.gameTime;
 		float deltaTime = (float)(newTime.Subtract(lastTime).TotalHours);
-		List<Item> drainList = new List<Item>();
+		
+		GenerateCrewList();
 		
 		foreach (Factory f in factories)
 		{
@@ -67,7 +76,30 @@ public class Station : Location {
 		}
 		
 		lastTime = GameControl.instance.gameTime;
-		
-		
 	}
+	
+	public CrewTable GetCrewTable()
+	{
+		return crewPool;
+	}
+	
+	public List<Crew> GetAvailableCrew()
+	{
+		return availableCrew;
+	}
+	
+	void GenerateCrewList()
+	{
+		availableCrew = new List<Crew>();
+		
+		for (int i = 0; i < crewPool.GetCrewList().Count; i ++)
+		{
+			if (availableCrew.Count < 3 && UnityEngine.Random.value < (float)(3 - availableCrew.Count)/(float)(crewPool.GetCrewList().Count - i))
+			{
+				availableCrew.Add(crewPool.GetCrewAt(i));
+
+			}
+		}
+	}
+	
 }

@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: TestModule1
   m_EditorClassIdentifier: 
-  moduleLevel: 1
+  initLevel: 1
   moneyBase: 4250
-  moneyInc: 455
+  moneyInc: 800
   drainItems:
   - {fileID: 11400000, guid: 6478c21bdb04b394fa883ac5ec2af684, type: 2}
   - {fileID: 11400000, guid: 4ef05eded9983cd4091a8271dfaf1c3b, type: 2}
@@ -25,5 +25,5 @@ MonoBehaviour:
   drainInc: 0a00000001000000
   gainBase: e8030000c800000032000000
   gainInc: 640000001900000005000000
-  eqBase: 
-  eqInc: 
+  eqBase: 88130000e8030000fa000000
+  eqInc: 260200006e0000001b000000

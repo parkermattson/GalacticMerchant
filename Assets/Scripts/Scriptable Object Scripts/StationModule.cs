@@ -6,11 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Station Module", menuName = "Station Module")]
 public class StationModule : ScriptableObject {
 
-	public float moduleLevel = 1f;
+	public float initLevel = 1f;
+	float moduleLevel = 1f;
 	public int moneyBase, moneyInc;
 	public List<Item> drainItems, gainItems;
 	public List<int> drainBase, drainInc, gainBase, gainInc, eqBase, eqInc;
 	
+	public void Init()
+	{
+		moduleLevel = initLevel;
+	}
 
 	public void Refresh(Station station)
 	{
@@ -27,7 +32,8 @@ public class StationModule : ScriptableObject {
 			} else Debug.Log("Enough of " + drainItems[i].GetName());
 		}
 		
-		if (moneyNeeded <= station.stationMoney && enoughRes)
+		enoughRes = true;
+		if (moneyNeeded*10 <= station.stationMoney && enoughRes)
 		{
 			Debug.Log("Enough money. Money at: " + station.stationMoney.ToString());
 			station.stationMoney-=moneyNeeded;
@@ -35,12 +41,18 @@ public class StationModule : ScriptableObject {
 			{
 				tempStack.Init(drainItems[i], drainBase[i] + drainInc[i] * (int)moduleLevel);
 				tempStack.RemoveFromList(station.marketInv);
+				tempStack.Init(drainItems[i], eqBase[i] + eqInc[i] * (int)moduleLevel);
+				if (tempStack.FindInList(station.marketInv))
+				{
+					moduleLevel += .25f;
+				}
 			}
 			for (int i =0; i < gainItems.Count; i++)
 			{
 				tempStack.Init(gainItems[i], gainBase[i] + gainInc[i] * (int)moduleLevel);
 				tempStack.AddToList(station.marketInv);
 			}
+			
 			moduleLevel+=.25f;
 		}
 		else {

@@ -11,4 +11,8 @@ public class CrewTable : ScriptableObject {
 		return crewList;
 	}
 	
+	public Crew GetCrewAt(int index)
+	{
+		return crewList[index];
+	}
 }
