@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AcademyScreenScript : MonoBehaviour {
 	
@@ -53,6 +54,10 @@ public class AcademyScreenScript : MonoBehaviour {
 		{
 			tempBox = Instantiate(crewPrefab, recruitBox.transform);
 			tempBox.GetComponent<CrewSlot>().AddCrew(availableCrew[i]);
+			if (GameControl.instance.playerMoney < availableCrew[i].GetPrice())
+			{
+				tempBox.GetComponentInChildren<Button>().interactable = false;
+			}
 		}
 		
 	}

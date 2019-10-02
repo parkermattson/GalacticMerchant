@@ -76,14 +76,15 @@ public class GameControl : MonoBehaviour {
 		crewMembs[0].SetStats(playerStats);
 	}
 	
-	public void Save()
+	public void Save(String saveName)
 	{
 		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
+		FileStream file = File.Create(Application.persistentDataPath + "/" + saveName + ".dat");
 		
 		GameData saveData = new GameData();
 		
 		//Assign local data to savedata here
+		saveData.saveName = saveName;
 		saveData.playerMoney = playerMoney;
 		saveData.playerName = playerName;
 		saveData.playerStats = playerStats;
@@ -102,12 +103,12 @@ public class GameControl : MonoBehaviour {
 		
 	}
 	
-	public void Load()
+	public void Load(String saveName)
 	{
-		if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+		if (File.Exists(Application.persistentDataPath + "/" + saveName + ".dat"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+			FileStream file = File.Open(Application.persistentDataPath + "/" + saveName + ".dat", FileMode.Open);
 			GameData loadData = (GameData)bf.Deserialize(file);
 			file.Close();
 			
@@ -183,7 +184,7 @@ public class GameControl : MonoBehaviour {
 	[Serializable]
 	class GameData
 	{
-		public string playerName;
+		public string saveName, playerName;
 		public int playerMoney, playerRace, playerAvatar;
 		public int[] playerStats;
 		public Crew[] crewMembs;

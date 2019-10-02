@@ -38,6 +38,7 @@ public class CrewSlot : MonoBehaviour {
 	{
 		Station station = (Station)GameControl.instance.playerLocation;
 		GameControl.instance.HireCrew(crew);
+		GameControl.instance.playerMoney -= crew.GetPrice();
 		station.GetCrewTable().GetCrewList().Remove(crew);
 		station.GetAvailableCrew().Remove(crew);
 		GetComponentInParent<AcademyScreenScript>().UpdateRecruitmentList();
