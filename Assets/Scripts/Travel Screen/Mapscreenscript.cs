@@ -194,6 +194,28 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
 			tempLocation.GetComponent<LocationScript>().location = l;
 			tempLocation.transform.localPosition = l.mapPosition;
+			switch (l.locationType)
+			{
+				case LocationType.Natural:
+					tempLocation.GetComponent<Image>().color = Color.green;
+					break;
+					
+				case LocationType.Anomaly:
+					tempLocation.GetComponent<Image>().color = new Color(.6f, 0f, .6f, 1f);
+					break;
+					
+				case LocationType.Distress:
+					tempLocation.GetComponent<Image>().color = Color.yellow;
+					break;
+					
+				case LocationType.Transmission:
+					tempLocation.GetComponent<Image>().color = Color.cyan;
+					break;
+					
+				case LocationType.Conflict:
+					tempLocation.GetComponent<Image>().color = Color.red;
+					break;
+			}
 		}
 		
 		foreach (Station l in GameControl.instance.stations)
@@ -202,7 +224,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);
 			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
 			tempLocation.GetComponent<LocationScript>().location = l;
-			tempLocation.GetComponent<Image>().color = Color.red;
+			tempLocation.GetComponent<Image>().color = Color.blue;
 			tempLocation.transform.localPosition = l.mapPosition;
 		}
 	}

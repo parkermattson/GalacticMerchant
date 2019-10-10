@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum LocationType {Station, Empty, Planet, Nebula, AsteroidField, Outpost}
+public enum LocationType {Station, Empty, Anomaly, Transmission, Distress, Conflict,  Natural}
 
 [CreateAssetMenu(fileName = "New Location", menuName = "Locations/Location")]
 public class Location : ScriptableObject {

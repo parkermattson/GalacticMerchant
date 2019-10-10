@@ -7,7 +7,6 @@ public enum ItemType {RawMat, RefMat, Component, IndGood, ConsGood, Agricultural
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
 public class Item : ScriptableObject {
 
-	public int itemID = 0;
 	public string itemName = "Name";
 	public string itemDesc = "Item Description";
 	public Sprite icon = null;
@@ -17,11 +16,6 @@ public class Item : ScriptableObject {
 	public int itemWeight = 0;
 	public bool isStackable = true;
 	public int priceRange, medianQuant, quantityRange;
-	
-	public int GetID()
-	{
-		return itemID;
-	}
 	
 	public string GetName()
 	{

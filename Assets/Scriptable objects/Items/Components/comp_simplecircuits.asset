@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5367d467af69b64b8d153b4a688567f, type: 3}
+  m_Name: comp_simplecircuits
+  m_EditorClassIdentifier: 
+  itemName: Simple Circuits
+  itemDesc: Various basic microchips used in less complicated machinery
+  icon: {fileID: 0}
+  itemTier: 2
+  itemType: 2
+  itemValue: 25
+  itemWeight: 0
+  isStackable: 1
+  priceRange: 10
+  medianQuant: 500
+  quantityRange: 200

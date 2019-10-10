@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5367d467af69b64b8d153b4a688567f, type: 3}
+  m_Name: mil_infequip
+  m_EditorClassIdentifier: 
+  itemName: Infantry Equipment
+  itemDesc: This is infantry equipment
+  icon: {fileID: 21300000, guid: 7068049b334057343a1ca60218c91839, type: 3}
+  itemTier: 1
+  itemType: 9
+  itemValue: 50
+  itemWeight: 1
+  isStackable: 1
+  priceRange: 25
+  medianQuant: 100
+  quantityRange: 50

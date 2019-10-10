@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5367d467af69b64b8d153b4a688567f, type: 3}
+  m_Name: mil_tavehicle
+  m_EditorClassIdentifier: 
+  itemName: Tri-phibious Armored Vehicle
+  itemDesc: This is a TAV
+  icon: {fileID: 21300000, guid: 7068049b334057343a1ca60218c91839, type: 3}
+  itemTier: 3
+  itemType: 9
+  itemValue: 1000
+  itemWeight: 1
+  isStackable: 1
+  priceRange: 500
+  medianQuant: 10
+  quantityRange: 7

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Test Location 3
   locationDesc: This is Test Location 3
+  locationType: 4
   icon: {fileID: 0}
   mapPosition: {x: -200, y: -750}
