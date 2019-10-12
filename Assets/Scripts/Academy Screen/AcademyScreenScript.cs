@@ -33,11 +33,12 @@ public class AcademyScreenScript : MonoBehaviour {
 		mission1.missionName = "Courier Mission 1";
 		mission1.missionType = MissionType.Courier;
 		mission1.rewardMoney = 10000;
-		mission1.cargoList.Add(tempStack.Init(testItem1, 100));
+		mission1.cargoList.Add(tempStack.Init(testItem1, 1));
 		tempStack = ScriptableObject.CreateInstance<ItemStack>();
-		mission1.cargoList.Add(tempStack.Init(testItem2, 500));
+		mission1.cargoList.Add(tempStack.Init(testItem2, 2));
 		tempStack = ScriptableObject.CreateInstance<ItemStack>();
-		mission1.rewardItems.Add(tempStack.Init(testItem3, 1000));
+		mission1.rewardItems.Add(tempStack.Init(testItem3, 3));
+		mission1.source = station;
 		mission1.destination = station;
 		availableMissions.Add(mission1);
 		
@@ -51,12 +52,13 @@ public class AcademyScreenScript : MonoBehaviour {
 		mission2.cargoList.Add(tempStack.Init(testItem3, 400));
 		tempStack = ScriptableObject.CreateInstance<ItemStack>();
 		mission2.rewardItems.Add(tempStack.Init(testItem1, 500));
+		mission2.source = station;
 		mission2.destination = station;
 		availableMissions.Add(mission2);
 	}
 	
 
-	void UpdateMissionList()
+	public void UpdateMissionList()
 	{
 		GameObject tempBox;
 		
@@ -69,6 +71,17 @@ public class AcademyScreenScript : MonoBehaviour {
 		{
 			tempBox = Instantiate(missionPrefab, missionBox.transform);
 			tempBox.GetComponent<MissionSlot>().AddMission(availableMissions[i]);
+		}
+		
+		for (int i = 0; i < playerMissionBox.transform.childCount; i++)
+		{
+			Destroy(playerMissionBox.transform.GetChild(i).gameObject);
+		}
+		
+		for (int i = 0; i  < GameControl.instance.acceptedMissions.Count; i++)
+		{
+			tempBox = Instantiate(playerMissionPrefab, playerMissionBox.transform);
+			tempBox.GetComponent<AcceptedMissionSlot>().AddMission(GameControl.instance.acceptedMissions[i]);
 		}
 		
 	}

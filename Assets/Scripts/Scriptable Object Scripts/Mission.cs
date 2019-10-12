@@ -8,7 +8,8 @@ public abstract class Mission : ScriptableObject {
 
 	public string missionName = "Mission Name";
 	public MissionType missionType = MissionType.Combat;
-	public Station destination;
+	public Station source;
+	public bool completed = false;
 	public int rewardMoney = 0;
 	public List<ItemStack> rewardItems = new List<ItemStack>();
 	public List<Equipment> rewardEquips = new List<Equipment>();

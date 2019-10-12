@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MissionSlot : MonoBehaviour {
+public class AcceptedMissionSlot : MonoBehaviour {
 
 	public Mission mission;
 	
@@ -14,7 +14,7 @@ public class MissionSlot : MonoBehaviour {
 	public TextMeshProUGUI locationText;
 	public TextMeshProUGUI descText;
 	public TextMeshProUGUI rewardText;
-	public Button acceptButton;
+	public Button turnInButton, deliverButton;
 	
 	public void AddMission(Mission newMission)
 	{
@@ -22,7 +22,7 @@ public class MissionSlot : MonoBehaviour {
 		mission = newMission;
 		nameText.text = mission.missionName;
 		descText.text = mission.GetDesc();
-		locationText.text = mission.source.GetName();
+		locationText.text = "Location: " + mission.source.GetName();
 		if (mission.rewardMoney > 0) {
 			rewardString = mission.rewardMoney.ToString() + " SB";
 			if (mission.rewardItems.Count > 0 || mission.rewardEquips.Count > 0)
@@ -44,20 +44,62 @@ public class MissionSlot : MonoBehaviour {
 		}
 		rewardText.text = rewardString;
 		
-		if (GameControl.instance.acceptedMissions.Count >= 5)
-			acceptButton.interactable = false;
+		CheckMissionStatus();
+		
+	}
+	
+	void CheckMissionStatus()
+	{
+		if (mission.completed) turnInButton.interactable = true;
+		else turnInButton.interactable = false;
+		
+		switch (mission.missionType)
+		{
+			case MissionType.Courier:
+				MissionCourier courMission = (MissionCourier)mission;
+				bool ready = true;
+				foreach (ItemStack stack in courMission.cargoList)
+				{
+					if (!Inventory.instance.FindItem(stack))
+						ready = false;
+				}
+				if (!ready)
+				{
+					deliverButton.gameObject.SetActive(true);
+					deliverButton.interactable = false;
+				}
+				break;
+			default: break;
+		}
+	}
+	
+	public void DeliverCargo()
+	{
+			MissionCourier courMission = (MissionCourier)mission;
+			foreach (ItemStack stack in courMission.cargoList)
+			{
+				Inventory.instance.RemoveItem(stack);
+			}
+			courMission.completed = true;
+			CheckMissionStatus();
+	}
+	
+	public void TurnInMission()
+	{
+		GameControl.instance.playerMoney += mission.rewardMoney;
+		foreach (ItemStack stack in mission.rewardItems)
+			Inventory.instance.AddItem(stack);
+		
+		foreach (Equipment equip in mission.rewardEquips)
+			Inventory.instance.AddEquipment(equip);
+		
+		GameControl.instance.acceptedMissions.Remove(mission);
+		GetComponentInParent<AcademyScreenScript>().UpdateMissionList();
 	}
 	
 	public Mission GetMission()
 	{
 		return mission;
-	}
-	
-	public void AcceptMission()
-	{
-		GameControl.instance.acceptedMissions.Add(mission);
-		GetComponentInParent<AcademyScreenScript>().availableMissions.Remove(mission);
-		GetComponentInParent<AcademyScreenScript>().UpdateMissionList();
 	}
 	
 }

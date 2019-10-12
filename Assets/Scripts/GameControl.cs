@@ -24,6 +24,7 @@ public class GameControl : MonoBehaviour {
     public Location playerLocation;
 	public DateTime gameTime, lastWeek;
 	public List<Station> initStations, stations;
+	public List<Mission> acceptedMissions = new List<Mission>();
 	
 	public Sprite[] avatars = new Sprite[3];
 	public Sprite[] races = new Sprite[3];

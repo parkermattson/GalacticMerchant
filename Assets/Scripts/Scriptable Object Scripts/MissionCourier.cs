@@ -7,6 +7,7 @@ using UnityEngine;
 public class MissionCourier : Mission {
 
 	public List<ItemStack>  cargoList = new List<ItemStack>();
+	public Station destination;
 	
 	public override string GetDesc() {
 		string description = "Bring ";
