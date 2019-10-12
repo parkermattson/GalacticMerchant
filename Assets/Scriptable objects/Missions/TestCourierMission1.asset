@@ -8,14 +8,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada5dbb033febd24492e494708b00a75, type: 3}
-  m_Name: TestMission1
+  m_Script: {fileID: 11500000, guid: f27f4aea57223694683e1c683c340ce2, type: 3}
+  m_Name: TestCourierMission1
   m_EditorClassIdentifier: 
-  missionName: Mission 1
-  missionDesc: This is mission 1
+  missionName: Courier Mission 1
+  missionDesc: Mission description
   missionType: 1
   rewardMoney: 1000
   rewardItems:
-  - {fileID: 11400000, guid: ba8a0293a881fd9478ed1486293000a2, type: 2}
-  rewardEquips:
-  - {fileID: 11400000, guid: 40719176ca4025f4c9edc97ee016f393, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquips: []
+  cargoList: []
+  destination: {fileID: 0}

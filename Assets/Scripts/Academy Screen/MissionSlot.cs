@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,16 +15,13 @@ public class MissionSlot : MonoBehaviour {
 	public TextMeshProUGUI descText;
 	public TextMeshProUGUI rewardText;
 	
-	public Image[] missionIcons = new Image[4];
-	
 	public void AddMission(Mission newMission)
 	{
 		string rewardString = "";
 		mission = newMission;
-		icon = missionIcons[(int)mission.missionType];
 		nameText.text = mission.missionName;
-		descText.text = mission.missionDesc;
-		locationText.text = "Location not added yet";
+		descText.text = mission.GetDesc();
+		locationText.text = mission.destination.GetName();
 		if (mission.rewardMoney > 0) {
 			rewardString = mission.rewardMoney.ToString() + " SB";
 			if (mission.rewardItems.Count > 0 || mission.rewardEquips.Count > 0)
@@ -31,12 +29,13 @@ public class MissionSlot : MonoBehaviour {
 		}	
 		if (mission.rewardItems.Count > 0)
 		{
-			for (int i = 0; i < mission.rewardItems.Count; i++)
+			for (int i = 0; i < mission.rewardItems.Count-1; i++)
 			{
-				rewardString = rewardString + mission.rewardItems[i].GetName();
+				rewardString = rewardString + mission.rewardItems[i].GetQuantity().ToString() + " " + mission.rewardItems[i].GetItem().GetName() + ", ";
 			}
+			rewardString = rewardString + mission.rewardItems.Last().GetQuantity().ToString() + " " + mission.rewardItems.Last().GetItem().GetName();
 			if (mission.rewardEquips.Count > 0)
-					rewardString = rewardString + ",  ";
+				rewardString = rewardString + ", ";
 		}
 		for (int i = 0; i < mission.rewardEquips.Count; i++)
 		{

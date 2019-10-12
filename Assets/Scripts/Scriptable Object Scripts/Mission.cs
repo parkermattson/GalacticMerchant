@@ -4,21 +4,19 @@ using UnityEngine;
 
 public enum MissionType {Combat, Courier, Mining, Express}
 
-[CreateAssetMenu(fileName = "New Mission", menuName = "Mission")]
-public class Mission : ScriptableObject {
+public abstract class Mission : ScriptableObject {
 
 	public string missionName = "Mission Name";
-	public string missionDesc = "Mission description";
 	public MissionType missionType = MissionType.Combat;
+	public Station destination;
 	public int rewardMoney = 0;
-	public List<Item> rewardItems;
-	public List<Equipment> rewardEquips;
+	public List<ItemStack> rewardItems = new List<ItemStack>();
+	public List<Equipment> rewardEquips = new List<Equipment>();
 	
 	public string GetName() {
 	return missionName; }
 	
-	public string GetDesc() {
-	return missionDesc; }
+	public abstract string GetDesc();
 	
 	public MissionType GetMissionType() {
 	return missionType; }
@@ -26,7 +24,7 @@ public class Mission : ScriptableObject {
 	public int GetRewardMoney() {
 	return rewardMoney; }
 	
-	public List<Item> GetRewardItems() {
+	public List<ItemStack> GetRewardItems() {
 	return rewardItems; }
 	
 	public List<Equipment> GetRewardEquips() {
