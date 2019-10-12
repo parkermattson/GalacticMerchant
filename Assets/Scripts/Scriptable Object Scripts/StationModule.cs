@@ -19,8 +19,12 @@ public class StationModule : ScriptableObject {
 
 	public void Refresh(Station station)
 	{
+		
+		
+		
 		bool enoughRes = true;
 		int moneyNeeded = moneyBase + moneyInc * (int)moduleLevel;
+		int productValue = 0, productCost = 0;
 		ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
 		for (int i =0; i < drainItems.Count; i++)
 		{
@@ -30,9 +34,29 @@ public class StationModule : ScriptableObject {
 				Debug.Log("Not enough of " + drainItems[i].GetName());
 				enoughRes = false;
 			} else Debug.Log("Enough of " + drainItems[i].GetName());
+			
+			int index = station.marketInv.FindIndex(x => x.GetItem() == drainItems[i]);
+			if (index != -1)
+				productValue += (drainBase[i] + drainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice();
+			else {
+				tempStack.Init(drainItems[i], 1);
+				productCost += (drainBase[i] + drainInc[i] * (int)moduleLevel) * tempStack.GetPrice();
+			}
+			
 		}
 		
-		enoughRes = true;
+		for (int i =0; i < gainItems.Count; i++)
+		{
+			int index = station.marketInv.FindIndex(x => x.GetItem() == gainItems[i]);
+			if (index != -1)
+				productValue += (gainBase[i] + gainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice();
+			else {
+				tempStack.Init(gainItems[i], 1);
+				productValue += (gainBase[i] + gainInc[i] * (int)moduleLevel) * tempStack.GetPrice();
+			}
+		}
+		
+		
 		if (moneyNeeded*10 <= station.stationMoney && enoughRes)
 		{
 			Debug.Log("Enough money. Money at: " + station.stationMoney.ToString());
@@ -42,10 +66,6 @@ public class StationModule : ScriptableObject {
 				tempStack.Init(drainItems[i], drainBase[i] + drainInc[i] * (int)moduleLevel);
 				tempStack.RemoveFromList(station.marketInv);
 				tempStack.Init(drainItems[i], eqBase[i] + eqInc[i] * (int)moduleLevel);
-				if (tempStack.FindInList(station.marketInv))
-				{
-					moduleLevel += .25f;
-				}
 			}
 			for (int i =0; i < gainItems.Count; i++)
 			{
@@ -53,14 +73,27 @@ public class StationModule : ScriptableObject {
 				tempStack.AddToList(station.marketInv);
 			}
 			
-			moduleLevel+=.25f;
-		}
-		else {
-			if (moduleLevel > 1) moduleLevel-=.25f;
+			if (moneyNeeded > 0)
+			{
+				if ((float)(productValue - (productCost + moneyNeeded))/(float)productValue > .15f)
+				moduleLevel +=.25f;
+			 else if ((float)(productValue - (productCost + moneyNeeded))/(float)productValue < 0 && moduleLevel > 1)
+				 moduleLevel -=.25f;
+			} else {
+				if ((float)(productValue - (productCost + moneyNeeded))/(float)(productValue - moneyNeeded) > .15f)
+				moduleLevel +=.25f;
+			 else if ((float)(productValue - (productCost + moneyNeeded))/(float)(productValue - moneyNeeded) < 0 && moduleLevel > 1)
+				 moduleLevel -=.25f;
+			}
+			 
+		} else {
 			Debug.Log("Not enough of money or resources. Money at: " + station.stationMoney.ToString());
+			if (moduleLevel > 1)
+				moduleLevel -=.25f;
 		}
 		
 		Debug.Log("Module Level" + moduleLevel.ToString());
 	}
+	
 	
 }

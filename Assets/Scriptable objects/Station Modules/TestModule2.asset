@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: TestModule2
   m_EditorClassIdentifier: 
   initLevel: 1
-  moneyBase: -1000
-  moneyInc: -75
+  moneyBase: -1250
+  moneyInc: -100
   drainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
   gainItems: []

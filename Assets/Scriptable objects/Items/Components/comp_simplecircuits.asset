@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Simple Circuits
   itemDesc: Various basic microchips used in less complicated machinery
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: de59210a60417c343bed07b382d3f7f7, type: 3}
   itemTier: 2
   itemType: 2
   itemValue: 25

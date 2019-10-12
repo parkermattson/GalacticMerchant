@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Fractal Geode
   itemDesc: A delicate and intricate crystal structure used to make compute crystals
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 18b4ce5107feb6d4e81156eb1df97955, type: 3}
   itemTier: 2
   itemType: 0
   itemValue: 12
