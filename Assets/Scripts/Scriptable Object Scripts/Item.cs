@@ -49,7 +49,7 @@ public class Item : ScriptableObject {
 	
 	public int CalculatePrice(int quantity)
 	{
-		int price = (int)(itemValue + priceRange/(1+Mathf.Pow(3,(float)(medianQuant - quantity)/(quantityRange/5f))));
+		int price = (int)(itemValue + priceRange - 2*priceRange/(1+Mathf.Pow(3,(float)(medianQuant - quantity)/(quantityRange/5f))));
 		return price;
 	} 
 }

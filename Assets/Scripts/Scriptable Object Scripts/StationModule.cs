@@ -18,10 +18,7 @@ public class StationModule : ScriptableObject {
 	}
 
 	public void Refresh(Station station)
-	{
-		
-		
-		
+	{		
 		bool enoughRes = true;
 		int moneyNeeded = moneyBase + moneyInc * (int)moduleLevel;
 		int productValue = 0, productCost = 0;
@@ -37,7 +34,7 @@ public class StationModule : ScriptableObject {
 			
 			int index = station.marketInv.FindIndex(x => x.GetItem() == drainItems[i]);
 			if (index != -1)
-				productValue += (drainBase[i] + drainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice();
+				productCost += (drainBase[i] + drainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice();
 			else {
 				tempStack.Init(drainItems[i], 1);
 				productCost += (drainBase[i] + drainInc[i] * (int)moduleLevel) * tempStack.GetPrice();
@@ -73,16 +70,19 @@ public class StationModule : ScriptableObject {
 				tempStack.AddToList(station.marketInv);
 			}
 			
+			int profitMargin = productValue - (productCost + moneyNeeded);
+			
+			Debug.Log("Value: " + productValue.ToString() + " Cost: " + productCost.ToString() + " Profit %: " + profitMargin.ToString());
 			if (moneyNeeded > 0)
 			{
-				if ((float)(productValue - (productCost + moneyNeeded))/(float)productValue > .15f)
+				if ((float)(profitMargin)/(float)productValue > .15f)
 				moduleLevel +=.25f;
-			 else if ((float)(productValue - (productCost + moneyNeeded))/(float)productValue < 0 && moduleLevel > 1)
+				else if ((float)(profitMargin)/(float)productValue < 0 && moduleLevel > 1)
 				 moduleLevel -=.25f;
 			} else {
-				if ((float)(productValue - (productCost + moneyNeeded))/(float)(productValue - moneyNeeded) > .15f)
+				if ((float)(profitMargin)/(float)(productValue - moneyNeeded) > .15f)
 				moduleLevel +=.25f;
-			 else if ((float)(productValue - (productCost + moneyNeeded))/(float)(productValue - moneyNeeded) < 0 && moduleLevel > 1)
+			 else if ((float)(profitMargin)/(float)(productValue - moneyNeeded) < 0 && moduleLevel > 1)
 				 moduleLevel -=.25f;
 			}
 			 
@@ -92,7 +92,7 @@ public class StationModule : ScriptableObject {
 				moduleLevel -=.25f;
 		}
 		
-		Debug.Log("Module Level" + moduleLevel.ToString());
+		Debug.Log("Module Level " + moduleLevel.ToString());
 	}
 	
 	

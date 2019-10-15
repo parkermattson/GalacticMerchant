@@ -7332,7 +7332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &267439626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28753,12 +28753,12 @@ Prefab:
     - target: {fileID: 224929842654401962, guid: a9b5fb3b7d1f4a04da4b7881a556fd01,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 768
       objectReference: {fileID: 0}
     - target: {fileID: 224929842654401962, guid: a9b5fb3b7d1f4a04da4b7881a556fd01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -178.2
       objectReference: {fileID: 0}
     - target: {fileID: 224929842654401962, guid: a9b5fb3b7d1f4a04da4b7881a556fd01,
         type: 2}
@@ -28778,7 +28778,7 @@ Prefab:
     - target: {fileID: 224929842654401962, guid: a9b5fb3b7d1f4a04da4b7881a556fd01,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224929842654401962, guid: a9b5fb3b7d1f4a04da4b7881a556fd01,
         type: 2}
@@ -28788,7 +28788,7 @@ Prefab:
     - target: {fileID: 224929842654401962, guid: a9b5fb3b7d1f4a04da4b7881a556fd01,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224929842654401962, guid: a9b5fb3b7d1f4a04da4b7881a556fd01,
         type: 2}
@@ -38619,12 +38619,12 @@ Prefab:
     - target: {fileID: 224154034838287104, guid: 7883db2a0603eca488febc55f53fd8a4,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 768
       objectReference: {fileID: 0}
     - target: {fileID: 224154034838287104, guid: 7883db2a0603eca488febc55f53fd8a4,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -178.2
       objectReference: {fileID: 0}
     - target: {fileID: 224154034838287104, guid: 7883db2a0603eca488febc55f53fd8a4,
         type: 2}
@@ -38644,7 +38644,7 @@ Prefab:
     - target: {fileID: 224154034838287104, guid: 7883db2a0603eca488febc55f53fd8a4,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224154034838287104, guid: 7883db2a0603eca488febc55f53fd8a4,
         type: 2}
@@ -38654,7 +38654,7 @@ Prefab:
     - target: {fileID: 224154034838287104, guid: 7883db2a0603eca488febc55f53fd8a4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224154034838287104, guid: 7883db2a0603eca488febc55f53fd8a4,
         type: 2}

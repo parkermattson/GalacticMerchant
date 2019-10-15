@@ -176,7 +176,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
 	public void WaitOneYear()
 	{
-		GameControl.instance.gameTime = GameControl.instance.gameTime.AddYears(1);
+		GameControl.instance.gameTime = GameControl.instance.gameTime.AddDays(365);
 	}
 	
 	void PlaceLocations()
