@@ -34,10 +34,10 @@ public class StationModule : ScriptableObject {
 			
 			int index = station.marketInv.FindIndex(x => x.GetItem() == drainItems[i]);
 			if (index != -1)
-				productCost += (drainBase[i] + drainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice();
+				productCost += Mathf.CeilToInt((drainBase[i] + drainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice(-(drainBase[i] + drainInc[i] * (int)moduleLevel)));
 			else {
 				tempStack.Init(drainItems[i], 1);
-				productCost += (drainBase[i] + drainInc[i] * (int)moduleLevel) * tempStack.GetPrice();
+				productCost += Mathf.CeilToInt((drainBase[i] + drainInc[i] * (int)moduleLevel) * tempStack.GetPrice(-(drainBase[i] + drainInc[i] * (int)moduleLevel)));
 			}
 			
 		}
@@ -46,10 +46,10 @@ public class StationModule : ScriptableObject {
 		{
 			int index = station.marketInv.FindIndex(x => x.GetItem() == gainItems[i]);
 			if (index != -1)
-				productValue += (gainBase[i] + gainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice();
+				productValue += Mathf.CeilToInt((gainBase[i] + gainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice(gainBase[i] + gainInc[i] * (int)moduleLevel));
 			else {
 				tempStack.Init(gainItems[i], 1);
-				productValue += (gainBase[i] + gainInc[i] * (int)moduleLevel) * tempStack.GetPrice();
+				productValue += Mathf.CeilToInt((gainBase[i] + gainInc[i] * (int)moduleLevel) * tempStack.GetPrice(gainBase[i] + gainInc[i] * (int)moduleLevel));
 			}
 		}
 		

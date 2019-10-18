@@ -17,14 +17,15 @@ public class MarketSlot : MonoBehaviour {
     public ItemStack itemStack;
 	public float price = 1;
 	public int slotQuant = 1;
+	bool isBuySlot = false;
+	Station station;
     
-    public void AddItemStack(ItemStack newItem, Station station, bool buySlot)
+    public void AddItemStack(ItemStack newItem, Station newStation, bool buySlot)
     {
+		station = newStation;
         itemStack = newItem;
-        price = station.priceTable.AdjustPrice(itemStack);
-		if (!buySlot) price *=.9f;
+		isBuySlot = buySlot;
 		CheckQuant();
-		
 		
         icon.sprite = itemStack.GetItem().icon;
         icon.enabled = true;
@@ -37,7 +38,7 @@ public class MarketSlot : MonoBehaviour {
         if (descText != null)
             descText.text = "Description: " + itemStack.GetItem().GetDescription();
         if (priceText != null)
-            priceText.SetText("{0}", price * slotQuant);
+            priceText.SetText("{0}(" + price.ToString("#.00") + ")", price * slotQuant);
     }
     
     public ItemStack GetItemStack()
@@ -66,8 +67,17 @@ public class MarketSlot : MonoBehaviour {
 	
 	public void UpdatePrice()
 	{
+		if (!isBuySlot)
+		{
+			int index = station.marketInv.FindIndex(x => x.GetItem() == itemStack.GetItem());
+			if (index != -1)
+				price = station.priceTable.AdjustPrice(station.marketInv[index], slotQuant);
+			else price = station.priceTable.AdjustPrice(itemStack, slotQuant);
+			price *=.9f;
+		} else price = station.priceTable.AdjustPrice(itemStack, -slotQuant);
+		
 		if (priceText != null)
-            priceText.SetText("{0}", price * slotQuant);
+            priceText.SetText("{0}(" + price.ToString("#.00") + ")", price * slotQuant);
 	}
 	
 	public void PlusMinusButton(bool plus)

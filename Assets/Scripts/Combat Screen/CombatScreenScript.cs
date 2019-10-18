@@ -11,9 +11,10 @@ public class CombatScreenScript : MonoBehaviour {
 	CombatIconScript switchedPlayerAttackIcon, switchedPlayerDefenseIcon, switchedEnemyAttackIcon, switchedEnemyDefenseIcon;
 	public Transform playerTimerBar, enemyTimerBar, playerHealthBar, enemyHealthBar;
 	bool combatStarted = false, playerAttackSwitching = false, playerDefenseSwitching = false, enemyAttackSwitching = false, enemyDefenseSwitching = false;
-	int playerMaxTimer = 1000, enemyMaxTimer = 1000, playerAttackMaxSwitch = 120, playerDefenseMaxSwitch = 90, 
-			enemyAttackMaxSwitch = 120, enemyDefenseMaxSwitch = 90, enemyThinkTime = 0, enemyHealth = 10, enemyHealthMax = 10;
-	float playerTimer = 0, enemyTimer = 0, playerAttackSwitchTimer = 0, playerDefenseSwitchTimer = 0, enemyAttackSwitchTimer = 0, enemyDefenseSwitchTimer = 0;
+	int  enemyHealth = 10, enemyHealthMax = 10;
+	float enemyAttackMaxSwitch = 2f, enemyDefenseMaxSwitch = 1.5f, enemyThinkTime = 0, 
+			playerMaxTimer = 10f, enemyMaxTimer = 10f, playerAttackMaxSwitch = 2f, playerDefenseMaxSwitch = 1.5f,
+			playerTimer = 0, enemyTimer = 0, playerAttackSwitchTimer = 0, playerDefenseSwitchTimer = 0, enemyAttackSwitchTimer = 0, enemyDefenseSwitchTimer = 0;
 	
 	void OnEnable()
 	{
@@ -27,56 +28,56 @@ public class CombatScreenScript : MonoBehaviour {
 		{
 			if (playerAttackSwitching)
 			{
-				playerAttackSwitchTimer+= Mathf.Lerp(0, 1, 1f/playerAttackMaxSwitch);
-				if (playerAttackSwitchTimer >= 1)
+				playerAttackSwitchTimer+= Time.deltaTime;
+				if (playerAttackSwitchTimer >= playerAttackMaxSwitch)
 				{
 					playerAttackSwitchTimer = 0;
 					SwitchPlayerSelectedAttack();
 					playerAttackSwitching = false;
 				}
-				switchedPlayerAttackIcon.FillCooldown(playerAttackSwitchTimer);
+				switchedPlayerAttackIcon.FillCooldown(playerAttackSwitchTimer/playerAttackMaxSwitch);
 			}
 			
 			if (playerDefenseSwitching)
 			{
-				playerDefenseSwitchTimer+= Mathf.Lerp(0, 1, 1f/playerDefenseMaxSwitch);
-				if (playerDefenseSwitchTimer >= 1)
+				playerDefenseSwitchTimer+= Time.deltaTime;
+				if (playerDefenseSwitchTimer >= playerDefenseMaxSwitch)
 				{
 					playerDefenseSwitchTimer = 0;
 					SwitchPlayerSelectedDefense();
 					playerDefenseSwitching = false;
 				}
-				switchedPlayerDefenseIcon.FillCooldown(playerDefenseSwitchTimer);
+				switchedPlayerDefenseIcon.FillCooldown(playerDefenseSwitchTimer/playerDefenseMaxSwitch);
 			}
 			
 			if (enemyAttackSwitching)
 			{
-				enemyAttackSwitchTimer+= Mathf.Lerp(0, 1, 1f/enemyAttackMaxSwitch);
-				if (enemyAttackSwitchTimer >= 1)
+				enemyAttackSwitchTimer+= Time.deltaTime;
+				if (enemyAttackSwitchTimer >= enemyAttackMaxSwitch)
 				{
 					enemyAttackSwitchTimer = 0;
 					SwitchEnemySelectedAttack();
 					enemyAttackSwitching = false;
 				}
-				switchedEnemyAttackIcon.FillCooldown(enemyAttackSwitchTimer);
+				switchedEnemyAttackIcon.FillCooldown(enemyAttackSwitchTimer/enemyAttackMaxSwitch);
 			}
 			
 			if (enemyDefenseSwitching)
 			{
-				enemyDefenseSwitchTimer+= Mathf.Lerp(0, 1, 1f/enemyDefenseMaxSwitch);
-				if (enemyDefenseSwitchTimer >= 1)
+				enemyDefenseSwitchTimer+= Time.deltaTime;
+				if (enemyDefenseSwitchTimer >= enemyDefenseMaxSwitch)
 				{
 					enemyDefenseSwitchTimer = 0;
 					SwitchEnemySelectedDefense();
 					enemyDefenseSwitching = false;
 				}
-				switchedEnemyDefenseIcon.FillCooldown(enemyDefenseSwitchTimer);
+				switchedEnemyDefenseIcon.FillCooldown(enemyDefenseSwitchTimer/enemyDefenseMaxSwitch);
 			}
 			
-			playerTimer+= Mathf.Lerp(0, 1, 1f/playerMaxTimer);
-			enemyTimer+= Mathf.Lerp(0, 1, 1f/enemyMaxTimer);
+			playerTimer+= Time.deltaTime;
+			enemyTimer+= Time.deltaTime;
 			
-			if (playerTimer >= 1)
+			if (playerTimer >= playerMaxTimer)
 			{
 				playerTimer = 0;
 				if (selectedPlayerAttackIcon.weapon != selectedEnemyDefenseIcon.weapon)
@@ -85,7 +86,7 @@ public class CombatScreenScript : MonoBehaviour {
 					enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, enemyHealthBar.localScale.y);
 				}
 			}
-			if (enemyTimer >= 1)
+			if (enemyTimer >= enemyMaxTimer)
 			{
 				enemyTimer = 0;
 				if (selectedEnemyAttackIcon.weapon != selectedPlayerDefenseIcon.weapon)
@@ -99,8 +100,8 @@ public class CombatScreenScript : MonoBehaviour {
 				}
 			}
 			
-			playerTimerBar.localScale = new Vector2 (playerTimer, playerTimerBar.transform.localScale.y);
-			enemyTimerBar.localScale = new Vector2 (enemyTimer, enemyTimerBar.transform.localScale.y);
+			playerTimerBar.localScale = new Vector2 (playerTimer/playerMaxTimer, playerTimerBar.transform.localScale.y);
+			enemyTimerBar.localScale = new Vector2 (enemyTimer/enemyMaxTimer, enemyTimerBar.transform.localScale.y);
 			
 			EnemyAI();
 			
@@ -178,9 +179,9 @@ public class CombatScreenScript : MonoBehaviour {
 	
 	void EnemyAI()
 	{
-		enemyThinkTime++;
+		enemyThinkTime+= Time.deltaTime;
 		
-		if (enemyThinkTime >= 60)
+		if (enemyThinkTime >= 1)
 		{
 			enemyThinkTime = 0;
 			

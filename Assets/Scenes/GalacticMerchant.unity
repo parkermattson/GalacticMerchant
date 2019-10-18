@@ -4170,7 +4170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &161150494
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5714,7 +5714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &205991207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12314,12 +12314,12 @@ Prefab:
     - target: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 444.23
       objectReference: {fileID: 0}
     - target: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100.43
       objectReference: {fileID: 0}
     - target: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -12374,17 +12374,17 @@ Prefab:
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 444.23
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50.215
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100.43
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -12394,7 +12394,7 @@ Prefab:
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -12404,7 +12404,7 @@ Prefab:
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114973002268911446, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -27095,11 +27095,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -48143,11 +48143,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -50685,11 +50685,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -61107,11 +61107,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -62486,11 +62486,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

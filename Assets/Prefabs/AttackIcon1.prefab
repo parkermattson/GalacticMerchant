@@ -307,6 +307,7 @@ MonoBehaviour:
   isSelected: 0
   isAvailable: 0
   isAttack: 1
+  isPlayer: 0
   weapon: 0
 --- !u!114 &114943654252372466
 MonoBehaviour:

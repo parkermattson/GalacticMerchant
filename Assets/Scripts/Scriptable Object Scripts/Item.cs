@@ -47,9 +47,19 @@ public class Item : ScriptableObject {
 		return itemWeight;
 	}
 	
-	public int CalculatePrice(int quantity)
+	public float CalculatePrice(int quantity, int startQuantity)
 	{
-		int price = (int)(itemValue + priceRange - 2*priceRange/(1+Mathf.Pow(3,(float)(medianQuant - quantity)/(quantityRange/5f))));
+		//int price = (int)(itemValue + priceRange - 2*priceRange/(1+Mathf.Pow(3,(float)(medianQuant - quantity)/(quantityRange/5f))));
+		if (startQuantity + quantity < 1)
+		{
+			quantity = 1-startQuantity;
+		}
+		float priceA = startQuantity * (itemValue + priceRange) - (2f*priceRange*(quantityRange/5f)*Mathf.Log(Mathf.Pow(3f, medianQuant/(quantityRange/5f)) + Mathf.Pow(3f, startQuantity/(quantityRange/5f)))/Mathf.Log(3f));
+		float priceB = (startQuantity+quantity) * (itemValue + priceRange) - (2f*priceRange*(quantityRange/5f)*Mathf.Log(Mathf.Pow(3f, medianQuant/(quantityRange/5f)) + Mathf.Pow(3f, (startQuantity + quantity)/(quantityRange/5f)))/Mathf.Log(3f));
+		
+		if (quantity == 0) quantity=1;
+		
+		float price = (priceB-priceA)/(float)quantity;
 		return price;
 	} 
 }

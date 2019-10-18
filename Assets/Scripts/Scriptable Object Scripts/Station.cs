@@ -38,6 +38,7 @@ public class Station : Location {
 	public void Init()
 	{
 		marketInv = stockTable.GenerateStock();
+		priceTable = ScriptableObject.CreateInstance<MarketPriceTable>();
 		crewPool = Instantiate(initCrewPool);
 		GenerateCrewList();
 		foreach (Factory f in initFactories)
@@ -47,6 +48,15 @@ public class Station : Location {
 		foreach (StationModule m in modules)
 		{
 			m.Init();
+			foreach (Item drain in m.drainItems)
+			{
+				priceTable.AddDrain(drain);
+			}
+			
+			foreach (Item gain in m.gainItems)
+			{
+				priceTable.AddGain(gain);
+			}
 		}
 	}
 	

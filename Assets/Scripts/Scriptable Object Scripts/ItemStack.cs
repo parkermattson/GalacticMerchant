@@ -31,9 +31,10 @@ public class ItemStack : ScriptableObject {
 		quantity+=newQuantity;
 	}
 	
-	public int GetPrice()
+	public float GetPrice(int addedQuantity)
 	{
-		return item.CalculatePrice(quantity);
+		float price = item.CalculatePrice(addedQuantity, quantity);
+		return price;
 	}
 	
 	public void AddToList(List<ItemStack> itemList)
