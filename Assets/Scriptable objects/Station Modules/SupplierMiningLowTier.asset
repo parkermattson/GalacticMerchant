@@ -9,13 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
-  m_Name: TestModule4
+  m_Name: SupplierMiningLowTier
   m_EditorClassIdentifier: 
+  initLevel: 1
+  moneyBase: 3500
+  moneyInc: 550
   drainItems: []
-  gainItems: []
+  gainItems:
+  - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
+  - {fileID: 11400000, guid: 6478c21bdb04b394fa883ac5ec2af684, type: 2}
+  - {fileID: 11400000, guid: 4ef05eded9983cd4091a8271dfaf1c3b, type: 2}
   drainBase: 
   drainInc: 
-  gainBase: 
-  gainInc: 
+  gainBase: 64000000640000000a000000
+  gainInc: 0a0000000a00000001000000
   eqBase: 
   eqInc: 

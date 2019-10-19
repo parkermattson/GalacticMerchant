@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
-  m_Name: TestModule1
+  m_Name: RawMatsLowTier
   m_EditorClassIdentifier: 
   initLevel: 1
   moneyBase: 4500
@@ -19,11 +19,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ef05eded9983cd4091a8271dfaf1c3b, type: 2}
   gainItems:
   - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
-  - {fileID: 11400000, guid: 5ce5ed507e2186b4b8dbc7d81ca2c51b, type: 2}
-  - {fileID: 11400000, guid: 54c0daa67495c6c4a94ef2fe025bf1c1, type: 2}
+  - {fileID: 11400000, guid: d6d7dcc586e73bb458694939f2d1de91, type: 2}
+  - {fileID: 11400000, guid: c95ffe90d54aab44dabcb7504a55bf4c, type: 2}
   drainBase: 640000000a000000
   drainInc: 0a00000001000000
-  gainBase: e8030000c800000032000000
-  gainInc: 640000001900000005000000
-  eqBase: 88130000e8030000fa000000
-  eqInc: 260200006e0000001b000000
+  gainBase: e80300008403000020030000
+  gainInc: 640000005a00000050000000
+  eqBase: 8813000094110000a00f0000
+  eqInc: 26020000f4010000c2010000

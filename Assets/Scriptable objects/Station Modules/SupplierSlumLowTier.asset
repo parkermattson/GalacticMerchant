@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
-  m_Name: TestModule2
+  m_Name: SupplierSlumLowTier
   m_EditorClassIdentifier: 
   initLevel: 1
-  moneyBase: -1250
-  moneyInc: -100
-  drainItems:
+  moneyBase: 1100
+  moneyInc: 100
+  drainItems: []
+  gainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
-  gainItems: []
-  drainBase: 64000000
-  drainInc: 0a000000
-  gainBase: 
-  gainInc: 
-  eqBase: 2c010000
-  eqInc: 21000000
+  drainBase: 
+  drainInc: 
+  gainBase: 64000000
+  gainInc: 0a000000
+  eqBase: f4010000
+  eqInc: 32000000

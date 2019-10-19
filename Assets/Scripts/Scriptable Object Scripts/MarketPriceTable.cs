@@ -38,7 +38,7 @@ public class MarketPriceTable : ScriptableObject {
 				adjustedItems[gain.GetName()] = 1f;
 		}
 		else {
-			adjustedItems[gain.GetName()] = .9f;
+			adjustedItems[gain.GetName()] = 1f;
 		}
 	}
 	

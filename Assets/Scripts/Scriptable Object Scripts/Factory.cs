@@ -13,7 +13,7 @@ public class Factory : ScriptableObject {
     public List<Recipe> queueRecipe;
     public List<int> queueAmt;
     public float currentQueueTime = 0;
-    bool isOwned = false;
+    //bool isOwned = false;
     
 	public void Refresh(float deltaTime)
 	{
