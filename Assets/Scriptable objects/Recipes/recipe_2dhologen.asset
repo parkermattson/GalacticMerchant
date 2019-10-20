@@ -9,14 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e63a4cc8bd0981f41adf35b8a6c0dbf9, type: 3}
-  m_Name: TestRecipe7
+  m_Name: recipe_2dhologen
   m_EditorClassIdentifier: 
   recipeName: Fabricate 2D Holo Generator
-  recipeDescription: Turn rigidium plates and compute crystals into a 2D holo generator
+  recipeDescription: Assemble 2D hologram generators from rigidium plates, simple
+    circuits, and holo-projection lenses
   ingredients:
   - {fileID: 11400000, guid: 86f4d3ef8e5a2554980b3e3fb8f050e1, type: 2}
-  - {fileID: 11400000, guid: f3e6c9aeb3f797d4a9c816367c8e6c5f, type: 2}
-  ingredientQuantities: 0500000002000000
+  - {fileID: 11400000, guid: f897050b35b45b84492344f8d7e13857, type: 2}
+  - {fileID: 11400000, guid: 06b0975517ac8e247b206c9cb250d07d, type: 2}
+  ingredientQuantities: 14000000140000000a000000
   product: {fileID: 11400000, guid: 147d9d488b7a66840a5840632841ad15, type: 2}
-  productQuantity: 1
-  completionTime: 15
+  productQuantity: 10
+  completionTime: 3

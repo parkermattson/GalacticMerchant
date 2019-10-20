@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5367d467af69b64b8d153b4a688567f, type: 3}
-  m_Name: comp_rigidiumplate
+  m_Name: ag_spacepotato
   m_EditorClassIdentifier: 
-  itemName: Rigidium Plate
-  itemDesc: This is a rigidium plate
-  icon: {fileID: 21300000, guid: de59210a60417c343bed07b382d3f7f7, type: 3}
-  itemTier: 2
-  itemType: 2
-  itemValue: 20
-  itemWeight: 1
+  itemName: Space Potato
+  itemDesc: A bland raw vegetable used as a base for a variety of space cuisine
+  icon: {fileID: 21300000, guid: 1a425ab27620416498523fdb710cb1a9, type: 3}
+  itemTier: 1
+  itemType: 5
+  itemValue: 3
+  itemWeight: 0
   isStackable: 1
-  priceRange: 12
-  medianQuant: 1000
-  quantityRange: 750
+  priceRange: 2
+  medianQuant: 3000
+  quantityRange: 2000

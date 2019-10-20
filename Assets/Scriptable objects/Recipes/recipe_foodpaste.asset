@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63a4cc8bd0981f41adf35b8a6c0dbf9, type: 3}
+  m_Name: recipe_foodpaste
+  m_EditorClassIdentifier: 
+  recipeName: Cook food paste
+  recipeDescription: Create a food-like paste from space potatoes
+  ingredients:
+  - {fileID: 11400000, guid: aea6c09b5cfd1c04893f700ec1a93ae6, type: 2}
+  ingredientQuantities: 1e000000
+  product: {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
+  productQuantity: 10
+  completionTime: 3

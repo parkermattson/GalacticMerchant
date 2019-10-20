@@ -8,16 +8,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ebd9bb4cff68d64aa2b2a9f51f88e09, type: 3}
-  m_Name: PopulousMarketStock
+  m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
+  m_Name: SupplierPopulousLowTier
   m_EditorClassIdentifier: 
-  items:
+  initLevel: 1
+  moneyBase: 19000
+  moneyInc: 2000
+  drainItems: []
+  gainItems:
   - {fileID: 11400000, guid: f897050b35b45b84492344f8d7e13857, type: 2}
   - {fileID: 11400000, guid: 86f4d3ef8e5a2554980b3e3fb8f050e1, type: 2}
   - {fileID: 11400000, guid: 06b0975517ac8e247b206c9cb250d07d, type: 2}
   - {fileID: 11400000, guid: aea6c09b5cfd1c04893f700ec1a93ae6, type: 2}
-  - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
-  - {fileID: 11400000, guid: 147d9d488b7a66840a5840632841ad15, type: 2}
   - {fileID: 11400000, guid: ab22b8ce1d0492341817dde008cccde6, type: 2}
-  eqQuantity: f4010000f4010000fa000000e8030000fa000000fa000000fa000000
-  maxQuantity: c8000000c800000064000000f40100002c0100006400000064000000
+  drainBase: 
+  drainInc: 
+  gainBase: c8000000c8000000640000002c01000064000000
+  gainInc: 14000000140000000a0000001e0000000a000000
+  eqBase: c4090000c4090000e8030000b80b0000dc050000
+  eqInc: fa000000fa000000640000002c01000096000000

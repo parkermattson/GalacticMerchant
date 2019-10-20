@@ -29,4 +29,6 @@ MonoBehaviour:
   marketInv: []
   stationMoney: 10000
   modules:
+  - {fileID: 11400000, guid: bb4efe3468df58641befb21a84082d5b, type: 2}
   - {fileID: 11400000, guid: 3194dbb67be91c744aaa782d7c559ca0, type: 2}
+  - {fileID: 11400000, guid: f238130445cf9304f896d3256c819f5a, type: 2}

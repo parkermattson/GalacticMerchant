@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63a4cc8bd0981f41adf35b8a6c0dbf9, type: 3}
+  m_Name: recipe_knockout
+  m_EditorClassIdentifier: 
+  recipeName: Synthesize Knockout
+  recipeDescription: Create knockout from toxygen, cycloric acid, and zetanine
+  ingredients:
+  - {fileID: 11400000, guid: 877770a1799e483488887a2272dd74ce, type: 2}
+  - {fileID: 11400000, guid: 18baf29d95ba5f942805725208f05556, type: 2}
+  - {fileID: 11400000, guid: 305ff04e1b3f7264e902d1eac68eec91, type: 2}
+  ingredientQuantities: fa0000007d00000032000000
+  product: {fileID: 11400000, guid: 55536716fa00b1a4c85f5ff900879627, type: 2}
+  productQuantity: 25
+  completionTime: 10

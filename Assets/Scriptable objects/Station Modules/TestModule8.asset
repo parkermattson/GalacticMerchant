@@ -9,8 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
-  m_Name: TestModule6
+  m_Name: TestModule8
   m_EditorClassIdentifier: 
+  initLevel: 1
   moneyBase: 0
   moneyInc: 0
   drainItems: []
