@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: PopulationLowTier
   m_EditorClassIdentifier: 
-  initLevel: 1
+  initLevel: 0
   moneyBase: -1250
   moneyInc: -100
   drainItems:

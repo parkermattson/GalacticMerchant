@@ -10,11 +10,14 @@ public class MarketPriceTable : ScriptableObject {
 
 	public float AdjustPrice(ItemStack stack, int quantity)
 	{
-		float multiplier = 1f;
+		float multiplier = .33f;
 		if (adjustedItems.ContainsKey(stack.GetItem().GetName()))
 			multiplier = adjustedItems[stack.GetItem().GetName()];
 		
-		float price = stack.GetPrice(quantity) * multiplier;
+		float price = stack.GetPrice(quantity);
+		Debug.Log("Pre-mult " + stack.GetItem().GetName() + " price: " + price.ToString("#.00"));
+		price *= multiplier;
+		Debug.Log("Post-mult " + stack.GetItem().GetName() + " price: " + price.ToString("#.00"));
 		return price;
 	}
 	

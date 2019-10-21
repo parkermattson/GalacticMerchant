@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
+  m_Name: RefLowTier
+  m_EditorClassIdentifier: 
+  initLevel: 0
+  moneyBase: 3240
+  moneyInc: 324
+  drainItems:
+  - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
+  - {fileID: 11400000, guid: d6d7dcc586e73bb458694939f2d1de91, type: 2}
+  - {fileID: 11400000, guid: 6eccf6470d011f24089a36de64b7e7ef, type: 2}
+  - {fileID: 11400000, guid: 44bb8fa845fc5b64badaa1b5e66c7b3b, type: 2}
+  gainItems:
+  - {fileID: 11400000, guid: 2f625d5cb50bb3c4496db4ac6ae8aefc, type: 2}
+  - {fileID: 11400000, guid: c8791a74fcf0c27429a2c4e279f64aea, type: 2}
+  - {fileID: 11400000, guid: 5629ae2d382d5944eaf291b2c5202a7b, type: 2}
+  - {fileID: 11400000, guid: 16bd0e942e95491499df897e686a2378, type: 2}
+  drainBase: b0040000e8030000580200008c000000
+  drainInc: 96000000780000003c0000000e000000
+  gainBase: 84030000ee020000f401000028000000
+  gainInc: 64000000500000003200000004000000
+  eqBase: 88130000a00f0000c4090000e2040000
+  eqInc: f401000090010000fa0000007d000000

@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Name: SlumMarketStock
   m_EditorClassIdentifier: 
   items:
+  - {fileID: 11400000, guid: 877770a1799e483488887a2272dd74ce, type: 2}
+  - {fileID: 11400000, guid: 18baf29d95ba5f942805725208f05556, type: 2}
+  - {fileID: 11400000, guid: 1592fde65ded9254b99122d45970863f, type: 2}
+  - {fileID: 11400000, guid: 11a96ebcbe3c2fb458218eca098168cc, type: 2}
+  - {fileID: 11400000, guid: 2cf43bc5f0538ca4facdf7ad3d8aa642, type: 2}
+  - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
+  - {fileID: 11400000, guid: 59c679a8958033641afba4f31a9ff039, type: 2}
+  - {fileID: 11400000, guid: 0397c447301ec9645ab71e994632541c, type: 2}
   - {fileID: 11400000, guid: 2f625d5cb50bb3c4496db4ac6ae8aefc, type: 2}
-  - {fileID: 11400000, guid: 86f4d3ef8e5a2554980b3e3fb8f050e1, type: 2}
-  - {fileID: 11400000, guid: 55536716fa00b1a4c85f5ff900879627, type: 2}
-  eqQuantity: c80000006400000005000000
-  maxQuantity: 640000002d0000000f000000
+  - {fileID: 11400000, guid: c8791a74fcf0c27429a2c4e279f64aea, type: 2}
+  eqQuantity: e8030000f4010000d0070000e8030000e8030000f4010000c800000064000000f40100002c010000
+  maxQuantity: c800000064000000f4010000f4010000c80000006400000032000000320000006400000064000000

@@ -18,12 +18,15 @@ MonoBehaviour:
   mapPosition: {x: 250, y: 0}
   stationType: 9
   stockTable: {fileID: 11400000, guid: 3a697e0631d52b647b6161f3a9a4016f, type: 2}
-  priceTable: {fileID: 11400000, guid: e1560a805d6b1734a8f66877ba31b798, type: 2}
+  priceTable: {fileID: 0}
   initCrewPool: {fileID: 11400000, guid: 9ac8ecfa595877143812805a48f4d8e8, type: 2}
   crewPool: {fileID: 0}
   race: 0
   initFactories: []
   factories: []
   marketInv: []
-  stationMoney: 10000
-  modules: []
+  stationMoney: 250000
+  modules:
+  - {fileID: 11400000, guid: 7171f2974bd75f941aeaf14d770f07b4, type: 2}
+  - {fileID: 11400000, guid: 3194dbb67be91c744aaa782d7c559ca0, type: 2}
+  - {fileID: 11400000, guid: e12a2fa37e713b94fa0877febb5a1f9b, type: 2}

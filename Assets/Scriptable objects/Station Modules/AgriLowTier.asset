@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
+  m_Name: AgriLowTier
+  m_EditorClassIdentifier: 
+  initLevel: 0
+  moneyBase: 225
+  moneyInc: 23
+  drainItems:
+  - {fileID: 11400000, guid: fc3639da09bd62743b551f7f914b0707, type: 2}
+  - {fileID: 11400000, guid: 587d4db674abbd547adb5736f78bf9c9, type: 2}
+  gainItems:
+  - {fileID: 11400000, guid: aea6c09b5cfd1c04893f700ec1a93ae6, type: 2}
+  drainBase: 9600000032000000
+  drainInc: 1400000006000000
+  gainBase: ee020000
+  gainInc: 4b000000
+  eqBase: b80b0000
+  eqInc: 2c010000

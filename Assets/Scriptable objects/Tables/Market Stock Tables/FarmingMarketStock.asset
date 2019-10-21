@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: FarmingMarketStock
   m_EditorClassIdentifier: 
   items:
+  - {fileID: 11400000, guid: fc3639da09bd62743b551f7f914b0707, type: 2}
+  - {fileID: 11400000, guid: 587d4db674abbd547adb5736f78bf9c9, type: 2}
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
-  - {fileID: 11400000, guid: ab22b8ce1d0492341817dde008cccde6, type: 2}
-  - {fileID: 11400000, guid: d92ae60acffddfe4bba1ab37e0ab22c7, type: 2}
   eqQuantity: f4010000fa00000064000000
   maxQuantity: f4010000fa00000064000000

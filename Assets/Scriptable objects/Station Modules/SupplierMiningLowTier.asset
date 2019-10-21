@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: SupplierMiningLowTier
   m_EditorClassIdentifier: 
-  initLevel: 1
-  moneyBase: 3500
-  moneyInc: 550
+  initLevel: 5
+  moneyBase: 5500
+  moneyInc: 750
   drainItems: []
   gainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}

@@ -20,5 +20,5 @@ MonoBehaviour:
   itemWeight: 1
   isStackable: 1
   priceRange: 3
-  medianQuant: 3500
-  quantityRange: 1500
+  medianQuant: 4000
+  quantityRange: 3250

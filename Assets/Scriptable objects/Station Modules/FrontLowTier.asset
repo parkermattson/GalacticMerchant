@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
+  m_Name: FrontLowTier
+  m_EditorClassIdentifier: 
+  initLevel: 0
+  moneyBase: 2025
+  moneyInc: 0
+  drainItems: []
+  gainItems:
+  - {fileID: 11400000, guid: 450df94a85ab63b44883119680830aa5, type: 2}
+  - {fileID: 11400000, guid: efb973b1ed7a966458457f2d0d18afea, type: 2}
+  - {fileID: 11400000, guid: e2d62fa740eaa8541ad8a1b780821294, type: 2}
+  drainBase: 
+  drainInc: 
+  gainBase: 010000000100000001000000
+  gainInc: 000000000000000000000000
+  eqBase: 000000000000000000000000
+  eqInc: 000000000000000000000000

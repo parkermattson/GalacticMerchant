@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Name: ManufacturingMarketStock
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: 86f4d3ef8e5a2554980b3e3fb8f050e1, type: 2}
-  - {fileID: 11400000, guid: f3e6c9aeb3f797d4a9c816367c8e6c5f, type: 2}
-  - {fileID: 11400000, guid: 1a3e337ce7480b840a1ba4af8cef07c1, type: 2}
-  - {fileID: 11400000, guid: 6478c21bdb04b394fa883ac5ec2af684, type: 2}
-  - {fileID: 11400000, guid: 4ef05eded9983cd4091a8271dfaf1c3b, type: 2}
-  - {fileID: 11400000, guid: a13079b4b5e52b5468b0f1e83b4d1649, type: 2}
-  eqQuantity: 900100006400000019000000c8000000640000000f000000
-  maxQuantity: 90010000320000000f00000064000000320000000a000000
+  - {fileID: 11400000, guid: 2f625d5cb50bb3c4496db4ac6ae8aefc, type: 2}
+  - {fileID: 11400000, guid: c8791a74fcf0c27429a2c4e279f64aea, type: 2}
+  - {fileID: 11400000, guid: 5629ae2d382d5944eaf291b2c5202a7b, type: 2}
+  - {fileID: 11400000, guid: 16bd0e942e95491499df897e686a2378, type: 2}
+  - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
+  eqQuantity: f40100002c010000c80000003200000064000000
+  maxQuantity: f40100002c010000c80000001900000064000000

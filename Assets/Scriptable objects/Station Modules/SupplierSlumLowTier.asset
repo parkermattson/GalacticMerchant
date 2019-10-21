@@ -11,19 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: SupplierSlumLowTier
   m_EditorClassIdentifier: 
-  initLevel: 1
-  moneyBase: 14000
-  moneyInc: 1420
+  initLevel: 5
+  moneyBase: 14500
+  moneyInc: 2175
   drainItems: []
   gainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
   - {fileID: 11400000, guid: 877770a1799e483488887a2272dd74ce, type: 2}
   - {fileID: 11400000, guid: 18baf29d95ba5f942805725208f05556, type: 2}
-  - {fileID: 11400000, guid: 305ff04e1b3f7264e902d1eac68eec91, type: 2}
   - {fileID: 11400000, guid: 1592fde65ded9254b99122d45970863f, type: 2}
+  - {fileID: 11400000, guid: 11a96ebcbe3c2fb458218eca098168cc, type: 2}
+  - {fileID: 11400000, guid: 2cf43bc5f0538ca4facdf7ad3d8aa642, type: 2}
   drainBase: 
   drainInc: 
-  gainBase: 6400000068010000960000001400000058020000
-  gainInc: 0a000000240000000f000000020000003c000000
-  eqBase: f4010000dc050000f40100009600000088130000
-  eqInc: 3200000096000000320000000f000000f4010000
+  gainBase: 640000006801000096000000580200002c0100002c010000
+  gainInc: 0a000000240000000f0000003c0000001e0000001e000000
+  eqBase: f4010000dc050000f401000088130000c4090000c4090000
+  eqInc: 320000009600000032000000f4010000fa000000fa000000

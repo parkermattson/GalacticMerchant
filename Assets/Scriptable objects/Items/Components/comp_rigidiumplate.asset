@@ -16,9 +16,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: de59210a60417c343bed07b382d3f7f7, type: 3}
   itemTier: 2
   itemType: 2
-  itemValue: 20
+  itemValue: 18
   itemWeight: 1
   isStackable: 1
-  priceRange: 12
+  priceRange: 8
   medianQuant: 1000
   quantityRange: 750

@@ -28,9 +28,9 @@ public class StationModule : ScriptableObject {
 			tempStack.Init(drainItems[i], drainBase[i] + drainInc[i] * (int)moduleLevel);
 			if (!tempStack.FindInList(station.marketInv))
 			{
-				Debug.Log("Not enough of " + drainItems[i].GetName());
+				//Debug.Log("Not enough of " + drainItems[i].GetName());
 				enoughRes = false;
-			} else Debug.Log("Enough of " + drainItems[i].GetName());
+			} //else Debug.Log("Enough of " + drainItems[i].GetName());
 			
 			int index = station.marketInv.FindIndex(x => x.GetItem() == drainItems[i]);
 			if (index != -1)
@@ -54,9 +54,9 @@ public class StationModule : ScriptableObject {
 		}
 		
 		
-		if (moneyNeeded*10 <= station.stationMoney && enoughRes)
+		if (moneyNeeded*5 <= station.stationMoney && enoughRes)
 		{
-			Debug.Log("Enough money. Money at: " + station.stationMoney.ToString());
+			//Debug.Log("Enough money. Money at: " + station.stationMoney.ToString());
 			station.stationMoney-=moneyNeeded;
 			for (int i =0; i < drainItems.Count; i++)
 			{
@@ -72,7 +72,7 @@ public class StationModule : ScriptableObject {
 			
 			int profitMargin = productValue - (productCost + moneyNeeded);
 			
-			Debug.Log("Value: " + productValue.ToString() + " Cost: " + productCost.ToString() + " Profit %: " + profitMargin.ToString());
+			//Debug.Log("Value: " + productValue.ToString() + " Cost: " + productCost.ToString() + " Profit %: " + profitMargin.ToString());
 			if (moneyNeeded > 0)
 			{
 				if ((float)(profitMargin)/(float)productValue > .15f)
@@ -87,12 +87,12 @@ public class StationModule : ScriptableObject {
 			}
 			 
 		} else {
-			Debug.Log("Not enough of money or resources. Money at: " + station.stationMoney.ToString());
+			//Debug.Log("Not enough of money or resources. Money at: " + station.stationMoney.ToString());
 			if (moduleLevel > 1)
 				moduleLevel -=.25f;
 		}
 		
-		Debug.Log("Module Level " + moduleLevel.ToString());
+		//Debug.Log("Module Level " + moduleLevel.ToString());
 	}
 	
 	

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
-  - {fileID: 11400000, guid: 5ce5ed507e2186b4b8dbc7d81ca2c51b, type: 2}
-  - {fileID: 11400000, guid: 54c0daa67495c6c4a94ef2fe025bf1c1, type: 2}
+  - {fileID: 11400000, guid: d6d7dcc586e73bb458694939f2d1de91, type: 2}
+  - {fileID: 11400000, guid: c95ffe90d54aab44dabcb7504a55bf4c, type: 2}
   eqQuantity: e803000058020000fa000000
   maxQuantity: f40100005e01000064000000
