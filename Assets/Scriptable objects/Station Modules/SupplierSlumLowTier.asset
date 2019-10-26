@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: SupplierSlumLowTier
   m_EditorClassIdentifier: 
   initLevel: 5
-  moneyBase: 14500
-  moneyInc: 2175
+  moneyBase: 17400
+  moneyInc: 1740
   drainItems: []
   gainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}

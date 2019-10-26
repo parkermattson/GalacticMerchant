@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: AgriLowTier
   m_EditorClassIdentifier: 
   initLevel: 0
-  moneyBase: 225
-  moneyInc: 23
+  moneyBase: -1600
+  moneyInc: -160
   drainItems:
   - {fileID: 11400000, guid: fc3639da09bd62743b551f7f914b0707, type: 2}
   - {fileID: 11400000, guid: 587d4db674abbd547adb5736f78bf9c9, type: 2}

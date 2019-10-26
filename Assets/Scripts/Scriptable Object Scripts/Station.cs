@@ -14,7 +14,7 @@ public class Station : Location {
 	public CrewTable initCrewPool, crewPool;
 	public int race = 0;
 	public List<Factory> initFactories, factories;
-	public List<ItemStack> marketInv;
+	public List<ItemStack> marketInv = new List<ItemStack>();
 	public int stationMoney = 10000;
 	public List<StationModule> modules;
 	DateTime lastTime = new DateTime(3000, 1, 1, 9, 0, 0);
@@ -37,7 +37,7 @@ public class Station : Location {
 	
 	public void Init()
 	{
-		marketInv = stockTable.GenerateStock();
+		//marketInv = stockTable.GenerateStock();
 		priceTable = ScriptableObject.CreateInstance<MarketPriceTable>();
 		crewPool = Instantiate(initCrewPool);
 		GenerateCrewList();
@@ -53,9 +53,12 @@ public class Station : Location {
 				priceTable.AddDrain(drain);
 			}
 			
-			foreach (Item gain in m.gainItems)
+			for (int i = 0; i < m.gainItems.Count; i++)
 			{
-				priceTable.AddGain(gain);
+				ItemStack tempStack = ItemStack.CreateInstance<ItemStack>();
+				tempStack.Init(m.gainItems[i], Mathf.CeilToInt(m.gainBase[i]*(1+5* UnityEngine.Random.value)));
+				tempStack.AddToList(marketInv);
+				priceTable.AddGain(m.gainItems[i]);
 			}
 		}
 	}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: SupplierFrontLowTier
   m_EditorClassIdentifier: 
   initLevel: 5
-  moneyBase: 1000
-  moneyInc: 150
+  moneyBase: 1200
+  moneyInc: 120
   drainItems: []
   gainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}

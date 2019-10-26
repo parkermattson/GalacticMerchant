@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: MilLowTier
   m_EditorClassIdentifier: 
   initLevel: 0
-  moneyBase: 7650
-  moneyInc: 765
+  moneyBase: -14500
+  moneyInc: -1450
   drainItems:
   - {fileID: 11400000, guid: 952aa6ffd089f404a985caa52aa95f0c, type: 2}
   - {fileID: 11400000, guid: 7e858ad1034af604db87c59246827a22, type: 2}

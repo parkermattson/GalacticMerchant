@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initLevel: 0
   moneyBase: -1250
-  moneyInc: -100
+  moneyInc: -125
   drainItems:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
   gainItems: []

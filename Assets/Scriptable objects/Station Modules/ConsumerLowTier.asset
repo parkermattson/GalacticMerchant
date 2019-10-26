@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ConsumerLowTier
   m_EditorClassIdentifier: 
   initLevel: 0
-  moneyBase: 1125
-  moneyInc: 113
+  moneyBase: -10150
+  moneyInc: -1015
   drainItems:
   - {fileID: 11400000, guid: f897050b35b45b84492344f8d7e13857, type: 2}
   - {fileID: 11400000, guid: 86f4d3ef8e5a2554980b3e3fb8f050e1, type: 2}

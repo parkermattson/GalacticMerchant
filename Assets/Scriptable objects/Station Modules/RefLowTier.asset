@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: RefLowTier
   m_EditorClassIdentifier: 
   initLevel: 0
-  moneyBase: 3240
-  moneyInc: 324
+  moneyBase: -16980
+  moneyInc: -1698
   drainItems:
   - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
   - {fileID: 11400000, guid: d6d7dcc586e73bb458694939f2d1de91, type: 2}

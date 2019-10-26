@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: SupplierParadiseHighTier
   m_EditorClassIdentifier: 
   initLevel: 5
-  moneyBase: 4750
-  moneyInc: 725
+  moneyBase: 18000
+  moneyInc: 1800
   drainItems: []
   gainItems:
   - {fileID: 11400000, guid: d92ae60acffddfe4bba1ab37e0ab22c7, type: 2}
