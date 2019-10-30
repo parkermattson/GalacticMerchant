@@ -15,9 +15,9 @@ public class MarketPriceTable : ScriptableObject {
 			multiplier = adjustedItems[stack.GetItem().GetName()];
 		
 		float price = stack.GetPrice(quantity);
-		Debug.Log("Pre-mult " + stack.GetItem().GetName() + " price: " + price.ToString("#.00"));
+		//Debug.Log("Pre-mult " + stack.GetItem().GetName() + " price: " + price.ToString("#.00"));
 		price *= multiplier;
-		Debug.Log("Post-mult " + stack.GetItem().GetName() + " price: " + price.ToString("#.00"));
+		//Debug.Log("Post-mult " + stack.GetItem().GetName() + " price: " + price.ToString("#.00"));
 		return price;
 	}
 	

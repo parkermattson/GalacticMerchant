@@ -17,22 +17,15 @@ public class MechanicScreenScript : MonoBehaviour {
 	
 	public GameObject currentScreen;
 	
-	public Image shipGraphic;
-	public TextMeshProUGUI nameText;
-	public TextMeshProUGUI descText;
-	public TextMeshProUGUI cargoText;
-	public TextMeshProUGUI fuelText;
-	public TextMeshProUGUI speedText;
-	public TextMeshProUGUI priceText;
-	public GameObject hullBar;
-	public GameObject fuelBar;
-	public GameObject signalBar;
+	public Image shipGraphic, repairShipGraphic;
+	public TextMeshProUGUI nameText, descText, cargoText, fuelText, speedText, priceText, repairText, refuelText;
+	public GameObject hullBarStore, hullBarRepair, fuelBarStore, fuelBarRepair, signalBar;
 	
 	public Ship displayShip;
 	public List<Ship> shipList;
 	public int shipIndex = 0;
 	
-	public Button shipBuyButton;
+	public Button shipBuyButton, repairButton, refuelButton;
 	public GameObject confirmBox;
 	public GameObject buyBoxPrefab;
 	public GameObject sellBoxPrefab;
@@ -52,14 +45,61 @@ public class MechanicScreenScript : MonoBehaviour {
 	
 	void OnEnable()
 	{
+		UpdateRepairScreen();
 		UpdateShipStore();
 		UpdateEquipStore();
+	}
+	
+	void UpdateRepairScreen()
+	{
+		float fuelPercent = (float)gameControl.shipState.currentFuel/ gameControl.shipState.playerShip.GetFuelMax();
+		fuelBarRepair.transform.localScale = new Vector3(fuelPercent, 1, 1);
+		
+		float hullPercent = (float)gameControl.shipState.currentHull/gameControl.shipState.playerShip.GetHullMax();
+		hullBarRepair.transform.localScale = new Vector3(hullPercent, 1, 1);
+		
+		repairShipGraphic.sprite = gameControl.shipState.playerShip.graphic;
+		
+		int repairCost = 250 * (gameControl.shipState.playerShip.GetHullMax() - gameControl.shipState.currentHull);
+		int refuelCost = 100 * (gameControl.shipState.playerShip.GetFuelMax() - gameControl.shipState.currentFuel);
+		
+		repairText.SetText(repairCost.ToString() + " SB");
+		refuelText.SetText(refuelCost.ToString() + " SB");
+		
+		if (repairCost > gameControl.playerMoney)
+			repairButton.interactable = false;
+		
+		if (refuelCost > gameControl.playerMoney)
+			refuelButton.interactable = false;
+		
+	}
+	
+	public void Repair()
+	{
+		int repairCost = 250 * (gameControl.shipState.playerShip.GetHullMax() - gameControl.shipState.currentHull);
+		gameControl.playerMoney -= repairCost;
+		gameControl.shipState.currentHull = gameControl.shipState.playerShip.GetHullMax();
+		
+		UpdateRepairScreen();
+	}
+	
+	public void Refuel()
+	{
+		int refuelCost = 100 * (gameControl.shipState.playerShip.GetFuelMax() - gameControl.shipState.currentFuel);
+		gameControl.playerMoney -= refuelCost;
+		gameControl.shipState.currentFuel = gameControl.shipState.playerShip.GetFuelMax();
+		
+		UpdateRepairScreen();
 	}
 	
 	public void SwitchTab(GameObject newScreen) {
 		currentScreen.SetActive(false);
 		currentScreen = newScreen;
 		currentScreen.SetActive(true);
+		
+		UpdateRepairScreen();
+		UpdateShipStore();
+		UpdateEquipStore();
 	}
 	
 	public void UpdateShipStore() {
@@ -111,12 +151,12 @@ public class MechanicScreenScript : MonoBehaviour {
 	
 	void SetHullBar() {
 		float hullPercent = (float)displayShip.GetHullMax()/HULLCAP;
-		hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
+		hullBarStore.transform.localScale = new Vector3(hullPercent, 1, 1);
 	}
 	
 	void SetFuelBar() {
 		float fuelPercent = (float)displayShip.GetFuelMax()/ FUELCAP;
-		fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
+		fuelBarStore.transform.localScale = new Vector3(fuelPercent, 1, 1);
 	}
 	
 	void SetSignalBar() {

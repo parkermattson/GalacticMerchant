@@ -20,8 +20,4 @@ MonoBehaviour:
   gainItems:
   - {fileID: 11400000, guid: aea6c09b5cfd1c04893f700ec1a93ae6, type: 2}
   drainBase: 9600000032000000
-  drainInc: 1400000006000000
   gainBase: ee020000
-  gainInc: 4b000000
-  eqBase: b80b0000
-  eqInc: 2c010000

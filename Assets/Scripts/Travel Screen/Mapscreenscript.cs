@@ -246,7 +246,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
     void SetFuelBar()
     {
-        float fuelPercent = (float)GameControl.instance.shipState.currentFuel / (float)GameControl.instance.shipState.playerShip.maxFuel;
+        float fuelPercent = (float)GameControl.instance.shipState.currentFuel / (float)GameControl.instance.shipState.playerShip.GetFuelMax();
         fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
 		
 		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", GameControl.instance.shipState.currentFuel, GameControl.instance.shipState.playerShip.maxFuel);

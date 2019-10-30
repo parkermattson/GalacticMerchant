@@ -67,6 +67,7 @@ public class Station : Location {
 	{
 		DateTime newTime = GameControl.instance.gameTime;
 		float deltaTime = (float)(newTime.Subtract(lastTime).TotalHours);
+		int daysSince = (int)Mathf.Min(deltaTime/24, 50);
 		
 		GenerateCrewList();
 		
@@ -75,7 +76,7 @@ public class Station : Location {
 			f.Refresh(deltaTime);
 		}
 		
-		for (int i = 0; i < deltaTime/24; i++)
+		for (int i = 0; i < daysSince; i++)
 		{
 			foreach (StationModule m in modules)
 			{

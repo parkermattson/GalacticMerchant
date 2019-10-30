@@ -8,9 +8,9 @@ public class StationModule : ScriptableObject {
 
 	public float initLevel = 1f;
 	float moduleLevel = 1f;
-	public int moneyBase, moneyInc;
+	public int moneyBase;
 	public List<Item> drainItems, gainItems;
-	public List<int> drainBase, drainInc, gainBase, gainInc, eqBase, eqInc;
+	public List<int> drainBase, gainBase;
 	
 	public void Init()
 	{
@@ -20,24 +20,24 @@ public class StationModule : ScriptableObject {
 	public void Refresh(Station station)
 	{		
 		bool enoughRes = true;
-		int moneyNeeded = moneyBase + moneyInc * (int)moduleLevel;
+		int moneyNeeded = (int)(moneyBase * (1 + (int)moduleLevel*.1f));
 		int productValue = 0, productCost = 0;
 		ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
 		for (int i =0; i < drainItems.Count; i++)
 		{
-			tempStack.Init(drainItems[i], drainBase[i] + drainInc[i] * (int)moduleLevel);
+			tempStack.Init(drainItems[i], (int)(drainBase[i] * (1+(int)moduleLevel*.1f)));
 			if (!tempStack.FindInList(station.marketInv))
 			{
-				//Debug.Log("Not enough of " + drainItems[i].GetName());
+				Debug.Log("Not enough of " + drainItems[i].GetName());
 				enoughRes = false;
 			} //else Debug.Log("Enough of " + drainItems[i].GetName());
 			
 			int index = station.marketInv.FindIndex(x => x.GetItem() == drainItems[i]);
 			if (index != -1)
-				productCost += Mathf.CeilToInt((drainBase[i] + drainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice(-(drainBase[i] + drainInc[i] * (int)moduleLevel)));
+				productCost += Mathf.CeilToInt((int)(drainBase[i] * (1+(int)moduleLevel*.1f)) * station.marketInv[index].GetPrice(-(int)(drainBase[i] * (1+(int)moduleLevel*.1f))));
 			else {
 				tempStack.Init(drainItems[i], 1);
-				productCost += Mathf.CeilToInt((drainBase[i] + drainInc[i] * (int)moduleLevel) * tempStack.GetPrice(-(drainBase[i] + drainInc[i] * (int)moduleLevel)));
+				productCost += Mathf.CeilToInt((int)(drainBase[i] * (1+(int)moduleLevel*.1f)) * tempStack.GetPrice(-(int)(drainBase[i] * (1+(int)moduleLevel*.1f))));
 			}
 			
 		}
@@ -46,10 +46,10 @@ public class StationModule : ScriptableObject {
 		{
 			int index = station.marketInv.FindIndex(x => x.GetItem() == gainItems[i]);
 			if (index != -1)
-				productValue += Mathf.CeilToInt((gainBase[i] + gainInc[i] * (int)moduleLevel) * station.marketInv[index].GetPrice(gainBase[i] + gainInc[i] * (int)moduleLevel));
+				productValue += Mathf.CeilToInt((int)(gainBase[i] * (1+(int)moduleLevel*.1f)) * station.marketInv[index].GetPrice((int)(gainBase[i] * (1+(int)moduleLevel*.1f))));
 			else {
 				tempStack.Init(gainItems[i], 1);
-				productValue += Mathf.CeilToInt((gainBase[i] + gainInc[i] * (int)moduleLevel) * tempStack.GetPrice(gainBase[i] + gainInc[i] * (int)moduleLevel));
+				productValue += Mathf.CeilToInt((int)(gainBase[i] * (1+(int)moduleLevel*.1f)) * tempStack.GetPrice((int)(gainBase[i] * (1+(int)moduleLevel*.1f))));
 			}
 		}
 		
@@ -60,19 +60,18 @@ public class StationModule : ScriptableObject {
 			station.stationMoney-=moneyNeeded;
 			for (int i =0; i < drainItems.Count; i++)
 			{
-				tempStack.Init(drainItems[i], drainBase[i] + drainInc[i] * (int)moduleLevel);
+				tempStack.Init(drainItems[i], (int)(drainBase[i] * (1+(int)moduleLevel*.1f)));
 				tempStack.RemoveFromList(station.marketInv);
-				tempStack.Init(drainItems[i], eqBase[i] + eqInc[i] * (int)moduleLevel);
 			}
 			for (int i =0; i < gainItems.Count; i++)
 			{
-				tempStack.Init(gainItems[i], gainBase[i] + gainInc[i] * (int)moduleLevel);
+				tempStack.Init(gainItems[i], (int)(gainBase[i] * (1+(int)moduleLevel*.1f)));
 				tempStack.AddToList(station.marketInv);
 			}
 			
 			int profitMargin = productValue - (productCost + moneyNeeded);
 			
-			//Debug.Log("Value: " + productValue.ToString() + " Cost: " + productCost.ToString() + " Profit %: " + profitMargin.ToString());
+			//Debug.Log("Value: " + productValue.ToString() + " Cost: " + productCost.ToString() + " Profit: " + profitMargin.ToString());
 			if (moneyNeeded > 0)
 			{
 				if ((float)(profitMargin)/(float)productValue > .15f)
@@ -92,7 +91,7 @@ public class StationModule : ScriptableObject {
 				moduleLevel -=.25f;
 		}
 		
-		//Debug.Log("Module Level " + moduleLevel.ToString());
+		Debug.Log("Module Level " + moduleLevel.ToString());
 	}
 	
 	
