@@ -78,6 +78,11 @@ public class ItemStack : ScriptableObject {
 			return false;
 		}
 	}
+	
+	public int GetWeight()
+	{
+		return item.GetWeight() * quantity;
+	}
 
 	
 }

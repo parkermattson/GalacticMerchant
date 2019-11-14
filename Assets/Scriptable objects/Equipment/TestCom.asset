@@ -9,16 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23934515ea016aa448be29ef0f135863, type: 3}
-  m_Name: TestComm
+  m_Name: TestCom
   m_EditorClassIdentifier: 
-  itemID: 2
-  itemName: Test Comm 1
+  itemName: Test Nav 1
   itemDesc: Item Description
-  icon: {fileID: 21300000, guid: ffdcee8e3f9b38549b3f76ef466945d5, type: 3}
+  icon: {fileID: 21300000, guid: 721f52c3bcb3f564ca9a2db29ac1063d, type: 3}
   itemTier: 1
-  itemType: 6
+  itemType: 10
   itemValue: 100
   itemWeight: 0
-  itemQuantity: 1
   isStackable: 0
-  equipSlot: 2
+  priceRange: 0
+  medianQuant: 0
+  quantityRange: 0
+  equipSlot: 0

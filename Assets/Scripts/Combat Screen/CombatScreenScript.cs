@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class CombatScreenScript : MonoBehaviour {
 
 	public CombatIconScript selectedPlayerAttackIcon, selectedPlayerDefenseIcon, selectedEnemyAttackIcon,selectedEnemyDefenseIcon;
-	public CombatIconScript[] enemyIcons = new CombatIconScript[10];
+	public CombatIconScript[] enemyIcons = new CombatIconScript[10], playerIcons = new CombatIconScript[10];
 	CombatIconScript switchedPlayerAttackIcon, switchedPlayerDefenseIcon, switchedEnemyAttackIcon, switchedEnemyDefenseIcon;
 	public Transform playerTimerBar, enemyTimerBar, playerHealthBar, enemyHealthBar;
 	bool combatStarted = false, playerAttackSwitching = false, playerDefenseSwitching = false, enemyAttackSwitching = false, enemyDefenseSwitching = false;
@@ -18,7 +18,7 @@ public class CombatScreenScript : MonoBehaviour {
 	
 	void OnEnable()
 	{
-		playerHealthBar.localScale = new Vector2((float)GameControl.instance.shipState.currentHull/GameControl.instance.shipState.playerShip.maxHull, playerHealthBar.localScale.y);
+		playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, playerHealthBar.localScale.y);
 		enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, enemyHealthBar.localScale.y);
 	}
 	
@@ -84,6 +84,7 @@ public class CombatScreenScript : MonoBehaviour {
 				{
 					enemyHealth--;
 					enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, enemyHealthBar.localScale.y);
+					
 				}
 			}
 			if (enemyTimer >= enemyMaxTimer)
@@ -91,9 +92,9 @@ public class CombatScreenScript : MonoBehaviour {
 				enemyTimer = 0;
 				if (selectedEnemyAttackIcon.weapon != selectedPlayerDefenseIcon.weapon)
 				{
-					GameControl.instance.shipState.currentHull--;
-					playerHealthBar.localScale = new Vector2((float)GameControl.instance.shipState.currentHull/GameControl.instance.shipState.playerShip.maxHull, playerHealthBar.localScale.y);
-					if (GameControl.instance.shipState.currentHull < 1)
+					GameControl.instance.playerShip.currentHull--;
+					playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, playerHealthBar.localScale.y);
+					if (GameControl.instance.playerShip.currentHull < 1)
 					{
 						Debug.Log("Game Over");						//Add Game Over State Here
 					}
@@ -113,6 +114,30 @@ public class CombatScreenScript : MonoBehaviour {
 		combatStarted = true;
 		playerTimer = 0;
 		enemyTimer = 0;
+		
+		foreach (Weapon weap in GameControl.instance.playerShip.weaponsList)
+		{
+			foreach (WeaponType type in weap.weaponParts)
+			{
+				switch (type)
+				{
+					case WeaponType.Kinetic: playerIcons[0].SetAvailable(true);
+						break;
+					
+					case WeaponType.Missile: playerIcons[1].SetAvailable(true);
+						break;
+					
+					case WeaponType.Energy: playerIcons[2].SetAvailable(true);
+						break;
+					
+					case WeaponType.Beam: playerIcons[3].SetAvailable(true);
+						break;
+					
+					case WeaponType.Hybrid: playerIcons[4].SetAvailable(true);
+						break;
+				}
+			}
+		}
 	}
 	
 	public void SelectAttackIcon(CombatIconScript newSelected)

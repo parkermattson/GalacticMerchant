@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 
-	public GameObject border;
+	public GameObject border, availableOverlay;
 	public Image cooldownImage;
 	public bool isSelected = false, isAvailable = false, isAttack = true, isPlayer = false;
 	public WeaponType weapon = WeaponType.Kinetic;
@@ -34,5 +34,17 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 		cooldownImage.fillAmount = fillPercent;
 	}
 	
+	public void SetAvailable(bool newAvailability)
+	{
+		if (newAvailability)
+		{
+			isAvailable = true;
+			availableOverlay.SetActive(false);
+		}
+		else {
+			isAvailable = false;
+			availableOverlay.SetActive(true);
+		}
+	}
 	
 }

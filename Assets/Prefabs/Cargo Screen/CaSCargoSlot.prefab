@@ -62,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1898951005498840
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 114398125994366134}
   qtText: {fileID: 114134564417662372}
+  stack: {fileID: 0}
 --- !u!114 &114398125994366134
 MonoBehaviour:
   m_ObjectHideFlags: 1

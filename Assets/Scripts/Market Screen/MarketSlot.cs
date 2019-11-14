@@ -7,13 +7,9 @@ using TMPro;
 public class MarketSlot : MonoBehaviour {
 
     public Image icon;
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI priceText;
-    public TextMeshProUGUI quantityText;
-    public TextMeshProUGUI descText;
-    public TextMeshProUGUI tierText;
-    public TextMeshProUGUI typeText;
+    public TextMeshProUGUI nameText, priceText, quantityText, descText, tierText, typeText;
 	public TMP_InputField quantityInput;
+	public Button buySellButton;
     public ItemStack itemStack;
 	public float price = 1;
 	public int slotQuant = 1;
@@ -78,6 +74,27 @@ public class MarketSlot : MonoBehaviour {
 		
 		if (priceText != null)
             priceText.SetText("{0}(" + price.ToString("#.00") + ")", price * slotQuant);
+		
+		if (isBuySlot)
+		{
+			if (price*slotQuant > GameControl.instance.playerMoney)
+			{
+				buySellButton.interactable = false;
+				priceText.color = Color.red;
+			} else {
+				buySellButton.interactable = true;
+				priceText.color = Color.black;
+			}
+		}  else {
+			if (price*slotQuant > station.stationMoney)
+			{
+				buySellButton.interactable = false;
+				priceText.color = Color.red;
+			} else {
+				buySellButton.interactable = true;
+				priceText.color = Color.black;
+			}
+		}
 	}
 	
 	public void PlusMinusButton(bool plus)

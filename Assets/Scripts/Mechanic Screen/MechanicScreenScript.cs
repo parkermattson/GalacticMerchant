@@ -52,16 +52,16 @@ public class MechanicScreenScript : MonoBehaviour {
 	
 	void UpdateRepairScreen()
 	{
-		float fuelPercent = (float)gameControl.shipState.currentFuel/ gameControl.shipState.playerShip.GetFuelMax();
+		float fuelPercent = (float)gameControl.playerShip.currentFuel/ gameControl.playerShip.GetFuelMax();
 		fuelBarRepair.transform.localScale = new Vector3(fuelPercent, 1, 1);
 		
-		float hullPercent = (float)gameControl.shipState.currentHull/gameControl.shipState.playerShip.GetHullMax();
+		float hullPercent = (float)gameControl.playerShip.currentHull/gameControl.playerShip.GetHullMax();
 		hullBarRepair.transform.localScale = new Vector3(hullPercent, 1, 1);
 		
-		repairShipGraphic.sprite = gameControl.shipState.playerShip.graphic;
+		repairShipGraphic.sprite = gameControl.playerShip.graphic;
 		
-		int repairCost = 250 * (gameControl.shipState.playerShip.GetHullMax() - gameControl.shipState.currentHull);
-		int refuelCost = 100 * (gameControl.shipState.playerShip.GetFuelMax() - gameControl.shipState.currentFuel);
+		int repairCost = 250 * (gameControl.playerShip.GetHullMax() - gameControl.playerShip.currentHull);
+		int refuelCost = 100 * (gameControl.playerShip.GetFuelMax() - gameControl.playerShip.currentFuel);
 		
 		repairText.SetText(repairCost.ToString() + " SB");
 		refuelText.SetText(refuelCost.ToString() + " SB");
@@ -76,18 +76,18 @@ public class MechanicScreenScript : MonoBehaviour {
 	
 	public void Repair()
 	{
-		int repairCost = 250 * (gameControl.shipState.playerShip.GetHullMax() - gameControl.shipState.currentHull);
+		int repairCost = 250 * (gameControl.playerShip.GetHullMax() - gameControl.playerShip.currentHull);
 		gameControl.playerMoney -= repairCost;
-		gameControl.shipState.currentHull = gameControl.shipState.playerShip.GetHullMax();
+		gameControl.playerShip.currentHull = gameControl.playerShip.GetHullMax();
 		
 		UpdateRepairScreen();
 	}
 	
 	public void Refuel()
 	{
-		int refuelCost = 100 * (gameControl.shipState.playerShip.GetFuelMax() - gameControl.shipState.currentFuel);
+		int refuelCost = 100 * (gameControl.playerShip.GetFuelMax() - gameControl.playerShip.currentFuel);
 		gameControl.playerMoney -= refuelCost;
-		gameControl.shipState.currentFuel = gameControl.shipState.playerShip.GetFuelMax();
+		gameControl.playerShip.currentFuel = gameControl.playerShip.GetFuelMax();
 		
 		UpdateRepairScreen();
 	}
@@ -160,7 +160,7 @@ public class MechanicScreenScript : MonoBehaviour {
 	}
 	
 	void SetSignalBar() {
-		float signalPercent = (float)displayShip.GetRange()/ SIGNALCAP;
+		float signalPercent = (float)displayShip.GetRawSensorRange()/ SIGNALCAP;
 		signalBar.transform.localScale = new Vector3(signalPercent, 1, 1);
 	}
 	
@@ -169,11 +169,11 @@ public class MechanicScreenScript : MonoBehaviour {
 	}
 	
 	void SetEffText() {
-		fuelText.SetText("{0:1}", displayShip.GetFuelEff());
+		fuelText.SetText("{0:1}", displayShip.GetNetFuelEff());
 	}
 	
 	void SetSpeedText() {
-		speedText.SetText("{0:1}", displayShip.GetSpeed());
+		speedText.SetText("{0:1}", displayShip.GetNetSpeed());
 	}
 	
 	void SetPriceText() {
@@ -234,11 +234,9 @@ public class MechanicScreenScript : MonoBehaviour {
 		gameControl.playerMoney -= displayShip.GetPrice();
 		tempShip = displayShip;
 		shipList.Remove(displayShip);
-		shipList.Add(gameControl.shipState.playerShip);
-		displayShip = gameControl.shipState.playerShip;
-		gameControl.shipState.playerShip = tempShip;
-		gameControl.shipState.currentHull = tempShip.GetHullMax();		//Need to make a method for updating ship state
-		gameControl.shipState.currentFuel = tempShip.GetFuelMax();
+		shipList.Add(gameControl.playerShip);
+		displayShip = gameControl.playerShip;
+		gameControl.playerShip = tempShip;
 		
 		shipIndex = 0;
 		displayShip = shipList[shipIndex];

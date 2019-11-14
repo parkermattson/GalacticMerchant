@@ -8,17 +8,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23934515ea016aa448be29ef0f135863, type: 3}
-  m_Name: TestWeap
+  m_Script: {fileID: 11500000, guid: c572c2627cb2fe44ba5281bbc614d023, type: 3}
+  m_Name: TestWep2
   m_EditorClassIdentifier: 
-  itemID: 5
-  itemName: Test Weapon 1
+  itemName: Name
   itemDesc: Item Description
-  icon: {fileID: 21300000, guid: 73e33f48681edb34fb4835c0a3f1aaf9, type: 3}
+  icon: {fileID: 0}
   itemTier: 1
-  itemType: 6
-  itemValue: 100
+  itemType: 10
+  itemValue: 0
   itemWeight: 0
-  itemQuantity: 1
-  isStackable: 0
+  isStackable: 1
+  priceRange: 0
+  medianQuant: 0
+  quantityRange: 0
   equipSlot: 1
+  weaponParts: 020000000300000004000000

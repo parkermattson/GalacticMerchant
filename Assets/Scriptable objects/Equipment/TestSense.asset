@@ -9,16 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23934515ea016aa448be29ef0f135863, type: 3}
-  m_Name: TestWeap 2
+  m_Name: TestSense
   m_EditorClassIdentifier: 
-  itemID: 6
-  itemName: Test Weapon 2
+  itemName: Test Sensor 1
   itemDesc: Item Description
-  icon: {fileID: 21300000, guid: 73e33f48681edb34fb4835c0a3f1aaf9, type: 3}
+  icon: {fileID: 21300000, guid: ffdcee8e3f9b38549b3f76ef466945d5, type: 3}
   itemTier: 1
-  itemType: 6
-  itemValue: 5000
+  itemType: 10
+  itemValue: 100
   itemWeight: 0
-  itemQuantity: 1
   isStackable: 0
-  equipSlot: 1
+  priceRange: 0
+  medianQuant: 0
+  quantityRange: 0
+  equipSlot: 2

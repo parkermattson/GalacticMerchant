@@ -19,8 +19,7 @@ public class GameControl : MonoBehaviour {
 	public int playerMoney, playerRace, playerAvatar;
 	public int[] playerStats = {1,1,1,1};
 	public Crew[] crewMembs = new Crew[4];
-    public ShipState shipState = new ShipState();
-	public Ship defaultShip;
+    public Ship playerShip, defaultShip;
     public Location playerLocation;
 	public DateTime gameTime, lastWeek;
 	public List<Station> initStations, stations;
@@ -43,8 +42,6 @@ public class GameControl : MonoBehaviour {
 			crewMembs[i] = null;
 		}
 		
-		shipState.playerShip = defaultShip;
-		
 		gameTime = new DateTime(3000, 1, 1, 9, 0, 0);
 		lastWeek = new DateTime(3000, 1, 1, 9, 0, 0);
 		
@@ -53,6 +50,8 @@ public class GameControl : MonoBehaviour {
 			stations.Add(Instantiate(s));
 			stations.Last().Init();
 		}
+		
+		playerShip = Instantiate(defaultShip);
 		
 		playerLocation = stations[0];
 	}
@@ -92,7 +91,7 @@ public class GameControl : MonoBehaviour {
 		saveData.playerAvatar = playerAvatar;
 		saveData.playerRace = playerRace;
 		saveData.crewMembs = crewMembs;
-		saveData.shipState = shipState;
+		saveData.playerShip = playerShip;
 		saveData.playerLocation = playerLocation;
 		saveData.items = inventory.items;
 		saveData.equipments = inventory.equipments;
@@ -120,7 +119,7 @@ public class GameControl : MonoBehaviour {
 				playerAvatar = loadData.playerAvatar;
 				playerRace = loadData.playerRace;
 				crewMembs = loadData.crewMembs;
-				shipState = loadData.shipState;
+				playerShip = loadData.playerShip;
 				playerLocation = loadData.playerLocation;
 				inventory.items = loadData.items;
 				inventory.equipments = loadData.equipments;
@@ -170,17 +169,7 @@ public class GameControl : MonoBehaviour {
 		public bool enabled = false;
 	}
 	
-	public class ShipState
-	{
-		public Ship playerShip;
-		public int currentHull = 10;
-		public int currentFuel  = 100;
-		public int currentCargo = 0;
-		public float netFuelEff = 1;
-		public int netSensorRange = 20;
-		public int netWarpRange = 350;
-		public int netSpeed = 1;
-	}
+	
 	
 	[Serializable]
 	class GameData
@@ -189,7 +178,7 @@ public class GameControl : MonoBehaviour {
 		public int playerMoney, playerRace, playerAvatar;
 		public int[] playerStats;
 		public Crew[] crewMembs;
-		public ShipState shipState;
+		public Ship playerShip;
 		public Location playerLocation;
 		public List<ItemStack> items;
 		public List<Equipment> equipments;

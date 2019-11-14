@@ -59,7 +59,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		if (fuelCounter >= 1)
 		{
 			fuelCounter = 0;
-			GameControl.instance.shipState.currentFuel --;
+			GameControl.instance.playerShip.currentFuel --;
 			SetFuelBar();
 		}
         if (Mathf.Abs((mapShipIcon.transform.localPosition-selectedLocation.transform.localPosition).magnitude)<=0.1f)
@@ -90,9 +90,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
 				locationTooltip.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\t\tFuel Cost: " + (int)(distance/50));
 				locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
-				if ((int)(distance/50) > GameControl.instance.shipState.currentFuel)
+				if ((int)(distance/50) > GameControl.instance.playerShip.currentFuel)
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
-				else if (distance > GameControl.instance.shipState.netWarpRange)
+				else if (distance > GameControl.instance.playerShip.GetNetWarpRange())
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
 				else
 					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable=true;
@@ -231,7 +231,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
     void SetHullBar()
     {
-        float hullPercent = (float)GameControl.instance.shipState.currentHull / (float)GameControl.instance.shipState.playerShip.maxHull;
+        float hullPercent = (float)GameControl.instance.playerShip.currentHull / (float)GameControl.instance.playerShip.maxHull;
         hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
 
         if (hullPercent > .66)
@@ -241,19 +241,19 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         else
             hullBar.GetComponent<Image>().color = Color.red;
 		
-		hullBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Hull: {0}/{1}", GameControl.instance.shipState.currentHull, GameControl.instance.shipState.playerShip.maxHull);
+		hullBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Hull: {0}/{1}", GameControl.instance.playerShip.currentHull, GameControl.instance.playerShip.maxHull);
 
     }
     void SetFuelBar()
     {
-        float fuelPercent = (float)GameControl.instance.shipState.currentFuel / (float)GameControl.instance.shipState.playerShip.GetFuelMax();
+        float fuelPercent = (float)GameControl.instance.playerShip.currentFuel / (float)GameControl.instance.playerShip.GetFuelMax();
         fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
 		
-		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", GameControl.instance.shipState.currentFuel, GameControl.instance.shipState.playerShip.maxFuel);
+		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", GameControl.instance.playerShip.currentFuel, GameControl.instance.playerShip.maxFuel);
     }
     void SetCargoSpace()
     {
-        cargoText.SetText("Cargo Space: {0} / {1}", GameControl.instance.shipState.currentCargo, GameControl.instance.shipState.playerShip.maxCargo);
+        cargoText.SetText("Cargo Space: {0} / {1}", Inventory.instance.currentCargo, GameControl.instance.playerShip.maxCargo);
     }
     void SetMoney()
     {

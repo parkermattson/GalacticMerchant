@@ -19,7 +19,7 @@ public class Slot : MonoBehaviour,  IPointerClickHandler{
 		stack = newStack;
 		
 		icon.sprite = stack.GetItem().icon;
-		icon.enabled = true;
+		icon.gameObject.SetActive(true);
 		qtText.SetText(stack.GetQuantity().ToString());
 		qtText.transform.gameObject.SetActive(true);
 	}
@@ -46,6 +46,6 @@ public class Slot : MonoBehaviour,  IPointerClickHandler{
 	
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		GetComponentInParent<CargoScreenScript>().SelectSlot(gameObject);
+		GetComponentInParent<CargoScreenScript>().SelectSlot(this.gameObject);
 	}
 }

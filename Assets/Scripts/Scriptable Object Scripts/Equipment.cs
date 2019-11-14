@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EquipmentSlot {Navigation, Weapons, Comms, Engine}
+public enum EquipmentSlot {Command, Weapons, Sensors, Engine}
 
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment")]
 public class Equipment : Item {
 	
-	public EquipmentSlot equipSlot = EquipmentSlot.Navigation;
+	public Equipment() {
+		itemType = ItemType.Equipment;
+	}
+	
+	public EquipmentSlot equipSlot = EquipmentSlot.Command;
 	
 	public EquipmentSlot GetSlotType()
 	{
@@ -16,9 +20,9 @@ public class Equipment : Item {
 	
 	public string GetTypeName()
 	{
-		if (equipSlot == EquipmentSlot.Navigation) return "Navigation";
+		if (equipSlot == EquipmentSlot.Command) return "Command";
 		else if (equipSlot == EquipmentSlot.Weapons) return "Weapons";
-		else if (equipSlot == EquipmentSlot.Comms) return "Comms";
+		else if (equipSlot == EquipmentSlot.Sensors) return "Sensors";
 		else return "Engine";
 	}
 }
