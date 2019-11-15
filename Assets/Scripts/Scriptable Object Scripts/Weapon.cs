@@ -11,7 +11,8 @@ public class Weapon : Equipment {
 		equipSlot = EquipmentSlot.Weapons;
 	}
 	
-	public List<WeaponType> weaponParts = new List<WeaponType>();
+	public List<WeaponType> weaponParts = new List<WeaponType>(), defenseParts = new List<WeaponType>();
+	public List<int> weaponPower = new List<int>(), defensePower = new List<int>(), weaponSpeed = new List<int>(), defenseSpeed = new List<int>();
 	
 	
 	

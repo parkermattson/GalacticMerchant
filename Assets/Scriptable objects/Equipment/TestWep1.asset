@@ -24,3 +24,8 @@ MonoBehaviour:
   quantityRange: 0
   equipSlot: 1
   weaponParts: 0000000001000000
+  defenseParts: 0000000001000000
+  weaponPower: 0100000001000000
+  defensePower: 0100000001000000
+  weaponSpeed: 0100000001000000
+  defenseSpeed: 0100000001000000
