@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class CombatScreenScript : MonoBehaviour {
 
 	public CombatIconScript selectedPlayerAttackIcon, selectedPlayerDefenseIcon, selectedEnemyAttackIcon,selectedEnemyDefenseIcon;
 	public CombatIconScript[] enemyIcons = new CombatIconScript[10], playerIcons = new CombatIconScript[10];
 	CombatIconScript switchedPlayerAttackIcon, switchedPlayerDefenseIcon, switchedEnemyAttackIcon, switchedEnemyDefenseIcon;
+	public GameObject stopCombatPopup;
 	public Transform playerTimerBar, enemyTimerBar, playerHealthBar, enemyHealthBar;
 	bool combatStarted = false, playerAttackSwitching = false, playerDefenseSwitching = false, enemyAttackSwitching = false, enemyDefenseSwitching = false;
 	int  enemyHealth = 10, enemyHealthMax = 10;
-	int[] playerWeaponPower = new int[5], playerWeaponSpeed = new int[5], playerDefensePower = new int[5], playerDefenseSpeed = new int[5];
+	int[] playerWeaponPower = new int[5], playerWeaponSpeed = new int[5], playerDefensePower = new int[5], playerDefenseSpeed = new int[5], playerWeaponCooldown = new int[5], playerDefenseCooldown = new int[5];
+	float[] enemyWeaponThinkProgress = {0,0,0,0,0};
 	float enemyAttackMaxSwitch = 2f, enemyDefenseMaxSwitch = 1.5f, enemyThinkProgress = 0,  enemyThinkTime = 1,
 			playerMaxTimer = 10f, enemyMaxTimer = 10f, playerAttackMaxSwitch = 2f, playerDefenseMaxSwitch = 1.5f,
 			playerTimer = 0, enemyTimer = 0, playerAttackSwitchTimer = 0, playerDefenseSwitchTimer = 0, enemyAttackSwitchTimer = 0, enemyDefenseSwitchTimer = 0,
@@ -23,129 +26,12 @@ public class CombatScreenScript : MonoBehaviour {
 		playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, playerHealthBar.localScale.y);
 		enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, enemyHealthBar.localScale.y);
 		
-		int[] numOfWeaps = {0,0,0,0,0,0,0,0,0,0};
-		foreach (Weapon weap in GameControl.instance.playerShip.weaponsList) {
-			foreach (WeaponType type in weap.weaponParts) {
-				switch (type) {
-					case WeaponType.Kinetic: 
-						playerIcons[0].SetAvailable(true);
-						playerWeaponPower[0] += weap.weaponPower[0];
-						playerWeaponSpeed[0] += weap.weaponSpeed[0];
-						numOfWeaps[0]++;
-						break;
-					
-					case WeaponType.Missile: 
-						playerIcons[1].SetAvailable(true);
-						playerWeaponPower[1] += weap.weaponPower[1];
-						playerWeaponSpeed[1] += weap.weaponSpeed[1];
-						numOfWeaps[1]++;
-						break;
-					
-					case WeaponType.Beam: 
-						playerIcons[2].SetAvailable(true);
-						playerWeaponPower[2] += weap.weaponPower[2];
-						playerWeaponSpeed[2] += weap.weaponSpeed[2];
-						numOfWeaps[2]++;
-						break;
-					
-					case WeaponType.Energy: 
-						playerIcons[3].SetAvailable(true);
-						playerWeaponPower[3] += weap.weaponPower[3];
-						playerWeaponSpeed[3] += weap.weaponSpeed[3];
-						numOfWeaps[3]++;
-						break;
-					
-					case WeaponType.Hybrid: 
-						playerIcons[4].SetAvailable(true);
-						playerWeaponPower[4] += weap.weaponPower[4];
-						playerWeaponSpeed[4] += weap.weaponSpeed[4];
-						numOfWeaps[4]++;
-						break;
-				}
-			}
-			
-			foreach (WeaponType type in weap.defenseParts) {
-				switch (type) {
-					case WeaponType.Kinetic: 
-						playerIcons[5].SetAvailable(true);
-						playerDefensePower[0] += weap.defensePower[0];
-						playerDefenseSpeed[0] += weap.defenseSpeed[0];
-						numOfWeaps[5]++;
-						break;
-					
-					case WeaponType.Missile:
-						playerIcons[6].SetAvailable(true);
-						playerDefensePower[1] += weap.defensePower[1];
-						playerDefenseSpeed[1] += weap.defenseSpeed[1];
-						numOfWeaps[6]++;
-						break;
-					
-					case WeaponType.Energy:
-						playerIcons[7].SetAvailable(true);
-						playerDefensePower[2] += weap.defensePower[2];
-						playerDefenseSpeed[2] += weap.defenseSpeed[2];
-						numOfWeaps[7]++;
-						break;
-					
-					case WeaponType.Beam:
-						playerIcons[8].SetAvailable(true);
-						playerDefensePower[3] += weap.defensePower[3];
-						playerDefenseSpeed[3] += weap.defenseSpeed[3];
-						numOfWeaps[8]++;
-						break;
-					
-					case WeaponType.Hybrid:
-						playerIcons[9].SetAvailable(true);
-						playerDefensePower[4] += weap.defensePower[4];
-						playerDefenseSpeed[4] += weap.defenseSpeed[4];
-						numOfWeaps[9]++;
-						break;
-				}
-			}
-		}
 		
-		for (int i = 0; i < 5; i++)
-		{
-			if (numOfWeaps[i] != 0)
-				playerWeaponSpeed[i] /=numOfWeaps[i];
-			
-			if (selectedPlayerAttackIcon == null && playerIcons[i].isAvailable)
-			{
-				switchedPlayerAttackIcon = playerIcons[i];
-				SwitchPlayerSelectedAttack();
-			}
-		}
-		
-		for (int i = 5; i < 10; i++)
-		{
-			if (numOfWeaps[i] != 0)
-				playerDefenseSpeed[i-5] /=numOfWeaps[i];
-			
-			if (selectedPlayerDefenseIcon == null && playerIcons[i].isAvailable)
-			{
-				switchedPlayerDefenseIcon = playerIcons[i];
-				SwitchPlayerSelectedDefense();
-			}
-		}
-		
-		GenerateEnemy();
 	}
 	
 	void Update() {
 		if (combatStarted)
-		{
-			if (playerAttackSwitching)
-			{
-				playerAttackSwitchTimer+= Time.deltaTime*playerAttackSwitchSpeed;
-				if (playerAttackSwitchTimer >= playerAttackMaxSwitch)
-				{
-					playerAttackSwitchTimer = 0;
-					SwitchPlayerSelectedAttack();
-					playerAttackSwitching = false;
-				}
-				switchedPlayerAttackIcon.FillCooldown(playerAttackSwitchTimer/playerAttackMaxSwitch);
-			}
-			
+		{	
 			if (playerDefenseSwitching)
 			{
 				playerDefenseSwitchTimer+= Time.deltaTime*playerDefenseSwitchSpeed;
@@ -156,18 +42,6 @@ public class CombatScreenScript : MonoBehaviour {
 					playerDefenseSwitching = false;
 				}
 				switchedPlayerDefenseIcon.FillCooldown(playerDefenseSwitchTimer/playerDefenseMaxSwitch);
-			}
-			
-			if (enemyAttackSwitching)
-			{
-				enemyAttackSwitchTimer+= Time.deltaTime;
-				if (enemyAttackSwitchTimer >= enemyAttackMaxSwitch)
-				{
-					enemyAttackSwitchTimer = 0;
-					SwitchEnemySelectedAttack();
-					enemyAttackSwitching = false;
-				}
-				switchedEnemyAttackIcon.FillCooldown(enemyAttackSwitchTimer/enemyAttackMaxSwitch);
 			}
 			
 			if (enemyDefenseSwitching)
@@ -182,33 +56,6 @@ public class CombatScreenScript : MonoBehaviour {
 				switchedEnemyDefenseIcon.FillCooldown(enemyDefenseSwitchTimer/enemyDefenseMaxSwitch);
 			}
 			
-			playerTimer+= Time.deltaTime*playerTimerSpeed;
-			enemyTimer+= Time.deltaTime;
-			
-			if (playerTimer >= playerMaxTimer)
-			{
-				playerTimer = 0;
-				if (selectedPlayerAttackIcon.weapon != selectedEnemyDefenseIcon.weapon)
-				{
-					enemyHealth--;
-					enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, enemyHealthBar.localScale.y);
-					
-				}
-			}
-			if (enemyTimer >= enemyMaxTimer)
-			{
-				enemyTimer = 0;
-				if (selectedEnemyAttackIcon.weapon != selectedPlayerDefenseIcon.weapon)
-				{
-					GameControl.instance.playerShip.currentHull--;
-					playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, playerHealthBar.localScale.y);
-					if (GameControl.instance.playerShip.currentHull < 1)
-					{
-						Debug.Log("Game Over");						//Add Game Over State Here
-					}
-				}
-			}
-			
 			playerTimerBar.localScale = new Vector2 (playerTimer/playerMaxTimer, playerTimerBar.transform.localScale.y);
 			enemyTimerBar.localScale = new Vector2 (enemyTimer/enemyMaxTimer, enemyTimerBar.transform.localScale.y);
 			
@@ -221,9 +68,68 @@ public class CombatScreenScript : MonoBehaviour {
 		combatStarted = true;
 		playerTimer = 0;
 		enemyTimer = 0;	
+		
+		int[] numOfWeaps = {0,0,0,0,0,0,0,0,0,0};
+		foreach (Weapon weap in GameControl.instance.playerShip.weaponsList) {
+			for (int i =0; i < weap.weaponParts.Count; i++) {
+				int partType = (int)weap.weaponParts[i];
+				playerIcons[partType].SetAvailable(true);
+				playerWeaponPower[partType] += weap.weaponPower[i];
+				playerWeaponSpeed[partType] += weap.weaponSpeed[i];
+				playerWeaponCooldown[partType] += weap.weaponCooldown[i];
+				numOfWeaps[partType]++;
+			}
+			
+			for (int i =0; i < weap.defenseParts.Count; i++) {
+				int partType = (int)weap.defenseParts[i];
+				playerIcons[partType+5].SetAvailable(true);
+				playerDefensePower[partType] += weap.defensePower[i];
+				playerDefenseSpeed[partType] += weap.defenseSpeed[i];
+				playerDefenseCooldown[partType] += weap.defenseCooldown[i];
+				numOfWeaps[partType+5]++;
+			}
+		}
+		
+		for (int i = 0; i < 5; i++)
+		{
+			if (numOfWeaps[i] != 0)
+			{
+				playerWeaponSpeed[i] /=numOfWeaps[i];
+				playerWeaponCooldown[i] /= numOfWeaps[i];
+				playerIcons[i].power = playerWeaponPower[i];
+				playerIcons[i].speed = playerWeaponSpeed[i];
+				playerIcons[i].cooldown = playerWeaponCooldown[i];
+			}
+		}
+		
+		for (int i = 5; i < 10; i++)
+		{
+			if (numOfWeaps[i] != 0)
+			{
+				playerDefenseSpeed[i-5] /=numOfWeaps[i];
+				playerDefenseCooldown[i-5] /= numOfWeaps[i];
+				playerIcons[i].power = playerDefensePower[i-5];
+				playerIcons[i].speed = playerDefenseSpeed[i-5];
+				playerIcons[i].cooldown = playerDefenseCooldown[i-5];
+			}
+			
+			if (selectedPlayerDefenseIcon == null && playerIcons[i].isAvailable)
+			{
+				switchedPlayerDefenseIcon = playerIcons[i];
+				SwitchPlayerSelectedDefense();
+			}
+		}
+		
+		GenerateEnemy();
 	}
 	
-	void StopCombat() {
+	void StopCombat(bool didWin) {
+		if (didWin)
+		{
+			stopCombatPopup.GetComponentInChildren<TextMeshProUGUI>().SetText("You Win!");
+		}
+		else stopCombatPopup.GetComponentInChildren<TextMeshProUGUI>().SetText("You Lose!");
+		stopCombatPopup.SetActive(true);
 		combatStarted = false;
 	}
 	
@@ -253,6 +159,22 @@ public class CombatScreenScript : MonoBehaviour {
 				enemyDefenseSwitching = true;
 			}
 		}
+	}
+	
+	public void playerAttack(int damage, WeaponType attackingType) {
+		enemyHealth-= damage;
+		enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, 1);
+		if (enemyHealth < 1)
+		{
+			StopCombat(true);
+		}
+	}
+	
+	public void enemyAttack(int damage, WeaponType attackingType) {
+		GameControl.instance.playerShip.currentHull -= Mathf.CeilToInt(damage / Mathf.Pow(1.055f, playerDefensePower[(int)attackingType]));
+		playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, 1);
+		if (GameControl.instance.playerShip.currentHull < 1)
+			StopCombat(false);
 	}
 	
 	void SwitchPlayerSelectedAttack() {
@@ -294,93 +216,14 @@ public class CombatScreenScript : MonoBehaviour {
 		{
 			enemyThinkProgress = 0;
 			
-			switch (selectedPlayerAttackIcon.weapon)
+			for (int i = 0; i < 5; i++)
 			{
-				case WeaponType.Kinetic:
-					if (selectedEnemyDefenseIcon.weapon != WeaponType.Kinetic)
-					{
-						if (enemyIcons[5].isAvailable)
-							SelectDefenseIcon(enemyIcons[5]);
-					}
-					break;
-				
-				case WeaponType.Missile:
-					if (selectedEnemyDefenseIcon.weapon != WeaponType.Missile)
-					{
-						if (enemyIcons[6].isAvailable)
-							SelectDefenseIcon(enemyIcons[6]);
-					}
-					break;
-				
-				case WeaponType.Beam:
-					if (selectedEnemyDefenseIcon.weapon != WeaponType.Beam)
-					{
-						if (enemyIcons[7].isAvailable)
-							SelectDefenseIcon(enemyIcons[7]);
-					}
-					break;
-				
-				case WeaponType.Energy:
-					if (selectedEnemyDefenseIcon.weapon != WeaponType.Energy)
-					{
-						if (enemyIcons[8].isAvailable)
-							SelectDefenseIcon(enemyIcons[8]);
-					}
-					break;
-				
-				case WeaponType.Hybrid:
-					if (selectedEnemyDefenseIcon.weapon != WeaponType.Hybrid)
-					{
-						if (enemyIcons[9].isAvailable)
-							SelectDefenseIcon(enemyIcons[9]);
-					}
-					break;
+				enemyWeaponThinkProgress[i] -= Time.deltaTime;
+				if (enemyWeaponThinkProgress[i] <= 0 && enemyIcons[i+5].isAvailable)
+				{
+					enemyIcons[i+5].Charge();
+				}
 			}
-			
-			switch (selectedPlayerDefenseIcon.weapon)
-			{
-				case WeaponType.Kinetic:
-					if (selectedEnemyAttackIcon.weapon == WeaponType.Kinetic)
-					{
-						if (enemyIcons[2].isAvailable)
-							SelectAttackIcon(enemyIcons[2]);
-					}
-					break;
-				
-				case WeaponType.Missile:
-					if (selectedEnemyAttackIcon.weapon == WeaponType.Missile)
-					{
-						if (enemyIcons[3].isAvailable)
-							SelectAttackIcon(enemyIcons[3]);
-					}
-					break;
-				
-				case WeaponType.Beam:
-					if (selectedEnemyAttackIcon.weapon == WeaponType.Beam)
-					{
-						if (enemyIcons[1].isAvailable)
-							SelectAttackIcon(enemyIcons[1]);
-					}
-					break;
-				
-				case WeaponType.Energy:
-					if (selectedEnemyAttackIcon.weapon == WeaponType.Energy)
-					{
-						if (enemyIcons[0].isAvailable)
-							SelectAttackIcon(enemyIcons[0]);
-					}
-					break;
-				
-				case WeaponType.Hybrid:
-					if (selectedEnemyAttackIcon.weapon == WeaponType.Hybrid)
-					{
-						if (enemyIcons[4].isAvailable)
-							SelectAttackIcon(enemyIcons[4]);
-					}
-					break;
-			}
-			
-			
 		}
 	}
 	

@@ -12,7 +12,7 @@ public class Weapon : Equipment {
 	}
 	
 	public List<WeaponType> weaponParts = new List<WeaponType>(), defenseParts = new List<WeaponType>();
-	public List<int> weaponPower = new List<int>(), defensePower = new List<int>(), weaponSpeed = new List<int>(), defenseSpeed = new List<int>();
+	public List<int> weaponPower = new List<int>(), defensePower = new List<int>(), weaponSpeed = new List<int>(), defenseSpeed = new List<int>(), weaponCooldown = new List<int>(), defenseCooldown = new List<int>();
 	
 	
 	

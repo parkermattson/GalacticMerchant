@@ -29,3 +29,5 @@ MonoBehaviour:
   defensePower: 0100000001000000
   weaponSpeed: 0100000001000000
   defenseSpeed: 0100000001000000
+  weaponCooldown: 0100000002000000
+  defenseCooldown: 0100000002000000
