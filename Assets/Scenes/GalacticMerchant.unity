@@ -4483,10 +4483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95419e509b2b58442befce6c61c1a9b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedPlayerAttackIcon: {fileID: 0}
-  selectedPlayerDefenseIcon: {fileID: 0}
-  selectedEnemyAttackIcon: {fileID: 377087785}
-  selectedEnemyDefenseIcon: {fileID: 1524183979}
   enemyIcons:
   - {fileID: 377087785}
   - {fileID: 1331817963}
@@ -4510,10 +4506,17 @@ MonoBehaviour:
   - {fileID: 391256241}
   - {fileID: 629965237}
   stopCombatPopup: {fileID: 732978247}
-  playerTimerBar: {fileID: 872232323}
-  enemyTimerBar: {fileID: 792042557}
   playerHealthBar: {fileID: 1247875317}
   enemyHealthBar: {fileID: 1077880945}
+  commList:
+  - {fileID: 11400000, guid: 623da2f6327714a4c81c4c62b47f597a, type: 2}
+  sensorList:
+  - {fileID: 11400000, guid: d919f6dd2ffb6764cbe4ac1cb2a34ed5, type: 2}
+  engineList:
+  - {fileID: 11400000, guid: 06f3782a3117a124fb0b43ab48a9dd6a, type: 2}
+  weaponList:
+  - {fileID: 11400000, guid: 06fde87a8a8f9054f86194441ca47a13, type: 2}
+  - {fileID: 11400000, guid: 06be020ae9feea945839bc00c927c470, type: 2}
 --- !u!1 &161909436
 GameObject:
   m_ObjectHideFlags: 0
@@ -36936,7 +36939,7 @@ Prefab:
     - target: {fileID: 114704555822070748, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -37181,7 +37184,32 @@ Prefab:
     - target: {fileID: 114704555822070748, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114704555822070748, guid: b0e05aa444b211c429a3d619abcdc033,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114704555822070748, guid: b0e05aa444b211c429a3d619abcdc033,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114704555822070748, guid: b0e05aa444b211c429a3d619abcdc033,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 161150495}
+    - target: {fileID: 114704555822070748, guid: b0e05aa444b211c429a3d619abcdc033,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ResetPlayerHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 114704555822070748, guid: b0e05aa444b211c429a3d619abcdc033,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0e05aa444b211c429a3d619abcdc033, type: 2}

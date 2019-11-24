@@ -7,58 +7,30 @@ using TMPro;
 
 public class CombatScreenScript : MonoBehaviour {
 
-	public CombatIconScript selectedPlayerAttackIcon, selectedPlayerDefenseIcon, selectedEnemyAttackIcon,selectedEnemyDefenseIcon;
 	public CombatIconScript[] enemyIcons = new CombatIconScript[10], playerIcons = new CombatIconScript[10];
 	CombatIconScript switchedPlayerAttackIcon, switchedPlayerDefenseIcon, switchedEnemyAttackIcon, switchedEnemyDefenseIcon;
 	public GameObject stopCombatPopup;
-	public Transform playerTimerBar, enemyTimerBar, playerHealthBar, enemyHealthBar;
-	bool combatStarted = false, playerAttackSwitching = false, playerDefenseSwitching = false, enemyAttackSwitching = false, enemyDefenseSwitching = false;
-	int  enemyHealth = 10, enemyHealthMax = 10;
-	int[] playerWeaponPower = new int[5], playerWeaponSpeed = new int[5], playerDefensePower = new int[5], playerDefenseSpeed = new int[5], playerWeaponCooldown = new int[5], playerDefenseCooldown = new int[5];
+	public Transform  playerHealthBar, enemyHealthBar;
+	bool combatStarted = false;
+	Ship enemyShip;
+	public List<Equipment> commList = new List<Equipment>(), sensorList = new List<Equipment>(), engineList = new List<Equipment>();
+	public List<Weapon> weaponList = new List<Weapon>();
 	float[] enemyWeaponThinkProgress = {0,0,0,0,0};
-	float enemyAttackMaxSwitch = 2f, enemyDefenseMaxSwitch = 1.5f, enemyThinkProgress = 0,  enemyThinkTime = 1,
-			playerMaxTimer = 10f, enemyMaxTimer = 10f, playerAttackMaxSwitch = 2f, playerDefenseMaxSwitch = 1.5f,
-			playerTimer = 0, enemyTimer = 0, playerAttackSwitchTimer = 0, playerDefenseSwitchTimer = 0, enemyAttackSwitchTimer = 0, enemyDefenseSwitchTimer = 0,
-			playerTimerSpeed = 1, playerAttackSwitchSpeed = 1, playerDefenseSwitchSpeed = 1;
+	float enemyThinkProgress = 0,  enemyThinkTime = 1;
+	
+	void Start()
+	{
+		enemyShip = Ship.CreateInstance<Ship>();
+	}
 	
 	void OnEnable()
 	{
 		playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, playerHealthBar.localScale.y);
-		enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, enemyHealthBar.localScale.y);
-		
-		
 	}
 	
 	void Update() {
 		if (combatStarted)
 		{	
-			if (playerDefenseSwitching)
-			{
-				playerDefenseSwitchTimer+= Time.deltaTime*playerDefenseSwitchSpeed;
-				if (playerDefenseSwitchTimer >= playerDefenseMaxSwitch)
-				{
-					playerDefenseSwitchTimer = 0;
-					SwitchPlayerSelectedDefense();
-					playerDefenseSwitching = false;
-				}
-				switchedPlayerDefenseIcon.FillCooldown(playerDefenseSwitchTimer/playerDefenseMaxSwitch);
-			}
-			
-			if (enemyDefenseSwitching)
-			{
-				enemyDefenseSwitchTimer+= Time.deltaTime;
-				if (enemyDefenseSwitchTimer >= enemyDefenseMaxSwitch)
-				{
-					enemyDefenseSwitchTimer = 0;
-					SwitchEnemySelectedDefense();
-					enemyDefenseSwitching = false;
-				}
-				switchedEnemyDefenseIcon.FillCooldown(enemyDefenseSwitchTimer/enemyDefenseMaxSwitch);
-			}
-			
-			playerTimerBar.localScale = new Vector2 (playerTimer/playerMaxTimer, playerTimerBar.transform.localScale.y);
-			enemyTimerBar.localScale = new Vector2 (enemyTimer/enemyMaxTimer, enemyTimerBar.transform.localScale.y);
-			
 			EnemyAI();
 			
 		}
@@ -66,58 +38,26 @@ public class CombatScreenScript : MonoBehaviour {
 	
 	public void StartCombat() {
 		combatStarted = true;
-		playerTimer = 0;
-		enemyTimer = 0;	
 		
-		int[] numOfWeaps = {0,0,0,0,0,0,0,0,0,0};
-		foreach (Weapon weap in GameControl.instance.playerShip.weaponsList) {
-			for (int i =0; i < weap.weaponParts.Count; i++) {
-				int partType = (int)weap.weaponParts[i];
-				playerIcons[partType].SetAvailable(true);
-				playerWeaponPower[partType] += weap.weaponPower[i];
-				playerWeaponSpeed[partType] += weap.weaponSpeed[i];
-				playerWeaponCooldown[partType] += weap.weaponCooldown[i];
-				numOfWeaps[partType]++;
-			}
-			
-			for (int i =0; i < weap.defenseParts.Count; i++) {
-				int partType = (int)weap.defenseParts[i];
-				playerIcons[partType+5].SetAvailable(true);
-				playerDefensePower[partType] += weap.defensePower[i];
-				playerDefenseSpeed[partType] += weap.defenseSpeed[i];
-				playerDefenseCooldown[partType] += weap.defenseCooldown[i];
-				numOfWeaps[partType+5]++;
-			}
-		}
-		
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i< 5; i++)
 		{
-			if (numOfWeaps[i] != 0)
+			if (GameControl.instance.playerShip.GetWeaponPower((WeaponType)i) > 0)
 			{
-				playerWeaponSpeed[i] /=numOfWeaps[i];
-				playerWeaponCooldown[i] /= numOfWeaps[i];
-				playerIcons[i].power = playerWeaponPower[i];
-				playerIcons[i].speed = playerWeaponSpeed[i];
-				playerIcons[i].cooldown = playerWeaponCooldown[i];
+				playerIcons[i].SetAvailable(true);
+				playerIcons[i].power = GameControl.instance.playerShip.GetWeaponPower((WeaponType)i);
+				playerIcons[i].speed = GameControl.instance.playerShip.GetWeaponSpeed((WeaponType)i);
+				playerIcons[i].cooldown = GameControl.instance.playerShip.GetWeaponCooldown((WeaponType)i);
 			}
-		}
+			else playerIcons[i].SetAvailable(false);
 		
-		for (int i = 5; i < 10; i++)
-		{
-			if (numOfWeaps[i] != 0)
+			if (GameControl.instance.playerShip.GetDefensePower((WeaponType)i) > 0)
 			{
-				playerDefenseSpeed[i-5] /=numOfWeaps[i];
-				playerDefenseCooldown[i-5] /= numOfWeaps[i];
-				playerIcons[i].power = playerDefensePower[i-5];
-				playerIcons[i].speed = playerDefenseSpeed[i-5];
-				playerIcons[i].cooldown = playerDefenseCooldown[i-5];
+				playerIcons[i+5].SetAvailable(true);
+				playerIcons[i+5].power = GameControl.instance.playerShip.GetDefensePower((WeaponType)i);
+				playerIcons[i+5].speed = GameControl.instance.playerShip.GetDefenseSpeed((WeaponType)i);
+				playerIcons[i+5].cooldown = GameControl.instance.playerShip.GetDefenseCooldown((WeaponType)i);
 			}
-			
-			if (selectedPlayerDefenseIcon == null && playerIcons[i].isAvailable)
-			{
-				switchedPlayerDefenseIcon = playerIcons[i];
-				SwitchPlayerSelectedDefense();
-			}
+			else playerIcons[i+5].SetAvailable(false);
 		}
 		
 		GenerateEnemy();
@@ -133,80 +73,126 @@ public class CombatScreenScript : MonoBehaviour {
 		combatStarted = false;
 	}
 	
-	public void SelectAttackIcon(CombatIconScript newSelected) {
-		if (!playerAttackSwitching)
-		{
-			if (newSelected.isPlayer)
-			{
-				switchedPlayerAttackIcon = newSelected;
-				playerAttackSwitching = true;
-			} else {
-				switchedEnemyAttackIcon = newSelected;
-				enemyAttackSwitching = true;
-			}
-		}
-	}
-	
-	public void SelectDefenseIcon(CombatIconScript newSelected) {
-		if (!playerDefenseSwitching)
-		{
-			if (newSelected.isPlayer)
-			{
-				switchedPlayerDefenseIcon = newSelected;
-				playerDefenseSwitching = true;
-			} else {
-				switchedEnemyDefenseIcon = newSelected;
-				enemyDefenseSwitching = true;
-			}
-		}
-	}
-	
 	public void playerAttack(int damage, WeaponType attackingType) {
-		enemyHealth-= damage;
-		enemyHealthBar.localScale = new Vector2((float)enemyHealth/enemyHealthMax, 1);
-		if (enemyHealth < 1)
+		int defense = 0;
+		switch (attackingType)
+		{
+			case WeaponType.Kinetic:
+				if (enemyIcons[5].state == SlotState.Charging)
+				{
+					defense+= enemyIcons[5].power;
+				}
+				if (enemyIcons[6].state == SlotState.Charging)
+				{
+					defense += enemyIcons[6].power/2;
+				}
+				break;
+			case WeaponType.Missile:
+				if (enemyIcons[6].state == SlotState.Charging)
+				{
+					defense+= enemyIcons[6].power;
+				}
+				if (enemyIcons[5].state == SlotState.Charging)
+				{
+					defense += enemyIcons[5].power/2;
+				}
+				break;
+			case WeaponType.Beam:
+				if (enemyIcons[7].state == SlotState.Charging)
+				{
+					defense+= enemyIcons[7].power;
+				}
+				if (enemyIcons[8].state == SlotState.Charging)
+				{
+					defense += enemyIcons[8].power/2;
+				}
+				break;
+			case WeaponType.Energy:
+				if (enemyIcons[8].state == SlotState.Charging)
+				{
+					defense+= enemyIcons[8].power;
+				}
+				if (enemyIcons[5].state == SlotState.Charging)
+				{
+					defense += enemyIcons[5].power / 2;
+				}
+				break;
+			case WeaponType.Hybrid:
+				for (int i = 5; i < 10; i++)
+				{
+					if (enemyIcons[i].state == SlotState.Charging)
+					{
+						defense+= enemyIcons[i].power / 4;
+					}
+				}
+				break;
+		}
+		enemyShip.currentHull-= Mathf.CeilToInt(damage / Mathf.Pow(1.055f, defense));
+		enemyHealthBar.localScale = new Vector2((float)enemyShip.currentHull/enemyShip.maxHull, 1);
+		if (enemyShip.currentHull < 1)
 		{
 			StopCombat(true);
 		}
 	}
 	
 	public void enemyAttack(int damage, WeaponType attackingType) {
-		GameControl.instance.playerShip.currentHull -= Mathf.CeilToInt(damage / Mathf.Pow(1.055f, playerDefensePower[(int)attackingType]));
+		int defense = 0;
+		switch (attackingType)
+		{
+			case WeaponType.Kinetic:
+				if (playerIcons[5].state == SlotState.Charging)
+				{
+					defense+= playerIcons[5].power;
+				}
+				if (playerIcons[6].state == SlotState.Charging)
+				{
+					defense += playerIcons[6].power/2;
+				}
+				break;
+			case WeaponType.Missile:
+				if (playerIcons[6].state == SlotState.Charging)
+				{
+					defense+= playerIcons[6].power;
+				}
+				if (playerIcons[5].state == SlotState.Charging)
+				{
+					defense += playerIcons[5].power/2;
+				}
+				break;
+			case WeaponType.Beam:
+				if (playerIcons[7].state == SlotState.Charging)
+				{
+					defense+= playerIcons[7].power;
+				}
+				if (playerIcons[8].state == SlotState.Charging)
+				{
+					defense += playerIcons[8].power/2;
+				}
+				break;
+			case WeaponType.Energy:
+				if (playerIcons[8].state == SlotState.Charging)
+				{
+					defense+= playerIcons[8].power;
+				}
+				if (playerIcons[5].state == SlotState.Charging)
+				{
+					defense += playerIcons[5].power / 2;
+				}
+				break;
+			case WeaponType.Hybrid:
+				for (int i = 5; i < 10; i++)
+				{
+					if (playerIcons[i].state == SlotState.Charging)
+					{
+						defense+= playerIcons[i].power / 4;
+					}
+				}
+				break;
+		}
+		GameControl.instance.playerShip.currentHull -= Mathf.CeilToInt(damage / Mathf.Pow(1.055f, defense));
 		playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, 1);
 		if (GameControl.instance.playerShip.currentHull < 1)
 			StopCombat(false);
-	}
-	
-	void SwitchPlayerSelectedAttack() {
-		if (selectedPlayerAttackIcon != null)
-			selectedPlayerAttackIcon.Deselect();
-		selectedPlayerAttackIcon = switchedPlayerAttackIcon;
-		selectedPlayerAttackIcon.isSelected = true;
-		selectedPlayerAttackIcon.border.SetActive(true);
-		playerTimerSpeed= 1f+ (playerWeaponSpeed[(int)selectedPlayerAttackIcon.weapon]-1)/4f;
-	}
-	
-	void SwitchPlayerSelectedDefense() {
-		if (selectedPlayerDefenseIcon != null)
-			selectedPlayerDefenseIcon.Deselect();
-		selectedPlayerDefenseIcon = switchedPlayerDefenseIcon;
-		selectedPlayerDefenseIcon.isSelected = true;
-		selectedPlayerDefenseIcon.border.SetActive(true);
-		playerDefenseSwitchSpeed = 1f + (playerDefenseSpeed[(int)selectedPlayerDefenseIcon.weapon]-1)/4f;
-	}
-	
-	void SwitchEnemySelectedAttack() {
-		selectedEnemyAttackIcon.Deselect();
-		selectedEnemyAttackIcon = switchedEnemyAttackIcon;
-		selectedEnemyAttackIcon.isSelected = true;
-		selectedEnemyAttackIcon.border.SetActive(true);
-	}
-	
-	void SwitchEnemySelectedDefense() {
-		selectedEnemyDefenseIcon.Deselect();
-		selectedEnemyDefenseIcon = switchedEnemyDefenseIcon;
-		selectedEnemyDefenseIcon.isSelected = true;
-		selectedEnemyDefenseIcon.border.SetActive(true);
 	}
 	
 	void EnemyAI() {
@@ -218,42 +204,62 @@ public class CombatScreenScript : MonoBehaviour {
 			
 			for (int i = 0; i < 5; i++)
 			{
-				enemyWeaponThinkProgress[i] -= Time.deltaTime;
-				if (enemyWeaponThinkProgress[i] <= 0 && enemyIcons[i+5].isAvailable)
+				if (playerIcons[i].state == SlotState.Charging && enemyIcons[i+5].isAvailable)
 				{
 					enemyIcons[i+5].Charge();
 				}
+			}
+		}
+		
+		for (int i = 0; i < 5; i++)
+		{
+			if (enemyIcons[i].state == SlotState.Ready)
+				enemyWeaponThinkProgress[i] += Time.deltaTime;
+			if (enemyWeaponThinkProgress[i] > .25f && enemyIcons[i].isAvailable)
+			{
+				enemyIcons[i].Charge();
+				enemyWeaponThinkProgress[i] = 0;
 			}
 		}
 	}
 	
 	public void GenerateEnemy() {
 		int difficulty = Mathf.FloorToInt(Random.value * 5);
-		enemyHealthMax = 10 * (int)Mathf.Pow(2, difficulty);
-		enemyHealth = enemyHealthMax;
-		
 		enemyThinkTime = 1.5f - difficulty*.15f;
-		enemyMaxTimer = 12f - difficulty*2;
-		enemyAttackMaxSwitch = 3f - difficulty*.4f;
-		enemyAttackMaxSwitch = 2.5f - difficulty*.35f;
 		
-		int needed = difficulty;
-		for (int i = 0; i < 4; i++)
+		enemyShip.maxHull = 10 * (int)Mathf.Pow(2, difficulty);
+		enemyShip.currentHull = enemyShip.maxHull;
+		enemyHealthBar.localScale = new Vector2((float)enemyShip.currentHull/enemyShip.maxHull, enemyHealthBar.localScale.y);
+		enemyShip.commandList.Add(commList[(int)(Random.value * difficulty * commList.Count / 5)]);
+		enemyShip.sensorList.Add(sensorList[(int)(Random.value * difficulty * sensorList.Count / 5)]);
+		enemyShip.engineList.Add(engineList[(int)(Random.value * difficulty * engineList.Count / 5)]);
+		enemyShip.weaponsList.Add(weaponList[(int)(Random.value * difficulty * weaponList.Count / 5)]);
+		
+		for (int i = 0; i< 5; i++)
 		{
-			if (Random.value < needed/(5-i))
+			if (enemyShip.GetWeaponPower((WeaponType)i) > 0)
 			{
 				enemyIcons[i].SetAvailable(true);
+				enemyIcons[i].power = enemyShip.GetWeaponPower((WeaponType)i);
+				enemyIcons[i].speed = enemyShip.GetWeaponSpeed((WeaponType)i);
+				enemyIcons[i].cooldown = enemyShip.GetWeaponCooldown((WeaponType)i);
 			}
-		}
+			else enemyIcons[i].SetAvailable(false);
 		
-		needed = difficulty;
-		for (int i = 0; i < 4; i++)
-		{
-			if (Random.value < needed/(5-i))
+			if (enemyShip.GetDefensePower((WeaponType)i) > 0)
 			{
 				enemyIcons[i+5].SetAvailable(true);
+				enemyIcons[i+5].power = enemyShip.GetDefensePower((WeaponType)i);
+				enemyIcons[i+5].speed = enemyShip.GetDefenseSpeed((WeaponType)i);
+				enemyIcons[i+5].cooldown = enemyShip.GetDefenseCooldown((WeaponType)i);
 			}
+			else enemyIcons[i+5].SetAvailable(false);
 		}
+		
+	}
+	
+	public void ResetPlayerHealth() {
+		GameControl.instance.playerShip.currentHull = GameControl.instance.playerShip.maxHull;
 	}
 	
 }

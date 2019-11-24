@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
+public enum SlotState {Ready, Charging, Cooling}
 
-	enum SlotState {Ready, Charging, Cooling}
+public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 	
-	SlotState state = SlotState.Ready;
+	public SlotState state = SlotState.Ready;
 	public CombatScreenScript combatScript;
 	public GameObject border, availableOverlay;
 	public Image cooldownImage;
@@ -19,17 +19,17 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 	
 	void Update()
 	{
-		if (isAttack)
+		if (state == SlotState.Charging)
 		{
-			if (state == SlotState.Charging)
+			timer+= Time.deltaTime;
+			cooldownImage.fillAmount = (float)timer/(4/Mathf.Pow(1.116f, speed-1));
+			if (timer > 4/Mathf.Pow(1.116f, speed-1)) 
 			{
-				timer+= Time.deltaTime;
-				cooldownImage.fillAmount = (float)timer/(4/Mathf.Pow(1.116f, speed-1));
-				if (timer > 4/Mathf.Pow(1.116f, speed-1)) 
+				timer = 0;
+				state = SlotState.Cooling;
+				cooldownImage.color = new Color(126, 190, 255, 166);
+				if (isAttack)
 				{
-					timer = 0;
-					state = SlotState.Cooling;
-					cooldownImage.color = new Color(126, 190, 255, 166);
 					if (isPlayer)
 					{
 						combatScript.playerAttack(power, weapon);
@@ -37,16 +37,16 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 					else combatScript.enemyAttack(power, weapon);
 				}
 			}
-			else if (state == SlotState.Cooling)
+		}
+		else if (state == SlotState.Cooling)
+		{
+			timer+=Time.deltaTime;
+			cooldownImage.fillAmount = ((4/Mathf.Pow(1.116f, cooldown-1))-timer)/(4/Mathf.Pow(1.116f, cooldown-1));
+			if (timer > 4/Mathf.Pow(1.116f, cooldown-1))
 			{
-				timer+=Time.deltaTime;
-				cooldownImage.fillAmount = ((4/Mathf.Pow(1.116f, cooldown-1))-timer)/(4/Mathf.Pow(1.116f, cooldown-1));
-				if (timer > 4/Mathf.Pow(1.116f, cooldown-1))
-				{
-					state = SlotState.Ready;
-					cooldownImage.gameObject.SetActive(false);
-					timer = 0;
-				}
+				state = SlotState.Ready;
+				cooldownImage.gameObject.SetActive(false);
+				timer = 0;
 			}
 		}
 	}
@@ -54,20 +54,7 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 	public void OnPointerClick(PointerEventData eventData)
 	{
 		if (isPlayer)
-		{
-			if (isAttack)
-			{
-				if (isAvailable && state == SlotState.Ready)
-				{
-					state = SlotState.Charging;
-					timer = 0;
-					cooldownImage.color = Color.blue;
-					cooldownImage.gameObject.SetActive(true);
-					
-				}
-			} else if (isAvailable && !isSelected)
-				combatScript.SelectDefenseIcon(this);
-		}
+			Charge();
 	}
 	
 	public void Charge()

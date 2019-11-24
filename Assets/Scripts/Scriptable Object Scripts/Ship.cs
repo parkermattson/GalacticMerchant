@@ -71,4 +71,88 @@ public class Ship : ScriptableObject {
 		return rawSpeed;
 	}
 	
+	public int GetWeaponPower(WeaponType type) {
+		int power = 0, numWeaps = 0;
+		foreach (Weapon weap in weaponsList)
+			for (int i = 0; i < weap.weaponParts.Count; i++)
+				if (weap.weaponParts[i] == type)
+				{
+					power += weap.weaponPower[i];
+					numWeaps++;
+				}
+		if (numWeaps > 0)
+			return power/numWeaps;
+		else return 0;
+	}
+	
+	public int GetWeaponSpeed(WeaponType type) {
+		int speed = 0, numWeaps = 0;
+		foreach (Weapon weap in weaponsList)
+			for (int i = 0; i < weap.weaponParts.Count; i++)
+				if (weap.weaponParts[i] == type)
+				{
+					speed += weap.weaponSpeed[i];
+					numWeaps++;
+				}
+		if (numWeaps > 0)
+			return speed/numWeaps;
+		else return 0;
+	}
+	
+	public int GetWeaponCooldown(WeaponType type) {
+		int cooldown = 0, numWeaps = 0;
+		foreach (Weapon weap in weaponsList)
+			for (int i = 0; i < weap.weaponParts.Count; i++)
+				if (weap.weaponParts[i] == type)
+				{
+					cooldown += weap.weaponCooldown[i];
+					numWeaps++;
+				}
+		if (numWeaps > 0)
+			return cooldown/numWeaps;
+		else return 0;
+	}
+	
+	public int GetDefensePower(WeaponType type) {
+		int power = 0, numWeaps = 0;
+		foreach (Weapon weap in weaponsList)
+			for (int i = 0; i < weap.defenseParts.Count; i++)
+				if (weap.defenseParts[i] == type)
+				{
+					power += weap.defensePower[i];
+					numWeaps++;
+				}
+		if (numWeaps > 0)
+			return power/numWeaps;
+		else return 0;
+	}
+	
+	public int GetDefenseSpeed(WeaponType type) {
+		int speed = 0, numWeaps = 0;
+		foreach (Weapon weap in weaponsList)
+			for (int i = 0; i < weap.defenseParts.Count; i++)
+				if (weap.defenseParts[i] == type)
+				{
+					speed += weap.defenseSpeed[i];
+					numWeaps++;
+				}
+		if (numWeaps > 0)
+			return speed/numWeaps;
+		else return 0;
+	}
+	
+	public int GetDefenseCooldown(WeaponType type) {
+		int cooldown = 0, numWeaps = 0;
+		foreach (Weapon weap in weaponsList)
+			for (int i = 0; i < weap.defenseParts.Count; i++)
+				if (weap.defenseParts[i] == type)
+				{
+					cooldown += weap.defenseCooldown[i];
+					numWeaps++;
+				}
+		if (numWeaps > 0)
+			return cooldown/numWeaps;
+		else return 0;
+	}
+	
 }
