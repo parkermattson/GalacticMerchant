@@ -10,20 +10,20 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 	
 	public SlotState state = SlotState.Ready;
 	public CombatScreenScript combatScript;
-	public GameObject border, availableOverlay;
+	public GameObject availableOverlay;
 	public Image cooldownImage;
-	public bool isSelected = false, isAvailable = false, isAttack = true, isPlayer = false;
+	public bool isAvailable = false, isAttack = true, isPlayer = false;
 	public WeaponType weapon = WeaponType.Kinetic;
 	public int power, speed, cooldown;
-	float timer = 0;
+	float timer = 0, cooldownTime, speedTime;
 	
 	void Update()
 	{
 		if (state == SlotState.Charging)
 		{
 			timer+= Time.deltaTime;
-			cooldownImage.fillAmount = (float)timer/(4/Mathf.Pow(1.116f, speed-1));
-			if (timer > 4/Mathf.Pow(1.116f, speed-1)) 
+			cooldownImage.fillAmount = timer/speedTime;
+			if (timer > speedTime) 
 			{
 				timer = 0;
 				state = SlotState.Cooling;
@@ -41,11 +41,11 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 		else if (state == SlotState.Cooling)
 		{
 			timer+=Time.deltaTime;
-			cooldownImage.fillAmount = ((4/Mathf.Pow(1.116f, cooldown-1))-timer)/(4/Mathf.Pow(1.116f, cooldown-1));
-			if (timer > 4/Mathf.Pow(1.116f, cooldown-1))
+			cooldownImage.fillAmount = (cooldownTime - timer) / cooldownTime;
+			if (timer > cooldownTime)
 			{
+				cooldownImage.fillAmount = 0;
 				state = SlotState.Ready;
-				cooldownImage.gameObject.SetActive(false);
 				timer = 0;
 			}
 		}
@@ -64,26 +64,36 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 				state = SlotState.Charging;
 				timer = 0;
 				cooldownImage.color = Color.blue;
-				cooldownImage.gameObject.SetActive(true);
 			}
-	}
-	
-	public void Deselect()
-	{
-		isSelected = false;
-		border.SetActive(false);
-		
-	}
-	
-	public void FillCooldown(float fillPercent)
-	{
-		cooldownImage.fillAmount = fillPercent;
 	}
 	
 	public void SetAvailable(bool newAvailability)
 	{
-			isAvailable = newAvailability;
-			availableOverlay.SetActive(!newAvailability);
+		isAvailable = newAvailability;
+		availableOverlay.SetActive(!newAvailability);
+		timer = 0;
+		cooldownImage.fillAmount = 0;
+		state = SlotState.Ready;
+		
+		if (newAvailability)
+		{
+			cooldownTime = 4/Mathf.Pow(1.116f, cooldown-1);
+			speedTime = 2/Mathf.Pow(1.116f, speed-1);
+			if (!isAttack)
+			{
+				cooldownTime/=2;
+				speedTime/=2;
+			}
+		}
+	}
+	
+	public float GetTimer()
+	{
+		if (state == SlotState.Charging)
+			return timer/speedTime;
+		else if (state == SlotState.Cooling)
+			return (cooldownTime - timer)/cooldownTime;
+		else return 0;
 	}
 	
 }

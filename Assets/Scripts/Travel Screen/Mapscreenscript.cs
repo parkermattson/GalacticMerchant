@@ -54,7 +54,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         locationTooltip.SetActive(false);
         mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 5f);
 		GameControl.instance.PassTime(.25f);
-		SetTime();
+		SetTimeText();
 		fuelCounter+=.1f;
 		if (fuelCounter >= 1)
 		{
@@ -66,6 +66,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             inTransit = false;
             GameControl.instance.playerLocation = GetLocation(selectedLocation);
+			GetLocation(selectedLocation).RollEncounter();
 			if (GameControl.instance.playerLocation.locationType == LocationType.Station)
 			{
 				Station tempStation = (Station)GameControl.instance.playerLocation;
@@ -164,9 +165,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		warpRangeImage.transform.localPosition -= new Vector3(25, 0);
         SetHullBar();
         SetFuelBar();
-        SetCargoSpace();
-        SetMoney();
-		SetTime();
+        SetCargoSpaceText();
+        SetMoneyText();
+		SetTimeText();
     }
 	
 	void OnDisable()
@@ -190,8 +191,12 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		foreach (Location l in locations)
 		{
 			GameObject tempLocation;
+			int locType = (int)(Random.value * 13) + 1;
+			if (locType > 6)
+				locType = 1;
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);
 			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
+			l.locationType = (LocationType)locType;
 			tempLocation.GetComponent<LocationScript>().location = l;
 			tempLocation.transform.localPosition = l.mapPosition;
 			switch (l.locationType)
@@ -251,16 +256,16 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		
 		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", GameControl.instance.playerShip.currentFuel, GameControl.instance.playerShip.maxFuel);
     }
-    void SetCargoSpace()
+    void SetCargoSpaceText()
     {
         cargoText.SetText("Cargo Space: {0} / {1}", Inventory.instance.currentCargo, GameControl.instance.playerShip.maxCargo);
     }
-    void SetMoney()
+    void SetMoneyText()
     {
         moneyText.SetText("Spacebucks: {0}", GameControl.instance.playerMoney);
     }
 	
-	void SetTime()
+	void SetTimeText()
 	{
 		timeText.SetText("Time: " + GameControl.instance.gameTime.ToString("HH:mm, MM/dd/yyyy"));
 	}

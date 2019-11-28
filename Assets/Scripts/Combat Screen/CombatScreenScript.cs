@@ -23,16 +23,10 @@ public class CombatScreenScript : MonoBehaviour {
 		enemyShip = Ship.CreateInstance<Ship>();
 	}
 	
-	void OnEnable()
-	{
-		playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, playerHealthBar.localScale.y);
-	}
-	
 	void Update() {
 		if (combatStarted)
 		{	
 			EnemyAI();
-			
 		}
 	}
 	
@@ -60,6 +54,8 @@ public class CombatScreenScript : MonoBehaviour {
 			else playerIcons[i+5].SetAvailable(false);
 		}
 		
+		playerHealthBar.localScale = new Vector2((float)GameControl.instance.playerShip.currentHull/GameControl.instance.playerShip.maxHull, playerHealthBar.localScale.y);
+		
 		GenerateEnemy();
 	}
 	
@@ -69,6 +65,11 @@ public class CombatScreenScript : MonoBehaviour {
 			stopCombatPopup.GetComponentInChildren<TextMeshProUGUI>().SetText("You Win!");
 		}
 		else stopCombatPopup.GetComponentInChildren<TextMeshProUGUI>().SetText("You Lose!");
+		for (int i =0; i < 10; i++)
+		{
+			playerIcons[i].SetAvailable(false);
+			enemyIcons[i].SetAvailable(false);
+		}
 		stopCombatPopup.SetActive(true);
 		combatStarted = false;
 	}
@@ -204,7 +205,7 @@ public class CombatScreenScript : MonoBehaviour {
 			
 			for (int i = 0; i < 5; i++)
 			{
-				if (playerIcons[i].state == SlotState.Charging && enemyIcons[i+5].isAvailable)
+				if (playerIcons[i].GetTimer() >= .5f && enemyIcons[i+5].isAvailable)
 				{
 					enemyIcons[i+5].Charge();
 				}
@@ -227,7 +228,7 @@ public class CombatScreenScript : MonoBehaviour {
 		int difficulty = Mathf.FloorToInt(Random.value * 5);
 		enemyThinkTime = 1.5f - difficulty*.15f;
 		
-		enemyShip.maxHull = 10 * (int)Mathf.Pow(2, difficulty);
+		enemyShip.maxHull = 5 * (difficulty+1);
 		enemyShip.currentHull = enemyShip.maxHull;
 		enemyHealthBar.localScale = new Vector2((float)enemyShip.currentHull/enemyShip.maxHull, enemyHealthBar.localScale.y);
 		enemyShip.commandList.Add(commList[(int)(Random.value * difficulty * commList.Count / 5)]);
