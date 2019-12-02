@@ -17,8 +17,8 @@ public class GameControl : MonoBehaviour {
 	//Game variables
 	public string playerName;
 	public int playerMoney, playerRace, playerAvatar;
-	public int[] playerStats = {1,1,1,1};
-	public Crew[] crewMembs = new Crew[4];
+	public int[] activeStats = {1,1,1,1};
+	public Crew[] crewMembs = new Crew[4], assignedCrew = new Crew[4];
     public Ship playerShip, defaultShip;
     public Location playerLocation;
 	public DateTime gameTime, lastWeek;
@@ -37,9 +37,15 @@ public class GameControl : MonoBehaviour {
 		
 		inventory = Inventory.instance;
 		
-		for (int i = 0; i < 4; i++)
+		crewMembs[0] = Crew.CreateInstance<Crew>();
+		crewMembs[0].crewName = "Player";
+		
+		assignedCrew[0] = crewMembs[0];
+		
+		for (int i = 1; i < 4; i++)
 		{
 			crewMembs[i] = null;
+			assignedCrew[i] = crewMembs[0];
 		}
 		
 		gameTime = new DateTime(3000, 1, 1, 9, 0, 0);
@@ -61,19 +67,23 @@ public class GameControl : MonoBehaviour {
 		
 	}
 	
-	public void NewChar(GameObject ccScreen)
+	public void NewChar(CharCreate ccScript)
 	{
-		CharCreate ccScript = ccScreen.GetComponent<CharCreate>();
 		playerName = ccScript.GetPlayerName();
 		playerRace = ccScript.GetRace();
 		playerAvatar = ccScript.GetAvatar();
-		playerStats = ccScript.GetStats();
 		playerMoney = 100;
 		crewMembs[0] = ScriptableObject.CreateInstance<Crew>();
 		crewMembs[0].SetCrewName(playerName);
 		crewMembs[0].SetRace(playerRace);
 		crewMembs[0].SetAvatar(playerAvatar);
-		crewMembs[0].SetStats(playerStats);
+		crewMembs[0].SetStats(ccScript.GetStats());
+		
+		for (int i = 0; i < 4; i++)
+		{
+			assignedCrew[i] = crewMembs[0];
+			activeStats[i] = assignedCrew[i].GetStat(i);
+		}
 	}
 	
 	public void Save(String saveName)
@@ -87,10 +97,11 @@ public class GameControl : MonoBehaviour {
 		saveData.saveName = saveName;
 		saveData.playerMoney = playerMoney;
 		saveData.playerName = playerName;
-		saveData.playerStats = playerStats;
+		saveData.activeStats = activeStats;
 		saveData.playerAvatar = playerAvatar;
 		saveData.playerRace = playerRace;
 		saveData.crewMembs = crewMembs;
+		saveData.assignedCrew = assignedCrew;
 		saveData.playerShip = playerShip;
 		saveData.playerLocation = playerLocation;
 		saveData.items = inventory.items;
@@ -115,10 +126,11 @@ public class GameControl : MonoBehaviour {
 			//Assign loaded data to local variables here
 				playerName = loadData.playerName;
 				playerMoney = loadData.playerMoney;
-				playerStats = loadData.playerStats;
+				activeStats = loadData.activeStats;
 				playerAvatar = loadData.playerAvatar;
 				playerRace = loadData.playerRace;
 				crewMembs = loadData.crewMembs;
+				assignedCrew = loadData.assignedCrew;
 				playerShip = loadData.playerShip;
 				playerLocation = loadData.playerLocation;
 				inventory.items = loadData.items;
@@ -160,24 +172,13 @@ public class GameControl : MonoBehaviour {
 		
 	}
 	
-	public class CrewMember
-	{
-		public string name = "";
-		public int race = 0;
-		public int avatar = 0;
-		public int[] stats = {1,1,1,1};
-		public bool enabled = false;
-	}
-	
-	
-	
 	[Serializable]
 	class GameData
 	{
 		public string saveName, playerName;
 		public int playerMoney, playerRace, playerAvatar;
-		public int[] playerStats;
-		public Crew[] crewMembs;
+		public int[] activeStats;
+		public Crew[] crewMembs, assignedCrew;
 		public Ship playerShip;
 		public Location playerLocation;
 		public List<ItemStack> items;

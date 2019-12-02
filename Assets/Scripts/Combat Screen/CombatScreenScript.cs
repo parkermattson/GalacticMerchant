@@ -231,10 +231,10 @@ public class CombatScreenScript : MonoBehaviour {
 		enemyShip.maxHull = 5 * (difficulty+1);
 		enemyShip.currentHull = enemyShip.maxHull;
 		enemyHealthBar.localScale = new Vector2((float)enemyShip.currentHull/enemyShip.maxHull, enemyHealthBar.localScale.y);
-		enemyShip.commandList.Add(commList[(int)(Random.value * difficulty * commList.Count / 5)]);
-		enemyShip.sensorList.Add(sensorList[(int)(Random.value * difficulty * sensorList.Count / 5)]);
-		enemyShip.engineList.Add(engineList[(int)(Random.value * difficulty * engineList.Count / 5)]);
-		enemyShip.weaponsList.Add(weaponList[(int)(Random.value * difficulty * weaponList.Count / 5)]);
+		enemyShip.command = commList[(int)(Random.value * difficulty * commList.Count / 5)];
+		enemyShip.sensor = sensorList[(int)(Random.value * difficulty * sensorList.Count / 5)];
+		enemyShip.engine = engineList[(int)(Random.value * difficulty * engineList.Count / 5)];
+		enemyShip.weapon = weaponList[(int)(Random.value * difficulty * weaponList.Count / 5)];
 		
 		for (int i = 0; i< 5; i++)
 		{

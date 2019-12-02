@@ -11,8 +11,8 @@ public class Ship : ScriptableObject {
 	public int price = 1000, maxHull = 10, currentHull = 10, maxFuel = 100, currentFuel = 100, maxCargo = 1000,  rawSensorRange = 20, rawWarpRange = 350;
 	public float rawFuelEff = 1, rawSpeed = 1;
 	public int[] equipCapacities = {1, 1, 1, 1};
-	public List<Equipment> commandList = new List<Equipment>(), sensorList = new List<Equipment>(), engineList = new List<Equipment>();
-	public List<Weapon> weaponsList = new List<Weapon>();
+	public Equipment command, sensor, engine;
+	public Weapon weapon;
 	
 	public string GetName() {
 		return shipName;
@@ -61,6 +61,11 @@ public class Ship : ScriptableObject {
 		return rawSensorRange;
 	}
 	
+	public int GetSensorLevel() {
+		Debug.Log("Need sensor level getter here");
+		return 1;
+	}
+	
 	public float GetNetWarpRange() {
 		Debug.Log("Need net warp range calculation");
 		return rawWarpRange;
@@ -73,13 +78,12 @@ public class Ship : ScriptableObject {
 	
 	public int GetWeaponPower(WeaponType type) {
 		int power = 0, numWeaps = 0;
-		foreach (Weapon weap in weaponsList)
-			for (int i = 0; i < weap.weaponParts.Count; i++)
-				if (weap.weaponParts[i] == type)
-				{
-					power += weap.weaponPower[i];
-					numWeaps++;
-				}
+		for (int i = 0; i < weapon.weaponParts.Count; i++)
+			if (weapon.weaponParts[i] == type)
+			{
+				power += weapon.weaponPower[i];
+				numWeaps++;
+			}
 		if (numWeaps > 0)
 			return power/numWeaps;
 		else return 0;
@@ -87,13 +91,12 @@ public class Ship : ScriptableObject {
 	
 	public int GetWeaponSpeed(WeaponType type) {
 		int speed = 0, numWeaps = 0;
-		foreach (Weapon weap in weaponsList)
-			for (int i = 0; i < weap.weaponParts.Count; i++)
-				if (weap.weaponParts[i] == type)
-				{
-					speed += weap.weaponSpeed[i];
-					numWeaps++;
-				}
+		for (int i = 0; i < weapon.weaponParts.Count; i++)
+			if (weapon.weaponParts[i] == type)
+			{
+				speed += weapon.weaponSpeed[i];
+				numWeaps++;
+			}
 		if (numWeaps > 0)
 			return speed/numWeaps;
 		else return 0;
@@ -101,13 +104,12 @@ public class Ship : ScriptableObject {
 	
 	public int GetWeaponCooldown(WeaponType type) {
 		int cooldown = 0, numWeaps = 0;
-		foreach (Weapon weap in weaponsList)
-			for (int i = 0; i < weap.weaponParts.Count; i++)
-				if (weap.weaponParts[i] == type)
-				{
-					cooldown += weap.weaponCooldown[i];
-					numWeaps++;
-				}
+		for (int i = 0; i < weapon.weaponParts.Count; i++)
+			if (weapon.weaponParts[i] == type)
+			{
+				cooldown += weapon.weaponCooldown[i];
+				numWeaps++;
+			}
 		if (numWeaps > 0)
 			return cooldown/numWeaps;
 		else return 0;
@@ -115,13 +117,12 @@ public class Ship : ScriptableObject {
 	
 	public int GetDefensePower(WeaponType type) {
 		int power = 0, numWeaps = 0;
-		foreach (Weapon weap in weaponsList)
-			for (int i = 0; i < weap.defenseParts.Count; i++)
-				if (weap.defenseParts[i] == type)
-				{
-					power += weap.defensePower[i];
-					numWeaps++;
-				}
+		for (int i = 0; i < weapon.defenseParts.Count; i++)
+			if (weapon.defenseParts[i] == type)
+			{
+				power += weapon.defensePower[i];
+				numWeaps++;
+			}
 		if (numWeaps > 0)
 			return power/numWeaps;
 		else return 0;
@@ -129,13 +130,12 @@ public class Ship : ScriptableObject {
 	
 	public int GetDefenseSpeed(WeaponType type) {
 		int speed = 0, numWeaps = 0;
-		foreach (Weapon weap in weaponsList)
-			for (int i = 0; i < weap.defenseParts.Count; i++)
-				if (weap.defenseParts[i] == type)
-				{
-					speed += weap.defenseSpeed[i];
-					numWeaps++;
-				}
+		for (int i = 0; i < weapon.defenseParts.Count; i++)
+			if (weapon.defenseParts[i] == type)
+			{
+				speed += weapon.defenseSpeed[i];
+				numWeaps++;
+			}
 		if (numWeaps > 0)
 			return speed/numWeaps;
 		else return 0;
@@ -143,13 +143,12 @@ public class Ship : ScriptableObject {
 	
 	public int GetDefenseCooldown(WeaponType type) {
 		int cooldown = 0, numWeaps = 0;
-		foreach (Weapon weap in weaponsList)
-			for (int i = 0; i < weap.defenseParts.Count; i++)
-				if (weap.defenseParts[i] == type)
-				{
-					cooldown += weap.defenseCooldown[i];
-					numWeaps++;
-				}
+		for (int i = 0; i < weapon.defenseParts.Count; i++)
+			if (weapon.defenseParts[i] == type)
+			{
+				cooldown += weapon.defenseCooldown[i];
+				numWeaps++;
+			}
 		if (numWeaps > 0)
 			return cooldown/numWeaps;
 		else return 0;

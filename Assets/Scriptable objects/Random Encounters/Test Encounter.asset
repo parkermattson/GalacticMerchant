@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c92780480ee2b46be92f657b19dc06, type: 3}
+  m_Name: Test Encounter
+  m_EditorClassIdentifier: 
+  encounterName: Test encounter 1
+  encounterDescription: This is a test encounter
+  encounterChoiceDesc:
+  - This choice will give you 1000SB and 20 xenospar
+  - This choice will damage hull by 2
+  - (Bribe) Pay 100 SB to get away
+  - Enter Combat
+  encounterSuccessDesc:
+  - Success Desc 1
+  - Success Desc 2
+  - Success Desc 3
+  - Success Desc 4
+  encounterFailureDesc:
+  - Failure Desc 1
+  - Failure Desc 2
+  - Failure Desc 3
+  - Failure Desc 4
+  choiceOutcomeItems1:
+  - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
+  choiceOutcomeItems2: []
+  choiceOutcomeItems3: []
+  choiceOutcomeItems4: []
+  choiceOutcomeQuants1: 14000000
+  choiceOutcomeQuants2: 
+  choiceOutcomeQuants3: 
+  choiceOutcomeQuants4: 
+  outcomeMoney: e8030000000000009cffffff00000000
+  outcomeHealth: 00000000feffffff0000000000000000
+  successChance:
+  - 0.5
+  - 1
+  - 0.9
+  - 0
