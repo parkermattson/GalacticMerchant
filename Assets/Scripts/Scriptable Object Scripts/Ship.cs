@@ -52,28 +52,28 @@ public class Ship : ScriptableObject {
 	}
 	
 	public float GetNetFuelEff() {
-		Debug.Log("Need net fuel eff calculation");
-		return rawFuelEff;
+		float netEff = rawFuelEff * GameControl.instance.GetFuelEfficiencyBonus();
+		return netEff;
 	}
 	
 	public float GetNetSensorRange() {
-		Debug.Log("Need net sensor range calculation");
-		return rawSensorRange;
+		float netRange = rawSensorRange * GameControl.instance.GetSensorRangeBonus();
+		return netRange;
 	}
 	
 	public int GetSensorLevel() {
-		Debug.Log("Need sensor level getter here");
-		return 1;
+		int level = 1 + GameControl.instance.GetSensorLevelBonus();
+		return level;
 	}
 	
 	public float GetNetWarpRange() {
-		Debug.Log("Need net warp range calculation");
-		return rawWarpRange;
+		float netWarpRange = rawWarpRange * GameControl.instance.GetWarpRangeBonus();
+		return netWarpRange;
 	}
 	
 	public float GetNetSpeed() {
-		Debug.Log("Need net speed calculation");
-		return rawSpeed;
+		float netSpeed = rawSpeed * GameControl.instance.GetWarpSpeedBonus();
+		return netSpeed;
 	}
 	
 	public int GetWeaponPower(WeaponType type) {
@@ -85,12 +85,12 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return power/numWeaps;
+			return power / numWeaps;
 		else return 0;
 	}
 	
-	public int GetWeaponSpeed(WeaponType type) {
-		int speed = 0, numWeaps = 0;
+	public float GetWeaponSpeed(WeaponType type) {
+		float speed = 0, numWeaps = 0;
 		for (int i = 0; i < weapon.weaponParts.Count; i++)
 			if (weapon.weaponParts[i] == type)
 			{
@@ -98,12 +98,12 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return speed/numWeaps;
+			return speed * GameControl.instance.GetWeaponChargeBonus() / numWeaps;
 		else return 0;
 	}
 	
-	public int GetWeaponCooldown(WeaponType type) {
-		int cooldown = 0, numWeaps = 0;
+	public float GetWeaponCooldown(WeaponType type) {
+		float cooldown = 0, numWeaps = 0;
 		for (int i = 0; i < weapon.weaponParts.Count; i++)
 			if (weapon.weaponParts[i] == type)
 			{
@@ -111,7 +111,7 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return cooldown/numWeaps;
+			return cooldown * GameControl.instance.GetWeaponCooldownBonus() / numWeaps;
 		else return 0;
 	}
 	
@@ -124,12 +124,12 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return power/numWeaps;
+			return power / numWeaps;
 		else return 0;
 	}
 	
-	public int GetDefenseSpeed(WeaponType type) {
-		int speed = 0, numWeaps = 0;
+	public float GetDefenseSpeed(WeaponType type) {
+		float speed = 0, numWeaps = 0;
 		for (int i = 0; i < weapon.defenseParts.Count; i++)
 			if (weapon.defenseParts[i] == type)
 			{
@@ -137,12 +137,12 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return speed/numWeaps;
+			return speed  * GameControl.instance.GetDefenseDurationBonus() / numWeaps;
 		else return 0;
 	}
 	
-	public int GetDefenseCooldown(WeaponType type) {
-		int cooldown = 0, numWeaps = 0;
+	public float GetDefenseCooldown(WeaponType type) {
+		float cooldown = 0, numWeaps = 0;
 		for (int i = 0; i < weapon.defenseParts.Count; i++)
 			if (weapon.defenseParts[i] == type)
 			{
@@ -150,7 +150,7 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return cooldown/numWeaps;
+			return cooldown  * GameControl.instance.GetDefenseCooldownBonus() / numWeaps;
 		else return 0;
 	}
 	

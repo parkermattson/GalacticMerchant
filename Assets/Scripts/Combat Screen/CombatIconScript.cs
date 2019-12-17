@@ -14,7 +14,8 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 	public Image cooldownImage;
 	public bool isAvailable = false, isAttack = true, isPlayer = false;
 	public WeaponType weapon = WeaponType.Kinetic;
-	public int power, speed, cooldown;
+	public int power;
+	public float speed, cooldown;
 	float timer = 0, cooldownTime, speedTime;
 	
 	void Update()

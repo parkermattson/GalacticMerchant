@@ -9,27 +9,24 @@ using TMPro;
 public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler{
 
     public Location location;
-
-    GameObject hoverTooltip;
+	
 	Mapscreenscript mapScript;
 	
 	Vector3 mouseStart;
 	
     public void OnPointerEnter(PointerEventData eventData)
     {
-        hoverTooltip.SetActive(true);
-		hoverTooltip.GetComponentInChildren<TextMeshProUGUI>().SetText("Click to Select\n"+location.GetName()+"\n"+location.GetDescription());
-        hoverTooltip.transform.position = transform.position;
+		mapScript.SetHoverTooltip(true, gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        hoverTooltip.SetActive(false);
+        mapScript.SetHoverTooltip(false, gameObject);
     }
 
     public void OnPointerClick(PointerEventData eventData)
 	{
-		mapScript.SelectLocation(transform.gameObject);
+		mapScript.SelectLocation(gameObject);
 	}
 	
 	public void OnBeginDrag(PointerEventData eventData)		//For tweaking locations more easily
@@ -47,7 +44,6 @@ public class LocationScript : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	
 	public void SetGeneralVars(GameObject newHoverTooltip, Mapscreenscript newMapScript)
 	{
-		hoverTooltip = newHoverTooltip;
 		mapScript = newMapScript;
 	}
 

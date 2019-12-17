@@ -24,6 +24,7 @@ public class GameControl : MonoBehaviour {
 	public DateTime gameTime, lastWeek;
 	public List<Station> initStations, stations;
 	public List<Mission> acceptedMissions = new List<Mission>();
+	public List<Location> initLocations, locations;
 	
 	public Sprite[] avatars = new Sprite[3];
 	public Sprite[] races = new Sprite[3];
@@ -57,14 +58,14 @@ public class GameControl : MonoBehaviour {
 			stations.Last().Init();
 		}
 		
+		foreach (Location l in initLocations)
+		{
+			locations.Add(Instantiate(l));
+		}
+		
 		playerShip = Instantiate(defaultShip);
 		
 		playerLocation = stations[0];
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 	
 	public void NewChar(CharCreate ccScript)
@@ -169,7 +170,133 @@ public class GameControl : MonoBehaviour {
 				Debug.Log("Crew couldnt be hired");
 			}
 		}
+	}
+	
+	public float GetQuestMoneyBonus() {
+		if (activeStats[0] > 0)
+			return 1.1f;
+		else return 1;
+	}
+	
+	public float GetMarketPriceBonus() {
+		if (activeStats[0] > 1)
+			return 1 + .02f * activeStats[0];
+		else return 1;
+	}
+	
+	public float GetCrewDiscountBonus() {
+		if (activeStats[0] > 2)
+			return .85f;
+		else return 1;
+	}
+	
+	public int GetActiveStatBonus() {
+		if (activeStats[0] > 3)
+			return 1;
+		else return 0;
+	}
+	
+	public float GetWeaponCooldownBonus() {
+		float bonus = 1;
+		if (activeStats[1] + GetActiveStatBonus() > 0) {
+			bonus+= 1.1f;
+			if (activeStats[1] + GetActiveStatBonus() > 4)
+				 bonus += .1f;
+		}
+		return bonus;
+	}
+	
+	public float GetWeaponChargeBonus() {
+		float bonus = 1;
+		if (activeStats[1] + GetActiveStatBonus() > 1) {
+			bonus+= 1 + .04f * (activeStats[1] + GetActiveStatBonus());
+			if (activeStats[1] + GetActiveStatBonus() > 4)
+				 bonus += .1f;
+		}
+		return bonus;
+	}
+	
+	public float GetDefenseDurationBonus() {
+		float bonus = 1;
+		if (activeStats[1] + GetActiveStatBonus() > 2) {
+			bonus+= 1.2f;
+			if (activeStats[1] + GetActiveStatBonus() > 4)
+				 bonus += .1f;
+		}
+		return bonus;
+	}
+	
+	public bool GetCombatDodgeBonus() {
+		if (activeStats[1] + GetActiveStatBonus() > 3)
+			return true;
+		else return false;
+	}
+	
+	public float GetDefenseCooldownBonus() {
+		if (activeStats[1] + GetActiveStatBonus() > 4)
+			return 1.1f;
+		else return 1;
+	}
+	
+	public float GetWarpRangeBonus() {
+		float bonus = 1;
+		if (activeStats[2] + GetActiveStatBonus() > 0)
+			bonus+= .1f;
 		
+		if (activeStats[3] + GetActiveStatBonus() > 2) {
+			bonus+= .25f;
+			if (activeStats[3] + GetActiveStatBonus() > 4)
+				 bonus += .1f;
+		}
+		return bonus;
+	}
+	
+	public float GetSensorRangeBonus() {
+		float bonus = 1;
+		if (activeStats[2] + GetActiveStatBonus() > 1) {
+			bonus+= 1 + .1f * (activeStats[2] + GetActiveStatBonus());
+			if (activeStats[2] + GetActiveStatBonus() > 4)
+				 bonus += .5f;
+		}
+		return bonus;
+	}
+	
+	public int GetSensorLevelBonus() {
+		if (activeStats[2] + GetActiveStatBonus() > 2)
+			return 1;
+		else return 0;
+	}
+	
+	public float GetEncounterSuccessBonus() {
+		if (activeStats[2] + GetActiveStatBonus() > 3)
+			return 1.25f;
+		else return 1;
+	}
+	
+	public float GetFuelEfficiencyBonus() {
+		float bonus = 1;
+		if (activeStats[3] + GetActiveStatBonus() > 0) {
+			bonus+= 1.15f;
+			if (activeStats[3] + GetActiveStatBonus() > 4)
+				 bonus += .1f;
+		}
+		return bonus;
+	}
+	
+	public float GetWarpSpeedBonus() {
+		float bonus = 1;
+		if (activeStats[3] + GetActiveStatBonus() > 1) {
+			bonus+= 1 + .15f * (activeStats[3] + GetActiveStatBonus());
+			if (activeStats[3] + GetActiveStatBonus() > 4)
+				 bonus += .1f;
+		}
+		return bonus;
+	}
+	
+	public float GetFactorySpeedBonus() {
+		if (activeStats[3] + GetActiveStatBonus() > 3)
+			return 1.33f;
+		else return 1;
 	}
 	
 	[Serializable]

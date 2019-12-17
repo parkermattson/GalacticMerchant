@@ -15,13 +15,10 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public GameObject hoverTooltip;
     GameObject selectedLocation = null;
     bool inTransit = false;
-	float fuelCounter = 0;
+	float fuelCounter = 1;
 	
 	[SerializeField]
 	private GameObject locationPrefab;
-	
-	[SerializeField]
-	private List<Location> locations;
 
     [SerializeField]
     private GameObject hullBar;
@@ -38,24 +35,21 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	[SerializeField]
 	private TextMeshProUGUI timeText;
 	
-	public Location GetLocation(GameObject locationObject)
-	{
+	public Location GetLocation(GameObject locationObject) {
 		return locationObject.GetComponent<LocationScript>().location;
 	}
 
-    public void SetInTransit(bool transiting)
-    {
+    public void SetInTransit(bool transiting) {
 		warpRangeImage.gameObject.SetActive(false);
         inTransit = transiting;
     }
 
-    private void MoveShip()
-    {
+    private void MoveShip() {
         locationTooltip.SetActive(false);
-        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 5f);
+        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 5f * GameControl.instance.playerShip.GetNetSpeed());
 		GameControl.instance.PassTime(.25f);
 		SetTimeText();
-		fuelCounter+=.1f;
+		fuelCounter+=.1f / GameControl.instance.playerShip.GetNetFuelEff();
 		if (fuelCounter >= 1)
 		{
 			fuelCounter = 0;
@@ -66,6 +60,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             inTransit = false;
             GameControl.instance.playerLocation = GetLocation(selectedLocation);
+			mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
 			GetLocation(selectedLocation).RollEncounter();
 			if (GameControl.instance.playerLocation.locationType == LocationType.Station)
 			{
@@ -79,8 +74,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
-    public void SelectLocation(GameObject newSelected)
-    {
+    public void SelectLocation(GameObject newSelected) {
         if (!inTransit && GetLocation(newSelected) != GameControl.instance.playerLocation)
         {
 			if (newSelected != selectedLocation || !locationTooltip.activeSelf)
@@ -88,40 +82,39 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				selectedLocation = newSelected;
 				float distance = Vector2.Distance(GameControl.instance.playerLocation.GetMapPos(), GetLocation(selectedLocation).GetMapPos());
 				locationTooltip.SetActive(true);
-				locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
-				locationTooltip.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\t\tFuel Cost: " + (int)(distance/50));
-				locationTooltip.transform.localPosition = selectedLocation.transform.localPosition;
+				SetHoverTooltip(false, selectedLocation);
+				
+				locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\nFuel Cost: " + Mathf.CeilToInt(distance/ (50 * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff())));
 				if ((int)(distance/50) > GameControl.instance.playerShip.currentFuel)
-					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
+					locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
 				else if (distance > GameControl.instance.playerShip.GetNetWarpRange())
-					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable = false;
+					locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
 				else
-					locationTooltip.transform.GetChild(0).GetComponent<Button>().interactable=true;
+					locationTooltip.transform.GetComponentInChildren<Button>().interactable=true;
+				
+				locationTooltip.transform.position = selectedLocation.transform.position + new Vector3(selectedLocation.GetComponent<RectTransform>().sizeDelta.x/2,0,0);
 			}
 			else 
 			{
 				locationTooltip.SetActive(false);
-				hoverTooltip.SetActive(true);
+				SetHoverTooltip(true, newSelected);
 			}
 			
         }
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
+    public void OnBeginDrag(PointerEventData eventData) {
         mouseStart = Input.mousePosition;
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
+    public void OnDrag(PointerEventData eventData) {
         Vector3 mouseChange = Input.mousePosition - mouseStart;
         mapImage.transform.position += mouseChange;
         mouseStart = Input.mousePosition;
         CheckBoundary();
     }
 
-    private void CheckBoundary()
-    {
+    private void CheckBoundary() {
         float scaleRatio = mapImage.transform.localScale.x - 0.6f;
         if (mapImage.transform.localPosition.x > 2280 * scaleRatio) mapImage.transform.localPosition = new Vector3(2280 * scaleRatio, mapImage.transform.localPosition.y);
         if (mapImage.transform.localPosition.x < -2280 * scaleRatio) mapImage.transform.localPosition = new Vector3(-2280 * scaleRatio, mapImage.transform.localPosition.y);
@@ -129,8 +122,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (mapImage.transform.localPosition.y < (-2250 * scaleRatio - 670f)) mapImage.transform.localPosition = new Vector3(mapImage.transform.localPosition.x, -(2250 * scaleRatio + 670f));
     }
 
-    public void OnScroll(PointerEventData eventData)
-    {
+    public void OnScroll(PointerEventData eventData) {
         float scaleChange = 0.25f * Input.GetAxis("Mouse ScrollWheel");
         mapImage.transform.localScale += new Vector3(scaleChange, scaleChange);
         if (mapImage.transform.localScale.x > 1.5) mapImage.transform.localScale = new Vector3(1.5f, 1.5f);
@@ -147,22 +139,14 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         mapShipIcon.transform.localScale *= canvas.transform.lossyScale.x / mapShipIcon.transform.lossyScale.x;
     }
 
-    public void Update()
-    {
-		if (locationTooltip.activeSelf)
-		{
-			locationTooltip.transform.position = selectedLocation.transform.position;
-			hoverTooltip.SetActive(false);
-		}
+    public void Update() {
         if (inTransit) MoveShip();
     }
 
-    void OnEnable()
-    {
+    void OnEnable() {
 		PlaceLocations();
-		mapShipIcon.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
-		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos() ;
-		warpRangeImage.transform.localPosition -= new Vector3(25, 0);
+		mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
+		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
         SetHullBar();
         SetFuelBar();
         SetCargoSpaceText();
@@ -170,25 +154,22 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		SetTimeText();
     }
 	
-	void OnDisable()
-	{
+	void OnDisable() {
 		locationTooltip.SetActive(false);
 	}
 	
-	public void WaitOneYear()
-	{
+	public void WaitOneYear() {
 		GameControl.instance.gameTime = GameControl.instance.gameTime.AddDays(365);
 	}
 	
-	void PlaceLocations()
-	{
+	void PlaceLocations() {
 		LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();
         foreach (LocationScript l in locationList)
         {
            Destroy(l.gameObject);
         }
 		
-		foreach (Location l in locations)
+		foreach (Location l in GameControl.instance.locations)
 		{
 			GameObject tempLocation;
 			int locType = (int)(Random.value * 13) + 1;
@@ -199,6 +180,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			l.locationType = (LocationType)locType;
 			tempLocation.GetComponent<LocationScript>().location = l;
 			tempLocation.transform.localPosition = l.mapPosition;
+			if (l == GameControl.instance.playerLocation)
+				selectedLocation = tempLocation;
+			
 			switch (l.locationType)
 			{
 				case LocationType.Natural:
@@ -231,11 +215,16 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			tempLocation.GetComponent<LocationScript>().location = l;
 			tempLocation.GetComponent<Image>().color = Color.blue;
 			tempLocation.transform.localPosition = l.mapPosition;
+			if (l == GameControl.instance.playerLocation)
+				selectedLocation = tempLocation;
 		}
+		
+		mapShipIcon.transform.SetAsLastSibling();
+		hoverTooltip.transform.SetAsLastSibling();
+		locationTooltip.transform.SetAsLastSibling();
 	}
 	
-    void SetHullBar()
-    {
+    void SetHullBar() {
         float hullPercent = (float)GameControl.instance.playerShip.currentHull / (float)GameControl.instance.playerShip.maxHull;
         hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
 
@@ -249,24 +238,38 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		hullBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Hull: {0}/{1}", GameControl.instance.playerShip.currentHull, GameControl.instance.playerShip.maxHull);
 
     }
-    void SetFuelBar()
-    {
+	
+	void SetFuelBar() {
         float fuelPercent = (float)GameControl.instance.playerShip.currentFuel / (float)GameControl.instance.playerShip.GetFuelMax();
         fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
 		
 		fuelBar.transform.parent.gameObject.GetComponentInChildren<TextMeshProUGUI>().SetText("Current Fuel: {0}/{1}", GameControl.instance.playerShip.currentFuel, GameControl.instance.playerShip.maxFuel);
     }
-    void SetCargoSpaceText()
-    {
+	
+    void SetCargoSpaceText() {
         cargoText.SetText("Cargo Space: {0} / {1}", Inventory.instance.currentCargo, GameControl.instance.playerShip.maxCargo);
     }
-    void SetMoneyText()
-    {
+	
+	void SetMoneyText() {
         moneyText.SetText("Spacebucks: {0}", GameControl.instance.playerMoney);
     }
 	
-	void SetTimeText()
-	{
+	void SetTimeText() {
 		timeText.SetText("Time: " + GameControl.instance.gameTime.ToString("HH:mm, MM/dd/yyyy"));
 	}
+
+	public void SetHoverTooltip(bool isActive, GameObject locationObject) {
+		if (!locationTooltip.activeSelf)
+		{
+			hoverTooltip.SetActive(isActive);
+			if (isActive)
+			{
+				LocationScript lScript = locationObject.GetComponent<LocationScript>();
+				hoverTooltip.GetComponentInChildren<TextMeshProUGUI>().SetText("Click to Select\n"+lScript.location.GetName()+"\n"+ lScript.location.GetDescription());
+				hoverTooltip.transform.position = locationObject.transform.position + new Vector3(locationObject.GetComponent<RectTransform>().sizeDelta.x/2,0,0);
+			}
+		}
+		else hoverTooltip.SetActive(false);
+	}
+	
 }
