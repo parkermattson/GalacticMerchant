@@ -8,18 +8,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23934515ea016aa448be29ef0f135863, type: 3}
-  m_Name: TestCom
+  m_Script: {fileID: 11500000, guid: baab37a89268e904da6e88480220ac77, type: 3}
+  m_Name: TestComm1
   m_EditorClassIdentifier: 
-  itemName: Test Nav 1
-  itemDesc: Item Description
+  itemName: Test Command 1
+  itemDesc: Boosts engine stats
   icon: {fileID: 21300000, guid: 721f52c3bcb3f564ca9a2db29ac1063d, type: 3}
   itemTier: 1
   itemType: 10
-  itemValue: 100
+  itemValue: 500
   itemWeight: 0
-  isStackable: 0
+  isStackable: 1
   priceRange: 0
   medianQuant: 0
   quantityRange: 0
   equipSlot: 0
+  bonusTypes: 000000000100000002000000
+  bonusMults:
+  - 0.1
+  - 0.1
+  - 0.1

@@ -8,18 +8,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23934515ea016aa448be29ef0f135863, type: 3}
-  m_Name: TestSense
+  m_Script: {fileID: 11500000, guid: b779ddf1a827b544c86926fbb9a3c217, type: 3}
+  m_Name: TestEng1
   m_EditorClassIdentifier: 
-  itemName: Test Sensor 1
-  itemDesc: Item Description
-  icon: {fileID: 21300000, guid: ffdcee8e3f9b38549b3f76ef466945d5, type: 3}
+  itemName: Test engine 1
+  itemDesc: Engine
+  icon: {fileID: 21300000, guid: 940051338458f7240b997990f8e94b0e, type: 3}
   itemTier: 1
   itemType: 10
-  itemValue: 100
+  itemValue: 500
   itemWeight: 0
-  isStackable: 0
+  isStackable: 1
   priceRange: 0
   medianQuant: 0
   quantityRange: 0
-  equipSlot: 2
+  equipSlot: 3
+  warpRange: 400
+  warpSpeed: 1
+  fuelEfficiency: 1
+  encounterBonus: 0

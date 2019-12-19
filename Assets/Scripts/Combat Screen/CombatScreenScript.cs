@@ -13,7 +13,9 @@ public class CombatScreenScript : MonoBehaviour {
 	public Transform  playerHealthBar, enemyHealthBar;
 	bool combatStarted = false;
 	Ship enemyShip;
-	public List<Equipment> commList = new List<Equipment>(), sensorList = new List<Equipment>(), engineList = new List<Equipment>();
+	public List<Command> commList = new List<Command>();
+	public List<Sensor> sensorList = new List<Sensor>();
+	public List<Engine> engineList = new List<Engine>();
 	public List<Weapon> weaponList = new List<Weapon>();
 	float[] enemyWeaponThinkProgress = {0,0,0,0,0};
 	float enemyThinkProgress = 0,  enemyThinkTime = 1;

@@ -11,7 +11,9 @@ public class Ship : ScriptableObject {
 	public int price = 1000, maxHull = 10, currentHull = 10, maxFuel = 100, currentFuel = 100, maxCargo = 1000,  rawSensorRange = 20, rawWarpRange = 350;
 	public float rawFuelEff = 1, rawSpeed = 1;
 	public int[] equipCapacities = {1, 1, 1, 1};
-	public Equipment command, sensor, engine;
+	public Command command;
+	public Sensor sensor;
+	public Engine engine;
 	public Weapon weapon;
 	
 	public string GetName() {
@@ -52,27 +54,27 @@ public class Ship : ScriptableObject {
 	}
 	
 	public float GetNetFuelEff() {
-		float netEff = rawFuelEff * GameControl.instance.GetFuelEfficiencyBonus();
+		float netEff = (rawFuelEff + engine.GetFuelEfficiency()) * (1 + GameControl.instance.GetFuelEfficiencyBonus() + command.GetBonus(CommandBonus.FuelEff));
 		return netEff;
 	}
 	
 	public float GetNetSensorRange() {
-		float netRange = rawSensorRange * GameControl.instance.GetSensorRangeBonus();
+		float netRange = (rawSensorRange + sensor.GetSensorRange()) * (1 + GameControl.instance.GetSensorRangeBonus() + command.GetBonus(CommandBonus.SensorRange));
 		return netRange;
 	}
 	
 	public int GetSensorLevel() {
-		int level = 1 + GameControl.instance.GetSensorLevelBonus();
+		int level = sensor.GetSensorLevel() + GameControl.instance.GetSensorLevelBonus();
 		return level;
 	}
 	
 	public float GetNetWarpRange() {
-		float netWarpRange = rawWarpRange * GameControl.instance.GetWarpRangeBonus();
+		float netWarpRange = (rawWarpRange + engine.GetWarpRange()) * (1 + GameControl.instance.GetWarpRangeBonus() + command.GetBonus(CommandBonus.WarpRange));
 		return netWarpRange;
 	}
 	
 	public float GetNetSpeed() {
-		float netSpeed = rawSpeed * GameControl.instance.GetWarpSpeedBonus();
+		float netSpeed = (rawSpeed + engine.GetWarpSpeed()) * (1 +GameControl.instance.GetWarpSpeedBonus() + command.GetBonus(CommandBonus.WarpSpeed));
 		return netSpeed;
 	}
 	
@@ -98,7 +100,7 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return speed * GameControl.instance.GetWeaponChargeBonus() / numWeaps;
+			return speed *(1 + GameControl.instance.GetWeaponChargeBonus() + command.GetBonus(CommandBonus.WeaponSpeed)) / numWeaps;
 		else return 0;
 	}
 	
@@ -111,7 +113,7 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return cooldown * GameControl.instance.GetWeaponCooldownBonus() / numWeaps;
+			return cooldown * (1 + GameControl.instance.GetWeaponCooldownBonus() + command.GetBonus(CommandBonus.WeaponCooldown)) / numWeaps;
 		else return 0;
 	}
 	
@@ -137,7 +139,7 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return speed  * GameControl.instance.GetDefenseDurationBonus() / numWeaps;
+			return speed  * (1 + GameControl.instance.GetDefenseDurationBonus() + command.GetBonus(CommandBonus.DefenseDuration)) / numWeaps;
 		else return 0;
 	}
 	
@@ -150,7 +152,7 @@ public class Ship : ScriptableObject {
 				numWeaps++;
 			}
 		if (numWeaps > 0)
-			return cooldown  * GameControl.instance.GetDefenseCooldownBonus() / numWeaps;
+			return cooldown  * (1 + GameControl.instance.GetDefenseCooldownBonus() + command.GetBonus(CommandBonus.DefenseCooldown))/ numWeaps;
 		else return 0;
 	}
 	

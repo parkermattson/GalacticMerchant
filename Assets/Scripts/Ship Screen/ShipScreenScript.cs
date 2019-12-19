@@ -6,8 +6,7 @@ using TMPro;
 
 public class ShipScreenScript : MonoBehaviour {
 	
-	[SerializeField]
-	private GameObject gameController, equipList, hullBar, fuelBar, shipSlotPrefab;
+	public GameObject gameController, equipList, hullBar, fuelBar, shipSlotPrefab;
 	
 	[SerializeField]
 	private TextMeshProUGUI cargoText, fuelText, warpSpeedText, warpRangeText, sensorLevelText, sensorRangeText;

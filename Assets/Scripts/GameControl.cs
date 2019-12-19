@@ -174,14 +174,14 @@ public class GameControl : MonoBehaviour {
 	
 	public float GetQuestMoneyBonus() {
 		if (activeStats[0] > 0)
-			return 1.1f;
-		else return 1;
+			return 0.1f;
+		else return 0;
 	}
 	
 	public float GetMarketPriceBonus() {
 		if (activeStats[0] > 1)
-			return 1 + .02f * activeStats[0];
-		else return 1;
+			return -.02f * activeStats[0];
+		else return 0;
 	}
 	
 	public float GetCrewDiscountBonus() {
@@ -197,9 +197,9 @@ public class GameControl : MonoBehaviour {
 	}
 	
 	public float GetWeaponCooldownBonus() {
-		float bonus = 1;
+		float bonus = 0;
 		if (activeStats[1] + GetActiveStatBonus() > 0) {
-			bonus+= 1.1f;
+			bonus+= .1f;
 			if (activeStats[1] + GetActiveStatBonus() > 4)
 				 bonus += .1f;
 		}
@@ -207,9 +207,9 @@ public class GameControl : MonoBehaviour {
 	}
 	
 	public float GetWeaponChargeBonus() {
-		float bonus = 1;
+		float bonus = 0;
 		if (activeStats[1] + GetActiveStatBonus() > 1) {
-			bonus+= 1 + .04f * (activeStats[1] + GetActiveStatBonus());
+			bonus+= .04f * (activeStats[1] + GetActiveStatBonus());
 			if (activeStats[1] + GetActiveStatBonus() > 4)
 				 bonus += .1f;
 		}
@@ -217,9 +217,9 @@ public class GameControl : MonoBehaviour {
 	}
 	
 	public float GetDefenseDurationBonus() {
-		float bonus = 1;
+		float bonus = 0;
 		if (activeStats[1] + GetActiveStatBonus() > 2) {
-			bonus+= 1.2f;
+			bonus+= .2f;
 			if (activeStats[1] + GetActiveStatBonus() > 4)
 				 bonus += .1f;
 		}
@@ -234,12 +234,12 @@ public class GameControl : MonoBehaviour {
 	
 	public float GetDefenseCooldownBonus() {
 		if (activeStats[1] + GetActiveStatBonus() > 4)
-			return 1.1f;
-		else return 1;
+			return 0.1f;
+		else return 0;
 	}
 	
 	public float GetWarpRangeBonus() {
-		float bonus = 1;
+		float bonus = 0;
 		if (activeStats[2] + GetActiveStatBonus() > 0)
 			bonus+= .1f;
 		
@@ -252,9 +252,9 @@ public class GameControl : MonoBehaviour {
 	}
 	
 	public float GetSensorRangeBonus() {
-		float bonus = 1;
+		float bonus = 0;
 		if (activeStats[2] + GetActiveStatBonus() > 1) {
-			bonus+= 1 + .1f * (activeStats[2] + GetActiveStatBonus());
+			bonus+= .1f * (activeStats[2] + GetActiveStatBonus());
 			if (activeStats[2] + GetActiveStatBonus() > 4)
 				 bonus += .5f;
 		}
@@ -269,14 +269,14 @@ public class GameControl : MonoBehaviour {
 	
 	public float GetEncounterSuccessBonus() {
 		if (activeStats[2] + GetActiveStatBonus() > 3)
-			return 1.25f;
-		else return 1;
+			return .25f;
+		else return 0;
 	}
 	
 	public float GetFuelEfficiencyBonus() {
-		float bonus = 1;
+		float bonus = 0;
 		if (activeStats[3] + GetActiveStatBonus() > 0) {
-			bonus+= 1.15f;
+			bonus+= .15f;
 			if (activeStats[3] + GetActiveStatBonus() > 4)
 				 bonus += .1f;
 		}
@@ -284,9 +284,9 @@ public class GameControl : MonoBehaviour {
 	}
 	
 	public float GetWarpSpeedBonus() {
-		float bonus = 1;
+		float bonus = 0;
 		if (activeStats[3] + GetActiveStatBonus() > 1) {
-			bonus+= 1 + .15f * (activeStats[3] + GetActiveStatBonus());
+			bonus+= .15f * (activeStats[3] + GetActiveStatBonus());
 			if (activeStats[3] + GetActiveStatBonus() > 4)
 				 bonus += .1f;
 		}
@@ -295,8 +295,8 @@ public class GameControl : MonoBehaviour {
 	
 	public float GetFactorySpeedBonus() {
 		if (activeStats[3] + GetActiveStatBonus() > 3)
-			return 1.33f;
-		else return 1;
+			return 0.33f;
+		else return 0;
 	}
 	
 	[Serializable]
