@@ -6,6 +6,10 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IScrollHandler {
+	
+	const float BASEFUELDRAIN = 0.1f;
+	const int BASESPEED = 3;
+	
 
     public Image mapImage;
     public Image mapShipIcon;
@@ -13,7 +17,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     Vector3 mouseStart;
     public GameObject locationTooltip;
     public GameObject hoverTooltip;
-    GameObject selectedLocation = null;
+    public GameObject selectedLocation = null;
     bool inTransit = false;
 	float fuelCounter = 1;
 	
@@ -35,6 +39,28 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	[SerializeField]
 	private TextMeshProUGUI timeText;
 	
+	void Awake() {
+		PlaceLocations();
+	}
+	
+    void Update() {
+        if (inTransit) MoveShip();
+    }
+
+	void OnEnable() {
+		mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
+		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
+        SetHullBar();
+        SetFuelBar();
+        SetCargoSpaceText();
+        SetMoneyText();
+		SetTimeText();
+    }
+	
+	void OnDisable() {
+		locationTooltip.SetActive(false);
+	}
+	
 	public Location GetLocation(GameObject locationObject) {
 		return locationObject.GetComponent<LocationScript>().location;
 	}
@@ -46,10 +72,11 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void MoveShip() {
         locationTooltip.SetActive(false);
-        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, 5f * GameControl.instance.playerShip.GetNetSpeed());
+        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed());
 		GameControl.instance.PassTime(.25f);
+		UpdateLocationColors();
 		SetTimeText();
-		fuelCounter+=.1f / GameControl.instance.playerShip.GetNetFuelEff();
+		fuelCounter+= BASEFUELDRAIN / GameControl.instance.playerShip.GetNetFuelEff();
 		if (fuelCounter >= 1)
 		{
 			fuelCounter = 0;
@@ -84,7 +111,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				locationTooltip.SetActive(true);
 				SetHoverTooltip(false, selectedLocation);
 				
-				locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\nFuel Cost: " + Mathf.CeilToInt(distance/ (50 * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff())));
+				locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\nFuel Cost: " + Mathf.CeilToInt(distance * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff())));
 				if ((int)(distance/50) > GameControl.instance.playerShip.currentFuel)
 					locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
 				else if (distance > GameControl.instance.playerShip.GetNetWarpRange())
@@ -102,7 +129,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			
         }
     }
-
+	
     public void OnBeginDrag(PointerEventData eventData) {
         mouseStart = Input.mousePosition;
     }
@@ -138,33 +165,13 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         mapShipIcon.transform.localScale *= canvas.transform.lossyScale.x / mapShipIcon.transform.lossyScale.x;
     }
-
-    public void Update() {
-        if (inTransit) MoveShip();
-    }
-
-    void OnEnable() {
-		PlaceLocations();
-		mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
-		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
-        SetHullBar();
-        SetFuelBar();
-        SetCargoSpaceText();
-        SetMoneyText();
-		SetTimeText();
-    }
-	
-	void OnDisable() {
-		locationTooltip.SetActive(false);
-	}
-	
+    
 	public void WaitOneYear() {
 		GameControl.instance.gameTime = GameControl.instance.gameTime.AddDays(365);
 	}
 	
 	void PlaceLocations() {
-		LocationScript[] locationList = this.GetComponentsInChildren<LocationScript>();
-        foreach (LocationScript l in locationList)
+        foreach (LocationScript l in GetComponentsInChildren<LocationScript>())
         {
            Destroy(l.gameObject);
         }
@@ -172,45 +179,20 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		foreach (Location l in GameControl.instance.locations)
 		{
 			GameObject tempLocation;
-			int locType = (int)(Random.value * 13) + 1;
-			if (locType > 6)
-				locType = 1;
 			tempLocation = Instantiate(locationPrefab, mapImage.transform);
 			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
-			l.locationType = (LocationType)locType;
 			tempLocation.GetComponent<LocationScript>().location = l;
 			tempLocation.transform.localPosition = l.mapPosition;
 			if (l == GameControl.instance.playerLocation)
 				selectedLocation = tempLocation;
 			
-			switch (l.locationType)
-			{
-				case LocationType.Natural:
-					tempLocation.GetComponent<Image>().color = Color.green;
-					break;
-					
-				case LocationType.Anomaly:
-					tempLocation.GetComponent<Image>().color = new Color(.6f, 0f, .6f, 1f);
-					break;
-					
-				case LocationType.Distress:
-					tempLocation.GetComponent<Image>().color = Color.yellow;
-					break;
-					
-				case LocationType.Transmission:
-					tempLocation.GetComponent<Image>().color = Color.cyan;
-					break;
-					
-				case LocationType.Conflict:
-					tempLocation.GetComponent<Image>().color = Color.red;
-					break;
-			}
 		}
+		
+		UpdateLocationColors();
 		
 		foreach (Station l in GameControl.instance.stations)
 		{
-			GameObject tempLocation;
-			tempLocation = Instantiate(locationPrefab, mapImage.transform);
+			GameObject tempLocation = Instantiate(locationPrefab, mapImage.transform);
 			tempLocation.GetComponent<LocationScript>().SetGeneralVars(hoverTooltip, this);
 			tempLocation.GetComponent<LocationScript>().location = l;
 			tempLocation.GetComponent<Image>().color = Color.blue;
@@ -222,6 +204,38 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		mapShipIcon.transform.SetAsLastSibling();
 		hoverTooltip.transform.SetAsLastSibling();
 		locationTooltip.transform.SetAsLastSibling();
+	}
+	
+	void UpdateLocationColors() {
+		foreach (LocationScript l in GetComponentsInChildren<LocationScript>())
+		{
+			switch (l.location.locationType)
+				{
+					case LocationType.Empty:
+						l.gameObject.GetComponent<Image>().color = Color.grey;
+						break;
+						
+					case LocationType.Natural:
+						l.gameObject.GetComponent<Image>().color = Color.green;
+						break;
+						
+					case LocationType.Anomaly:
+						l.gameObject.GetComponent<Image>().color = new Color(.6f, 0f, .6f, 1f);
+						break;
+						
+					case LocationType.Distress:
+						l.gameObject.GetComponent<Image>().color = Color.yellow;
+						break;
+						
+					case LocationType.Transmission:
+						l.gameObject.GetComponent<Image>().color = Color.cyan;
+						break;
+						
+					case LocationType.Conflict:
+						l.gameObject.GetComponent<Image>().color = Color.red;
+						break;
+				}
+		}
 	}
 	
     void SetHullBar() {

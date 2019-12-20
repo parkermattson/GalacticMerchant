@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +12,9 @@ public class Location : ScriptableObject {
     public string locationDesc = "Location Description";
 	public LocationType locationType = LocationType.Empty;
     public Sprite icon = null;
-
     public Vector2 mapPosition;
+	
+	DateTime encounterStart = new DateTime (3000, 1, 1, 9, 0, 0);
 
     public string GetName()
     {
@@ -31,7 +33,7 @@ public class Location : ScriptableObject {
 	
 	public void RollEncounter()
 	{
-		float rng = Random.value;
+		float rng = UnityEngine.Random.value;
 		
 		switch (locationType)
 		{
@@ -79,4 +81,22 @@ public class Location : ScriptableObject {
 				break;
 		}
 	}
+	
+	public void RefreshType(){
+		if (locationType == LocationType.Empty)
+		{
+			int locType = (int)(UnityEngine.Random.value * 250) + 1;
+				if (locType > 6)
+					locType = 1;
+				
+			locationType = (LocationType)locType;
+			encounterStart = GameControl.instance.gameTime;
+		}
+		else if (GameControl.instance.gameTime > encounterStart.AddHours(24))
+		{
+			locationType = LocationType.Empty;
+		}
+		
+	}
+	
 }

@@ -5257,11 +5257,11 @@ MonoBehaviour:
   playerHealthBar: {fileID: 1247875317}
   enemyHealthBar: {fileID: 1077880945}
   commList:
-  - {fileID: 11400000, guid: 623da2f6327714a4c81c4c62b47f597a, type: 2}
+  - {fileID: 0}
   sensorList:
-  - {fileID: 11400000, guid: d919f6dd2ffb6764cbe4ac1cb2a34ed5, type: 2}
+  - {fileID: 0}
   engineList:
-  - {fileID: 11400000, guid: 06f3782a3117a124fb0b43ab48a9dd6a, type: 2}
+  - {fileID: 0}
   weaponList:
   - {fileID: 11400000, guid: 06fde87a8a8f9054f86194441ca47a13, type: 2}
   - {fileID: 11400000, guid: 06be020ae9feea945839bc00c927c470, type: 2}
@@ -6714,6 +6714,7 @@ MonoBehaviour:
   warpRangeImage: {fileID: 389856070}
   locationTooltip: {fileID: 667614032}
   hoverTooltip: {fileID: 492863001}
+  selectedLocation: {fileID: 0}
   locationPrefab: {fileID: 1122972392675246, guid: 49c3c9b10dd78ea48b4b47f629a692e4,
     type: 2}
   hullBar: {fileID: 1801211268}
@@ -19103,15 +19104,15 @@ MonoBehaviour:
   currentCargo: 0
   items: []
   equipments:
-  - {fileID: 11400000, guid: 623da2f6327714a4c81c4c62b47f597a, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 06be020ae9feea945839bc00c927c470, type: 2}
-  - {fileID: 11400000, guid: d919f6dd2ffb6764cbe4ac1cb2a34ed5, type: 2}
-  - {fileID: 11400000, guid: 06f3782a3117a124fb0b43ab48a9dd6a, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   shipEquipment:
-  - {fileID: 11400000, guid: 623da2f6327714a4c81c4c62b47f597a, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 06fde87a8a8f9054f86194441ca47a13, type: 2}
-  - {fileID: 11400000, guid: d919f6dd2ffb6764cbe4ac1cb2a34ed5, type: 2}
-  - {fileID: 11400000, guid: 06f3782a3117a124fb0b43ab48a9dd6a, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

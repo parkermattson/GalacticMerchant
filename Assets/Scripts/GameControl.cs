@@ -12,7 +12,7 @@ public class GameControl : MonoBehaviour {
 	
 	public static GameControl instance = null;
 	
-	Inventory inventory;
+	Inventory inventory = Inventory.instance;
 	
 	//Game variables
 	public string playerName;
@@ -21,7 +21,7 @@ public class GameControl : MonoBehaviour {
 	public Crew[] crewMembs = new Crew[4], assignedCrew = new Crew[4];
     public Ship playerShip, defaultShip;
     public Location playerLocation;
-	public DateTime gameTime, lastWeek;
+	public DateTime gameTime = new DateTime(3000, 1, 1, 9, 0, 0), lastHour = new DateTime(3000, 1, 1, 9, 0, 0), lastWeek = new DateTime(3000, 1, 1, 9, 0, 0);
 	public List<Station> initStations, stations;
 	public List<Mission> acceptedMissions = new List<Mission>();
 	public List<Location> initLocations, locations;
@@ -36,21 +36,13 @@ public class GameControl : MonoBehaviour {
 		
 		instance = this;
 		
-		inventory = Inventory.instance;
-		
 		crewMembs[0] = Crew.CreateInstance<Crew>();
 		crewMembs[0].crewName = "Player";
 		
-		assignedCrew[0] = crewMembs[0];
-		
-		for (int i = 1; i < 4; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			crewMembs[i] = null;
 			assignedCrew[i] = crewMembs[0];
 		}
-		
-		gameTime = new DateTime(3000, 1, 1, 9, 0, 0);
-		lastWeek = new DateTime(3000, 1, 1, 9, 0, 0);
 		
 		foreach (Station s in initStations)
 		{
@@ -61,6 +53,7 @@ public class GameControl : MonoBehaviour {
 		foreach (Location l in initLocations)
 		{
 			locations.Add(Instantiate(l));
+			locations.Last().RefreshType();
 		}
 		
 		playerShip = Instantiate(defaultShip);
@@ -73,7 +66,7 @@ public class GameControl : MonoBehaviour {
 		playerName = ccScript.GetPlayerName();
 		playerRace = ccScript.GetRace();
 		playerAvatar = ccScript.GetAvatar();
-		playerMoney = 100;
+		playerMoney = 1000;
 		crewMembs[0] = ScriptableObject.CreateInstance<Crew>();
 		crewMembs[0].SetCrewName(playerName);
 		crewMembs[0].SetRace(playerRace);
@@ -145,6 +138,17 @@ public class GameControl : MonoBehaviour {
 	public void PassTime(float hours)
 	{
 		gameTime = gameTime.AddHours(hours);
+		
+		if (gameTime > lastHour.AddHours(1))
+		{
+			foreach (Location l in locations)
+			{
+				l.RefreshType();
+			}
+			
+			lastHour = gameTime;
+		}
+		
 		while (gameTime > lastWeek.AddDays(7))
 		{
 			for (int i = 1; i < 4; i++)
