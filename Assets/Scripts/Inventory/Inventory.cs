@@ -12,7 +12,6 @@ public class Inventory : MonoBehaviour {
 	public int currentCargo = 0;
 	public List<ItemStack> items = new List<ItemStack>();
 	public List<Equipment> equipments = new List<Equipment>();
-	public Equipment[] shipEquipment = new Equipment[8];
 	
 	void Awake ()
 	{
@@ -64,15 +63,56 @@ public class Inventory : MonoBehaviour {
 	
 	public void SwapEquipment(Equipment equipment, int slot)
 	{
-		if (shipEquipment[slot] != null)
+		switch (slot)
 		{
-			equipments.Add(shipEquipment[slot]);
-			currentCargo += shipEquipment[slot].GetWeight();
+			case 0:
+			if (GameControl.instance.playerShip.command != null)
+			{
+				equipments.Add((Equipment)GameControl.instance.playerShip.command);
+				currentCargo += GameControl.instance.playerShip.command.GetWeight();
+			}
+			
+			GameControl.instance.playerShip.command = (Command)equipment;
+			equipments.Remove(equipment);
+			currentCargo -= equipment.GetWeight();
+			break;
+			
+			case 1:
+			if (GameControl.instance.playerShip.weapon != null)
+			{
+				equipments.Add((Equipment)GameControl.instance.playerShip.weapon);
+				currentCargo += GameControl.instance.playerShip.weapon.GetWeight();
+			}
+			
+			GameControl.instance.playerShip.weapon = (Weapon)equipment;
+			equipments.Remove(equipment);
+			currentCargo -= equipment.GetWeight();
+			break;
+			
+			case 2:
+			if (GameControl.instance.playerShip.sensor != null)
+			{
+				equipments.Add((Equipment)GameControl.instance.playerShip.sensor);
+				currentCargo += GameControl.instance.playerShip.sensor.GetWeight();
+			}
+			
+			GameControl.instance.playerShip.sensor = (Sensor)equipment;
+			equipments.Remove(equipment);
+			currentCargo -= equipment.GetWeight();
+			break;
+			
+			case 3:
+			if (GameControl.instance.playerShip.engine != null)
+			{
+				equipments.Add((Equipment)GameControl.instance.playerShip.engine);
+				currentCargo += GameControl.instance.playerShip.engine.GetWeight();
+			}
+			
+			GameControl.instance.playerShip.engine = (Engine)equipment;
+			equipments.Remove(equipment);
+			currentCargo -= equipment.GetWeight();
+			break;
 		}
-		
-		shipEquipment[slot] = equipment;
-		equipments.Remove(equipment);
-		currentCargo -= equipment.GetWeight();
 		
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();

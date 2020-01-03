@@ -23,7 +23,7 @@ MonoBehaviour:
   medianQuant: 0
   quantityRange: 0
   equipSlot: 3
-  warpRange: 400
+  warpRange: 150
   warpSpeed: 1
   fuelEfficiency: 1
   encounterBonus: 0

@@ -156,4 +156,16 @@ public class Ship : ScriptableObject {
 		else return 0;
 	}
 	
+	public void AddHealth(int hpAdded) {
+		currentHull += hpAdded;
+		if (currentHull > maxHull)
+			currentHull = maxHull;
+		
+		if (currentHull < 1)
+		{
+			currentHull = 0;
+			Debug.Log("Game Over. Ran out of health");
+		}
+	}
+	
 }

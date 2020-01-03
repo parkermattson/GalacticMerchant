@@ -31,61 +31,10 @@ public class Location : ScriptableObject {
         return mapPosition;
     }
 	
-	public void RollEncounter()
-	{
-		float rng = UnityEngine.Random.value;
-		
-		switch (locationType)
-		{
-			case LocationType.Station:
-				if (rng < .1f)
-				{
-					Debug.Log("Random Encounter Trigger");
-				}
-				break;
-			case LocationType.Empty:
-				if (rng < .1f)
-				{
-					Debug.Log("Random Encounter Trigger");
-				}
-				break;
-			case LocationType.Anomaly: 
-				if (rng < .1f)
-				{
-					Debug.Log("Random Encounter Trigger");
-				}
-				break;
-			case LocationType.Transmission: 
-				if (rng < .1f)
-				{
-					Debug.Log("Random Encounter Trigger");
-				}
-				break;
-			case LocationType.Distress: 
-				if (rng < .1f)
-				{
-					Debug.Log("Random Encounter Trigger");
-				}
-				break;
-			case LocationType.Conflict: 
-				if (rng < .1f)
-				{
-					Debug.Log("Random Encounter Trigger");
-				}
-				break;
-			case LocationType.Natural:
-				if (rng < .1f)
-				{
-					Debug.Log("Random Encounter Trigger");
-				}
-				break;
-		}
-	}
-	
 	public void RefreshType(){
 		if (locationType == LocationType.Empty)
 		{
-			int locType = (int)(UnityEngine.Random.value * 250) + 1;
+			int locType = (int)(UnityEngine.Random.value * 100) + 1;
 				if (locType > 6)
 					locType = 1;
 				

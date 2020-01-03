@@ -21,7 +21,7 @@ MonoBehaviour:
   currentFuel: 100
   maxCargo: 1000
   rawSensorRange: 20
-  rawWarpRange: 350
+  rawWarpRange: 200
   rawFuelEff: 1
   rawSpeed: 1
   equipCapacities: 01000000010000000100000001000000

@@ -11,33 +11,17 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	const int BASESPEED = 3;
 	
 
-    public Image mapImage;
-    public Image mapShipIcon;
-	public Image warpRangeImage;
-    Vector3 mouseStart;
-    public GameObject locationTooltip;
-    public GameObject hoverTooltip;
-    public GameObject selectedLocation = null;
-    bool inTransit = false;
+    public Image mapImage, mapShipIcon, warpRangeImage;
+	public List<RandomEncounter> encountersStation = new List<RandomEncounter>(), encountersEmpty = new List<RandomEncounter>(), encountersAnomaly = new List<RandomEncounter>(), encountersTransmission = new List<RandomEncounter>(),
+																		 encountersDistress = new List<RandomEncounter>(), encountersConflict = new List<RandomEncounter>(), encountersNatural = new List<RandomEncounter>();
+	RandomEncounter currentEncounter = null;
+	bool inTransit = false;
 	float fuelCounter = 1;
+	Vector3 mouseStart;
 	
-	[SerializeField]
-	private GameObject locationPrefab;
+	public GameObject hullBar, fuelBar, locationPrefab, hoverTooltip, locationTooltip, encounterBox, encounterBox2, selectedLocation = null;
 
-    [SerializeField]
-    private GameObject hullBar;
-
-    [SerializeField]
-    private GameObject fuelBar;
-
-    [SerializeField]
-    private TextMeshProUGUI cargoText;
-
-    [SerializeField]
-    private TextMeshProUGUI moneyText;
-	
-	[SerializeField]
-	private TextMeshProUGUI timeText;
+    public TextMeshProUGUI cargoText, moneyText, timeText, encounterNameText, encounterDescText, encounterText1, encounterText2, encounterText3 ,encounterText4, encounterSuccessText, encounterOutcomeText, encounterRewardsText;
 	
 	void Awake() {
 		PlaceLocations();
@@ -50,11 +34,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	void OnEnable() {
 		mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
 		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
-        SetHullBar();
-        SetFuelBar();
-        SetCargoSpaceText();
-        SetMoneyText();
-		SetTimeText();
+		SetStatusBox();
     }
 	
 	void OnDisable() {
@@ -73,7 +53,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void MoveShip() {
         locationTooltip.SetActive(false);
         mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed());
-		GameControl.instance.PassTime(.25f);
+		GameControl.instance.PassTime(.05f);
 		UpdateLocationColors();
 		SetTimeText();
 		fuelCounter+= BASEFUELDRAIN / GameControl.instance.playerShip.GetNetFuelEff();
@@ -88,7 +68,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             inTransit = false;
             GameControl.instance.playerLocation = GetLocation(selectedLocation);
 			mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
-			GetLocation(selectedLocation).RollEncounter();
+			RollEncounter(GetLocation(selectedLocation));
 			if (GameControl.instance.playerLocation.locationType == LocationType.Station)
 			{
 				Station tempStation = (Station)GameControl.instance.playerLocation;
@@ -171,6 +151,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	}
 	
 	void PlaceLocations() {
+		Canvas canvas = FindObjectOfType<Canvas>();
         foreach (LocationScript l in GetComponentsInChildren<LocationScript>())
         {
            Destroy(l.gameObject);
@@ -186,6 +167,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			if (l == GameControl.instance.playerLocation)
 				selectedLocation = tempLocation;
 			
+			tempLocation.transform.localScale *= canvas.transform.lossyScale.x/tempLocation.transform.lossyScale.x;
 		}
 		
 		UpdateLocationColors();
@@ -238,7 +220,138 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		}
 	}
 	
-    void SetHullBar() {
+	void RollEncounter(Location loc) {
+		
+		float rng = UnityEngine.Random.value;
+		
+		switch (loc.locationType)
+		{
+			case LocationType.Station:
+				if (rng < .5f)
+				{
+					rng = UnityEngine.Random.value * encountersStation.Count;
+					
+					SetEncounterBox(encountersStation[Mathf.FloorToInt(rng)]);
+				}
+				break;
+			case LocationType.Empty:
+				if (rng < .5f)
+				{
+					rng = UnityEngine.Random.value * encountersEmpty.Count;
+					
+					SetEncounterBox(encountersEmpty[Mathf.FloorToInt(rng)]);
+				}
+				break;
+			case LocationType.Anomaly: 
+				if (rng < .5f)
+				{
+					rng = UnityEngine.Random.value * encountersAnomaly.Count;
+					
+					SetEncounterBox(encountersAnomaly[Mathf.FloorToInt(rng)]);
+				}
+				break;
+			case LocationType.Transmission: 
+				if (rng < .5f)
+				{
+					rng = UnityEngine.Random.value * encountersTransmission.Count;
+					
+					SetEncounterBox(encountersTransmission[Mathf.FloorToInt(rng)]);
+				}
+				break;
+			case LocationType.Distress: 
+				if (rng < .5f)
+				{
+					rng = UnityEngine.Random.value * encountersDistress.Count;
+					
+					SetEncounterBox(encountersDistress[Mathf.FloorToInt(rng)]);
+				}
+				break;
+			case LocationType.Conflict: 
+				if (rng < .5f)
+				{
+					rng = UnityEngine.Random.value * encountersConflict.Count;
+					
+					SetEncounterBox(encountersConflict[Mathf.FloorToInt(rng)]);
+				}
+				break;
+			case LocationType.Natural:
+				if (rng < .5f)
+				{
+					rng = UnityEngine.Random.value * encountersNatural.Count;
+					
+					SetEncounterBox(encountersNatural[Mathf.FloorToInt(rng)]);
+				}
+				break;
+		}
+	}
+	
+	public void ChooseEncounter(int choice) {
+		string rewardsText = "";
+		encounterBox.SetActive(false);
+		encounterBox2.SetActive(true);
+		float rng = UnityEngine.Random.value;
+		if (rng < currentEncounter.successChance[choice])
+		{
+			encounterSuccessText.SetText("Success!");
+			encounterOutcomeText.SetText(currentEncounter.encounterSuccessDesc[choice]);
+			
+			if (currentEncounter.outcomeMoney[choice] > 0)
+			{
+				rewardsText = "- Money Gained: " + currentEncounter.outcomeMoney[choice].ToString() + "\n";
+				GameControl.instance.AddMoney(currentEncounter.outcomeMoney[choice]);
+			} else if (currentEncounter.outcomeMoney[choice] < 0)
+			{
+				int money = -currentEncounter.outcomeMoney[choice];
+				rewardsText = "- Money Lost: " + money.ToString() + "\n";
+				GameControl.instance.AddMoney(currentEncounter.outcomeMoney[choice]);
+			}
+			
+			if (currentEncounter.outcomeHealth[choice] != 0)
+			{
+				rewardsText = rewardsText + "- Health Lost: " + currentEncounter.outcomeHealth[choice].ToString() + "\n";
+				GameControl.instance.playerShip.AddHealth(currentEncounter.outcomeHealth[choice]);
+			}
+			
+			for (int i = 0; i < currentEncounter.GetChoiceItems(choice).Length; i++)
+			{
+				rewardsText = rewardsText + "-  " + currentEncounter.GetChoiceQuants(choice)[i].ToString() + " " + currentEncounter.GetChoiceItems(choice)[i].itemName + "\n";
+				Inventory.instance.AddItem(currentEncounter.GetChoiceItemStack(choice, i));
+			}
+			
+			encounterRewardsText.SetText(rewardsText);
+			
+		}
+		else 
+		{
+			encounterSuccessText.SetText("Failure!");
+			encounterOutcomeText.SetText(currentEncounter.encounterFailureDesc[choice]);
+			
+			encounterRewardsText.SetText("Impliment failure consequences maybe");
+			
+		}
+		SetStatusBox();
+	}
+	
+	void SetEncounterBox(RandomEncounter encounter) {
+		encounterBox.SetActive(true);
+		currentEncounter = encounter;
+		encounterNameText.SetText(encounter.encounterName);
+		encounterDescText.SetText(encounter.encounterDescription);
+		encounterText1.SetText(encounter.encounterChoiceDesc[0]);
+		encounterText2.SetText(encounter.encounterChoiceDesc[1]);
+		encounterText3.SetText(encounter.encounterChoiceDesc[2]);
+		encounterText4.SetText(encounter.encounterChoiceDesc[3]);
+	}
+	
+    void SetStatusBox() {
+		SetHullBar();
+        SetFuelBar();
+        SetCargoSpaceText();
+        SetMoneyText();
+		SetTimeText();
+	}
+	
+	void SetHullBar() {
         float hullPercent = (float)GameControl.instance.playerShip.currentHull / (float)GameControl.instance.playerShip.maxHull;
         hullBar.transform.localScale = new Vector3(hullPercent, 1, 1);
 

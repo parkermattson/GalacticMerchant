@@ -100,7 +100,6 @@ public class GameControl : MonoBehaviour {
 		saveData.playerLocation = playerLocation;
 		saveData.items = inventory.items;
 		saveData.equipments = inventory.equipments;
-		saveData.shipEquipment = inventory.shipEquipment;
 		saveData.stations = stations;
 		
 		bf.Serialize(file, saveData);
@@ -129,7 +128,6 @@ public class GameControl : MonoBehaviour {
 				playerLocation = loadData.playerLocation;
 				inventory.items = loadData.items;
 				inventory.equipments = loadData.equipments;
-				inventory.shipEquipment = loadData.shipEquipment;
 				stations = loadData.stations;
 			
 		}
@@ -173,6 +171,15 @@ public class GameControl : MonoBehaviour {
 			{
 				Debug.Log("Crew couldnt be hired");
 			}
+		}
+	}
+	
+	public void AddMoney(int amount) {
+		playerMoney += amount;
+		
+		if (playerMoney < 0)
+		{
+			Debug.Log("Game Over. Ran out of money");
 		}
 	}
 	
@@ -314,7 +321,6 @@ public class GameControl : MonoBehaviour {
 		public Location playerLocation;
 		public List<ItemStack> items;
 		public List<Equipment> equipments;
-		public Equipment[] shipEquipment;
 		public List<Station> stations;
 	}
 }
