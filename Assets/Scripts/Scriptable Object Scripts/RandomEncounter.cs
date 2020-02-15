@@ -10,6 +10,11 @@ public class RandomEncounter : ScriptableObject {
 	public Item[] choiceOutcomeItems1, choiceOutcomeItems2, choiceOutcomeItems3, choiceOutcomeItems4;
 	public int[] choiceOutcomeQuants1, choiceOutcomeQuants2, choiceOutcomeQuants3, choiceOutcomeQuants4, outcomeMoney, outcomeHealth;
 	public float[] successChance;
+	public bool[] triggersCombatOnFailure;
+	
+	public bool CheckCombatTrigger(int choice) {
+		return triggersCombatOnFailure[choice];
+	}
 	
 	public Item[] GetChoiceItems(int choice) {
 		switch (choice)

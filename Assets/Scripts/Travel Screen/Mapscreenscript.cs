@@ -15,11 +15,11 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	public List<RandomEncounter> encountersStation = new List<RandomEncounter>(), encountersEmpty = new List<RandomEncounter>(), encountersAnomaly = new List<RandomEncounter>(), encountersTransmission = new List<RandomEncounter>(),
 																		 encountersDistress = new List<RandomEncounter>(), encountersConflict = new List<RandomEncounter>(), encountersNatural = new List<RandomEncounter>();
 	RandomEncounter currentEncounter = null;
-	bool inTransit = false;
+	bool inTransit = false, encounterCombatTrigger = false;
 	float fuelCounter = 1;
 	Vector3 mouseStart;
 	
-	public GameObject hullBar, fuelBar, locationPrefab, hoverTooltip, locationTooltip, encounterBox, encounterBox2, selectedLocation = null;
+	public GameObject hullBar, fuelBar, locationPrefab, hoverTooltip, locationTooltip, encounterBox, encounterBox2, combatScreen, selectedLocation = null;
 
     public TextMeshProUGUI cargoText, moneyText, timeText, encounterNameText, encounterDescText, encounterText1, encounterText2, encounterText3 ,encounterText4, encounterSuccessText, encounterOutcomeText, encounterRewardsText;
 	
@@ -326,10 +326,20 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			encounterSuccessText.SetText("Failure!");
 			encounterOutcomeText.SetText(currentEncounter.encounterFailureDesc[choice]);
 			
+			encounterCombatTrigger = currentEncounter.CheckCombatTrigger(choice);
+			
 			encounterRewardsText.SetText("Impliment failure consequences maybe");
 			
 		}
 		SetStatusBox();
+	}
+	
+	public void EncounterCombatCheck() {
+		if (encounterCombatTrigger)
+			{
+				combatScreen.SetActive(true);
+																																		//Add enemy generation function here
+			}
 	}
 	
 	void SetEncounterBox(RandomEncounter encounter) {
