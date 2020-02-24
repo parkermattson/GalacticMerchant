@@ -353,7 +353,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		encounterText4.SetText(encounter.encounterChoiceDesc[3]);
 	}
 	
-    void SetStatusBox() {
+    public void SetStatusBox() {
 		SetHullBar();
         SetFuelBar();
         SetCargoSpaceText();

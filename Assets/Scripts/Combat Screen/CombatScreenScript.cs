@@ -9,22 +9,18 @@ public class CombatScreenScript : MonoBehaviour {
 
 	public CombatIconScript[] enemyIcons = new CombatIconScript[10], playerIcons = new CombatIconScript[10];
 	CombatIconScript switchedPlayerAttackIcon, switchedPlayerDefenseIcon, switchedEnemyAttackIcon, switchedEnemyDefenseIcon;
-	public GameObject stopCombatPopup;
+	public GameObject winPopup, losePopup;
 	public Transform  playerHealthBar, enemyHealthBar;
 	bool combatStarted = false;
 	Ship enemyShip;
+	public List<Ship> enemyShipList = new List<Ship>();
 	public List<Command> commList = new List<Command>();
 	public List<Sensor> sensorList = new List<Sensor>();
 	public List<Engine> engineList = new List<Engine>();
 	public List<Weapon> weaponList = new List<Weapon>();
-	float[] enemyWeaponThinkProgress = {0,0,0,0,0};
-	float enemyThinkProgress = 0,  enemyThinkTime = 1;
-	
-	void Start()
-	{
-		enemyShip = Ship.CreateInstance<Ship>();
-	}
-	
+	public List<Item>  lootList = new List<Item>();
+	float enemyThinkProgress = 0,  enemyThinkTime = .25f;
+		
 	void Update() {
 		if (combatStarted)
 		{	
@@ -64,15 +60,18 @@ public class CombatScreenScript : MonoBehaviour {
 	void StopCombat(bool didWin) {
 		if (didWin)
 		{
-			stopCombatPopup.GetComponentInChildren<TextMeshProUGUI>().SetText("You Win!");
+			string popupString = GenerateCombatLoot();
+			winPopup.GetComponentsInChildren<TextMeshProUGUI>()[1].SetText(popupString);
+			winPopup.SetActive(true);
 		}
-		else stopCombatPopup.GetComponentInChildren<TextMeshProUGUI>().SetText("You Lose!");
+		else losePopup.SetActive(true);
+		
 		for (int i =0; i < 10; i++)
 		{
 			playerIcons[i].SetAvailable(false);
 			enemyIcons[i].SetAvailable(false);
 		}
-		stopCombatPopup.SetActive(true);
+		
 		combatStarted = false;
 	}
 	
@@ -207,31 +206,32 @@ public class CombatScreenScript : MonoBehaviour {
 			
 			for (int i = 0; i < 5; i++)
 			{
-				if (playerIcons[i].GetTimer() >= .5f && enemyIcons[i+5].isAvailable)
+				if (playerIcons[i].GetTimer() >= .5f && enemyIcons[i+5].isAvailable && enemyIcons[i+5].state == SlotState.Ready)
 				{
 					enemyIcons[i+5].Charge();
+					break;
+				}
+			}
+			for (int i = 0; i < 5; i++)
+			{
+				
+				if (enemyIcons[i].isAvailable && enemyIcons[i].state == SlotState.Ready)
+				{
+					enemyIcons[i].Charge();
+					break;
 				}
 			}
 		}
 		
-		for (int i = 0; i < 5; i++)
-		{
-			if (enemyIcons[i].state == SlotState.Ready)
-				enemyWeaponThinkProgress[i] += Time.deltaTime;
-			if (enemyWeaponThinkProgress[i] > .25f && enemyIcons[i].isAvailable)
-			{
-				enemyIcons[i].Charge();
-				enemyWeaponThinkProgress[i] = 0;
-			}
-		}
+		
 	}
 	
 	public void GenerateEnemy() {
 		int difficulty = Mathf.FloorToInt(Random.value * 5);
 		enemyThinkTime = 1.5f - difficulty*.15f;
 		
-		enemyShip.maxHull = 5 * (difficulty+1);
-		enemyShip.currentHull = enemyShip.maxHull;
+		enemyShip = Instantiate(enemyShipList[(int)(Random.value * difficulty * enemyShipList.Count / 5)]);
+		
 		enemyHealthBar.localScale = new Vector2((float)enemyShip.currentHull/enemyShip.maxHull, enemyHealthBar.localScale.y);
 		enemyShip.command = commList[(int)(Random.value * difficulty * commList.Count / 5)];
 		enemyShip.sensor = sensorList[(int)(Random.value * difficulty * sensorList.Count / 5)];
@@ -263,6 +263,41 @@ public class CombatScreenScript : MonoBehaviour {
 	
 	public void ResetPlayerHealth() {
 		GameControl.instance.playerShip.currentHull = GameControl.instance.playerShip.maxHull;
+	}
+	
+	string GenerateCombatLoot() {
+		string lootString = "Loot collected:\n";
+		int scrapAmnt = (int)(enemyShip.maxHull * Random.value * 5);
+		ItemStack tempStack = ItemStack.CreateInstance<ItemStack>().Init(lootList[0], scrapAmnt);
+		Inventory.instance.AddItem(tempStack);
+		lootString = lootString + "- " + scrapAmnt.ToString() + " Salvaged Scrap\n";
+		
+		if (Random.value > .9f)
+		{
+			Inventory.instance.AddEquipment(enemyShip.command);
+			lootString = lootString  + "- " + enemyShip.command.GetName() + "\n";
+		}
+		
+		if (Random.value > .9f)
+		{
+			Inventory.instance.AddEquipment(enemyShip.weapon);
+			lootString = lootString  + "- " + enemyShip.weapon.GetName() + "\n";
+		}
+		
+		if (Random.value > .9f)
+		{
+			Inventory.instance.AddEquipment(enemyShip.sensor);
+			lootString = lootString  + "- " + enemyShip.sensor.GetName() + "\n";
+		}
+		
+		if (Random.value > .9f)
+		{
+			Inventory.instance.AddEquipment(enemyShip.engine);
+			lootString = lootString  + "- " + enemyShip.engine.GetName() + "\n";
+		}
+		
+		return lootString;
+		
 	}
 	
 }
