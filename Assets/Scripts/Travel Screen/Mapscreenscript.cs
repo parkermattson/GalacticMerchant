@@ -15,13 +15,15 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	public List<RandomEncounter> encountersStation = new List<RandomEncounter>(), encountersEmpty = new List<RandomEncounter>(), encountersAnomaly = new List<RandomEncounter>(), encountersTransmission = new List<RandomEncounter>(),
 																		 encountersDistress = new List<RandomEncounter>(), encountersConflict = new List<RandomEncounter>(), encountersNatural = new List<RandomEncounter>();
 	RandomEncounter currentEncounter = null;
-	bool inTransit = false, encounterCombatTrigger = false;
+	bool inTransit = false, encounterCombatTrigger = false, inEncounter = false;
 	float fuelCounter = 1;
 	Vector3 mouseStart;
 	
 	bool pathTest = true;
 	public GameObject travelLinePrefab;
+	List<Location> travelPath = new List<Location>();
 	List<GameObject> travelLines = new List<GameObject>();
+	int nextLocation;
 	
 	public GameObject hullBar, fuelBar, locationPrefab, hoverTooltip, locationTooltip, encounterBox, encounterBox2, combatScreen, selectedLocation = null;
 
@@ -32,7 +34,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	}
 	
     void Update() {
-        if (inTransit) MoveShip();
+        if (inTransit && !inEncounter) MoveShip();
     }
 
 	void OnEnable() {
@@ -56,7 +58,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void MoveShip() {
         locationTooltip.SetActive(false);
-        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, selectedLocation.transform.localPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed());
+        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, travelPath[nextLocation].mapPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed());
 		GameControl.instance.PassTime(.05f);
 		UpdateLocationColors();
 		SetTimeText();
@@ -67,12 +69,12 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			GameControl.instance.playerShip.currentFuel --;
 			SetFuelBar();
 		}
-        if (Mathf.Abs((mapShipIcon.transform.localPosition-selectedLocation.transform.localPosition).magnitude)<=0.1f)
+        if (Mathf.Abs(((Vector2)(mapShipIcon.transform.localPosition)-travelPath[nextLocation].mapPosition).magnitude)<=0.1f)
         {
-            inTransit = false;
-            GameControl.instance.playerLocation = GetLocation(selectedLocation);
-			mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
-			RollEncounter(GetLocation(selectedLocation));
+            
+            GameControl.instance.playerLocation = travelPath[nextLocation];
+			mapShipIcon.transform.localPosition = travelPath[nextLocation].mapPosition + new Vector2(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2);
+			RollEncounter(travelPath[nextLocation]);
 			if (GameControl.instance.playerLocation.locationType == LocationType.Station)
 			{
 				Station tempStation = (Station)GameControl.instance.playerLocation;
@@ -80,8 +82,21 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				
 			}
 			
-			warpRangeImage.transform.localPosition = mapShipIcon.transform.localPosition;
-			warpRangeImage.gameObject.SetActive(true);
+			if (nextLocation == travelPath.Count - 1)
+			{
+				inTransit = false;
+				warpRangeImage.transform.localPosition = mapShipIcon.transform.localPosition;
+				warpRangeImage.gameObject.SetActive(true);
+				while (travelLines.Count > 0)
+				{
+					Destroy(travelLines[0]);
+					travelLines.RemoveAt(0);
+				}
+			}
+			else
+			{
+				nextLocation++;
+			}
         }
     }
 
@@ -89,11 +104,6 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         
 		if (!inTransit && GetLocation(newSelected) != GameControl.instance.playerLocation)
         {
-			while (travelLines.Count > 0)
-					{
-						Destroy(travelLines[0]);
-						travelLines.RemoveAt(0);
-					}
 			if (newSelected != selectedLocation || !locationTooltip.activeSelf)
 			{
 				selectedLocation = newSelected;
@@ -116,16 +126,17 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				} 
 				else
 				{
-					List<Location> pathToSelected = GameControl.instance.FindShortestPath(GameControl.instance.playerLocation, GetLocation(newSelected), GameControl.instance.playerShip.GetNetWarpRange());
-					if (pathToSelected != null)
+					travelPath = GameControl.instance.FindShortestPath(GameControl.instance.playerLocation, GetLocation(newSelected), GameControl.instance.playerShip.GetNetWarpRange());
+					nextLocation = 1;
+					if (travelPath != null)
 					{
 						Vector3[] pathCoords = new Vector3[30];
 						float fuelCost = 0;
-						pathCoords[0] = new Vector3(pathToSelected[0].mapPosition.x, pathToSelected[0].mapPosition.y,  0);
-						for (int i = 1; i < pathToSelected.Count; i++)
+						pathCoords[0] = new Vector3(travelPath[0].mapPosition.x, travelPath[0].mapPosition.y,  0);
+						for (int i = 1; i < travelPath.Count; i++)
 						{
-							pathCoords[i] = new Vector3(pathToSelected[i].mapPosition.x, pathToSelected[i].mapPosition.y,  0);
-							fuelCost += Vector2.Distance(pathToSelected[i-1].mapPosition, pathToSelected[i].mapPosition) * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff());
+							pathCoords[i] = new Vector3(travelPath[i].mapPosition.x, travelPath[i].mapPosition.y,  0);
+							fuelCost += Vector2.Distance(travelPath[i-1].mapPosition, travelPath[i].mapPosition) * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff());
 							travelLines.Add(Instantiate(travelLinePrefab, mapImage.transform));
 							travelLines[i-1].transform.SetAsFirstSibling();
 							travelLines[i-1].transform.localPosition = (pathCoords[i-1]+pathCoords[i])/2;
@@ -133,7 +144,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 							travelLines[i-1].transform.Rotate(0, 0, Mathf.Rad2Deg * Mathf.Atan((pathCoords[i-1].y - pathCoords[i].y)/(pathCoords[i-1].x - pathCoords[i].x)), Space.Self);
 						}
 						
-						locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(pathToSelected[1].GetName() + "\n" + pathToSelected[1].GetDescription() +  "\nFuel Cost: " + Mathf.CeilToInt(fuelCost));
+						locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(travelPath[1].GetName() + "\n" + travelPath[1].GetDescription() +  "\nFuel Cost: " + Mathf.CeilToInt(fuelCost));
 					
 					}
 					else
@@ -272,7 +283,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersStation.Count;
-					
+					inEncounter = true;
 					SetEncounterBox(encountersStation[Mathf.FloorToInt(rng)]);
 				}
 				break;
@@ -280,7 +291,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersEmpty.Count;
-					
+					inEncounter = true;
 					SetEncounterBox(encountersEmpty[Mathf.FloorToInt(rng)]);
 				}
 				break;
@@ -288,7 +299,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersAnomaly.Count;
-					
+					inEncounter = true;
 					SetEncounterBox(encountersAnomaly[Mathf.FloorToInt(rng)]);
 				}
 				break;
@@ -296,7 +307,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersTransmission.Count;
-					
+					inEncounter = true;
 					SetEncounterBox(encountersTransmission[Mathf.FloorToInt(rng)]);
 				}
 				break;
@@ -304,7 +315,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersDistress.Count;
-					
+					inEncounter = true;
 					SetEncounterBox(encountersDistress[Mathf.FloorToInt(rng)]);
 				}
 				break;
@@ -312,7 +323,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersConflict.Count;
-					
+					inEncounter = true;
 					SetEncounterBox(encountersConflict[Mathf.FloorToInt(rng)]);
 				}
 				break;
@@ -320,7 +331,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersNatural.Count;
-					
+					inEncounter = true;
 					SetEncounterBox(encountersNatural[Mathf.FloorToInt(rng)]);
 				}
 				break;
@@ -380,8 +391,10 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		if (encounterCombatTrigger)
 			{
 				combatScreen.SetActive(true);
+				inEncounter = true;
 																																		//Add enemy generation function here
 			}
+			else inEncounter = false;
 	}
 	
 	void SetEncounterBox(RandomEncounter encounter) {
@@ -393,6 +406,10 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		encounterText2.SetText(encounter.encounterChoiceDesc[1]);
 		encounterText3.SetText(encounter.encounterChoiceDesc[2]);
 		encounterText4.SetText(encounter.encounterChoiceDesc[3]);
+	}
+	
+	public void SetInEncounter(bool newState) {
+		inEncounter = newState;
 	}
 	
     public void SetStatusBox() {
