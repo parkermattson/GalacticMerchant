@@ -19,6 +19,10 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	float fuelCounter = 1;
 	Vector3 mouseStart;
 	
+	bool pathTest = true;
+	public GameObject travelLinePrefab;
+	List<GameObject> travelLines = new List<GameObject>();
+	
 	public GameObject hullBar, fuelBar, locationPrefab, hoverTooltip, locationTooltip, encounterBox, encounterBox2, combatScreen, selectedLocation = null;
 
     public TextMeshProUGUI cargoText, moneyText, timeText, encounterNameText, encounterDescText, encounterText1, encounterText2, encounterText3 ,encounterText4, encounterSuccessText, encounterOutcomeText, encounterRewardsText;
@@ -82,24 +86,62 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
 
     public void SelectLocation(GameObject newSelected) {
-        if (!inTransit && GetLocation(newSelected) != GameControl.instance.playerLocation)
+        
+		if (!inTransit && GetLocation(newSelected) != GameControl.instance.playerLocation)
         {
+			while (travelLines.Count > 0)
+					{
+						Destroy(travelLines[0]);
+						travelLines.RemoveAt(0);
+					}
 			if (newSelected != selectedLocation || !locationTooltip.activeSelf)
 			{
 				selectedLocation = newSelected;
-				float distance = Vector2.Distance(GameControl.instance.playerLocation.GetMapPos(), GetLocation(selectedLocation).GetMapPos());
 				locationTooltip.SetActive(true);
 				SetHoverTooltip(false, selectedLocation);
-				
-				locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\nFuel Cost: " + Mathf.CeilToInt(distance * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff())));
-				if ((int)(distance/50) > GameControl.instance.playerShip.currentFuel)
-					locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
-				else if (distance > GameControl.instance.playerShip.GetNetWarpRange())
-					locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
-				else
-					locationTooltip.transform.GetComponentInChildren<Button>().interactable=true;
-				
 				locationTooltip.transform.position = selectedLocation.transform.position + new Vector3(selectedLocation.GetComponent<RectTransform>().sizeDelta.x/2,0,0);
+				if (pathTest == false)
+				{
+					float distance = Vector2.Distance(GameControl.instance.playerLocation.GetMapPos(), GetLocation(selectedLocation).GetMapPos());	
+					
+					locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\nFuel Cost: " + Mathf.CeilToInt(distance * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff())));
+					if ((int)(distance/50) > GameControl.instance.playerShip.currentFuel)
+						locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
+					else if (distance > GameControl.instance.playerShip.GetNetWarpRange())
+						locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
+					else
+						locationTooltip.transform.GetComponentInChildren<Button>().interactable=true;
+					
+					
+				} 
+				else
+				{
+					List<Location> pathToSelected = GameControl.instance.FindShortestPath(GameControl.instance.playerLocation, GetLocation(newSelected), GameControl.instance.playerShip.GetNetWarpRange());
+					if (pathToSelected != null)
+					{
+						Vector3[] pathCoords = new Vector3[30];
+						float fuelCost = 0;
+						pathCoords[0] = new Vector3(pathToSelected[0].mapPosition.x, pathToSelected[0].mapPosition.y,  0);
+						for (int i = 1; i < pathToSelected.Count; i++)
+						{
+							pathCoords[i] = new Vector3(pathToSelected[i].mapPosition.x, pathToSelected[i].mapPosition.y,  0);
+							fuelCost += Vector2.Distance(pathToSelected[i-1].mapPosition, pathToSelected[i].mapPosition) * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff());
+							travelLines.Add(Instantiate(travelLinePrefab, mapImage.transform));
+							travelLines[i-1].transform.SetAsFirstSibling();
+							travelLines[i-1].transform.localPosition = (pathCoords[i-1]+pathCoords[i])/2;
+							travelLines[i-1].GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(pathCoords[i-1], pathCoords[i]), 30);
+							travelLines[i-1].transform.Rotate(0, 0, Mathf.Rad2Deg * Mathf.Atan((pathCoords[i-1].y - pathCoords[i].y)/(pathCoords[i-1].x - pathCoords[i].x)), Space.Self);
+						}
+						
+						locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(pathToSelected[1].GetName() + "\n" + pathToSelected[1].GetDescription() +  "\nFuel Cost: " + Mathf.CeilToInt(fuelCost));
+					
+					}
+					else
+					{
+						locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() +  "\nOut of Range");
+						locationTooltip.transform.GetComponentInChildren<Button>().interactable=false;
+					}
+				}
 			}
 			else 
 			{
@@ -227,7 +269,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		switch (loc.locationType)
 		{
 			case LocationType.Station:
-				if (rng < .5f)
+				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersStation.Count;
 					
@@ -235,7 +277,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 			case LocationType.Empty:
-				if (rng < .5f)
+				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersEmpty.Count;
 					
@@ -243,7 +285,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 			case LocationType.Anomaly: 
-				if (rng < .5f)
+				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersAnomaly.Count;
 					
@@ -251,7 +293,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 			case LocationType.Transmission: 
-				if (rng < .5f)
+				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersTransmission.Count;
 					
@@ -259,7 +301,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 			case LocationType.Distress: 
-				if (rng < .5f)
+				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersDistress.Count;
 					
@@ -267,7 +309,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 			case LocationType.Conflict: 
-				if (rng < .5f)
+				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersConflict.Count;
 					
@@ -275,7 +317,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 			case LocationType.Natural:
-				if (rng < .5f)
+				if (rng < .25f)
 				{
 					rng = UnityEngine.Random.value * encountersNatural.Count;
 					

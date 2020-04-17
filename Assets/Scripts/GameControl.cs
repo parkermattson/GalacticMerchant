@@ -149,6 +149,7 @@ public class GameControl : MonoBehaviour {
 		
 		while (gameTime > lastWeek.AddDays(7))
 		{
+			Debug.Log("Weekly Payday");
 			for (int i = 1; i < 4; i++)
 			{
 				if (crewMembs[i] != null)
@@ -181,6 +182,81 @@ public class GameControl : MonoBehaviour {
 		{
 			Debug.Log("Game Over. Ran out of money");
 		}
+	}
+	
+	public List<Location> FindShortestPath(Location start, Location destination, float range) {
+		Dictionary<Location, float> nodeCosts = new Dictionary<Location, float>();
+		Dictionary<Location, Location> prevNode = new Dictionary<Location, Location>();
+		List<Location> nodes = new List<Location>(), path = new List<Location>();
+		foreach (Location l in locations)
+		{
+			nodeCosts.Add(l, 1000000);
+			nodes.Add(l);
+		}
+		
+		foreach (Station s in stations)
+		{
+			nodeCosts.Add(s, 1000000);
+			nodes.Add(s);
+		}
+		
+		nodeCosts[start] = 0;
+		
+		while (nodes.Count > 0)
+		{
+			Location closest = nodes.OrderBy(x => nodeCosts[x]).First();
+			
+			foreach (Location l in FindLocationNeighbors(closest, range))
+			{
+				float newCost = nodeCosts[closest] + Vector2.Distance(l.mapPosition, closest.mapPosition);
+				if (newCost < nodeCosts[l])
+				{
+					nodeCosts[l] = newCost;
+					prevNode[l] = closest;
+				}
+			}
+			
+			nodes.Remove(closest);
+		}
+		
+		if (nodeCosts[destination] >= 1000000)
+		{
+			return null;
+		}
+		else 
+		{
+			Location tempLoc = destination;
+			while (tempLoc != start)
+			{
+				path.Insert(0, tempLoc);
+				tempLoc = prevNode[tempLoc];
+			}
+			path.Insert(0, start);
+			return path;
+		}
+		
+	}
+	
+	public List<Location> FindLocationNeighbors(Location node, float range) {
+		List<Location> neighbors = new List<Location>();
+		
+		foreach (Location l in locations)
+		{
+			if (Vector2.Distance(node.mapPosition, l.mapPosition) <= range && Vector2.Distance(node.mapPosition, l.mapPosition) > 0)
+			{
+				neighbors.Add(l);
+			}
+		}
+		
+		foreach (Station s in stations)
+		{
+			if (Vector2.Distance(node.mapPosition, s.mapPosition) <= range && Vector2.Distance(node.mapPosition, s.mapPosition) > 0)
+			{
+				neighbors.Add(s);
+			}
+		}
+		
+		return neighbors;
 	}
 	
 	public float GetQuestMoneyBonus() {

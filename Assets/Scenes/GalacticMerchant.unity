@@ -6940,7 +6940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 64, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &205991208
@@ -6971,6 +6971,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1aac220fa7142b440b29ff02420f2181, type: 2}
   encountersNatural:
   - {fileID: 11400000, guid: 1aac220fa7142b440b29ff02420f2181, type: 2}
+  travelLinePrefab: {fileID: 1089599347927218, guid: 73cee709544b2d34b917aed5ff2d2943,
+    type: 2}
   hullBar: {fileID: 1801211268}
   fuelBar: {fileID: 1377673010}
   locationPrefab: {fileID: 1122972392675246, guid: 49c3c9b10dd78ea48b4b47f629a692e4,
@@ -24074,7 +24076,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 161.3}
+  m_AnchoredPosition: {x: 0, y: 161.29999}
   m_SizeDelta: {x: -100, y: -1122.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &733583155
