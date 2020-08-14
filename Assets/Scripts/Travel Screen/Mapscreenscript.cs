@@ -12,8 +12,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
 
     public Image mapImage, mapShipIcon, warpRangeImage;
-	public List<RandomEncounter> encountersStation = new List<RandomEncounter>(), encountersEmpty = new List<RandomEncounter>(), encountersAnomaly = new List<RandomEncounter>(), encountersTransmission = new List<RandomEncounter>(),
-																		 encountersDistress = new List<RandomEncounter>(), encountersConflict = new List<RandomEncounter>(), encountersNatural = new List<RandomEncounter>();
+	public List<RandomEncounter> encountersStation, encountersEmpty, encountersAnomaly, encountersTransmission, encountersDistress, encountersConflict, encountersNatural;
 	RandomEncounter currentEncounter = null;
 	bool inTransit = false, encounterCombatTrigger = false, inEncounter = false;
 	float fuelCounter = 1;
@@ -137,11 +136,19 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 						{
 							pathCoords[i] = new Vector3(travelPath[i].mapPosition.x, travelPath[i].mapPosition.y,  0);
 							fuelCost += Vector2.Distance(travelPath[i-1].mapPosition, travelPath[i].mapPosition) * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff());
-							travelLines.Add(Instantiate(travelLinePrefab, mapImage.transform));
+							if (i > travelLines.Count)
+								travelLines.Add(Instantiate(travelLinePrefab, mapImage.transform));
 							travelLines[i-1].transform.SetAsFirstSibling();
 							travelLines[i-1].transform.localPosition = (pathCoords[i-1]+pathCoords[i])/2;
 							travelLines[i-1].GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(pathCoords[i-1], pathCoords[i]), 30);
-							travelLines[i-1].transform.Rotate(0, 0, Mathf.Rad2Deg * Mathf.Atan((pathCoords[i-1].y - pathCoords[i].y)/(pathCoords[i-1].x - pathCoords[i].x)), Space.Self);
+							travelLines[i-1].transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan((pathCoords[i-1].y - pathCoords[i].y)/(pathCoords[i-1].x - pathCoords[i].x)));
+						}
+						for (int i=travelLines.Count-1; i >= travelPath.Count-1; i--)
+						{
+							GameObject tempObj = travelLines[i];
+							travelLines.Remove(travelLines[i]);
+							Destroy(tempObj);
+							
 						}
 						
 						locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(travelPath[1].GetName() + "\n" + travelPath[1].GetDescription() +  "\nFuel Cost: " + Mathf.CeilToInt(fuelCost));

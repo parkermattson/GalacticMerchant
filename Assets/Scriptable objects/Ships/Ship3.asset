@@ -24,8 +24,14 @@ MonoBehaviour:
   rawWarpRange: 500
   rawFuelEff: 1.2
   rawSpeed: 1.5
-  equipCapacities: 01000000010000000100000001000000
-  command: {fileID: 0}
-  sensor: {fileID: 0}
-  engine: {fileID: 0}
-  weapon: {fileID: 0}
+  equipCapacities: 03000000020000000200000004000000
+  commandList:
+  - {fileID: 11400000, guid: b4e622bf0c5d54d468da8783c0129add, type: 2}
+  sensorList:
+  - {fileID: 11400000, guid: be76bbae62fe21440989d72f5d99c645, type: 2}
+  engineList:
+  - {fileID: 11400000, guid: ad207c94097bf0044b6ea8c11a803ea7, type: 2}
+  combatList:
+  - {fileID: 11400000, guid: 9d74384ec05741b4a9c804907637855d, type: 2}
+  - {fileID: 11400000, guid: 9d74384ec05741b4a9c804907637855d, type: 2}
+  - {fileID: 11400000, guid: 0017825e49c01b24eab8a99aca5b6344, type: 2}

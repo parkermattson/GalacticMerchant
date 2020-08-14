@@ -15,8 +15,8 @@ MonoBehaviour:
   shipDesc: Ship description
   graphic: {fileID: 21300000, guid: d5d434a759b9c074c80253e0d963296f, type: 3}
   price: 1000
-  maxHull: 1
-  currentHull: 1
+  maxHull: 5
+  currentHull: 5
   maxFuel: 100
   currentFuel: 100
   maxCargo: 1000
@@ -25,7 +25,11 @@ MonoBehaviour:
   rawFuelEff: 1
   rawSpeed: 1
   equipCapacities: 01000000010000000100000001000000
-  command: {fileID: 11400000, guid: b4e622bf0c5d54d468da8783c0129add, type: 2}
-  sensor: {fileID: 11400000, guid: be76bbae62fe21440989d72f5d99c645, type: 2}
-  engine: {fileID: 11400000, guid: ad207c94097bf0044b6ea8c11a803ea7, type: 2}
-  weapon: {fileID: 11400000, guid: 06fde87a8a8f9054f86194441ca47a13, type: 2}
+  commandList:
+  - {fileID: 11400000, guid: b4e622bf0c5d54d468da8783c0129add, type: 2}
+  sensorList:
+  - {fileID: 11400000, guid: be76bbae62fe21440989d72f5d99c645, type: 2}
+  engineList:
+  - {fileID: 11400000, guid: ad207c94097bf0044b6ea8c11a803ea7, type: 2}
+  combatList:
+  - {fileID: 11400000, guid: 9d74384ec05741b4a9c804907637855d, type: 2}

@@ -14,6 +14,9 @@ public class ShipSlot : EquipSlot, IPointerEnterHandler, IPointerExitHandler, ID
 	private int slotNumber;
 	
 	[SerializeField]
+	private int subslotNumber;
+	
+	[SerializeField]
 	private EquipmentSlot slotType;
 	
 	[TextArea]
@@ -49,7 +52,7 @@ public class ShipSlot : EquipSlot, IPointerEnterHandler, IPointerExitHandler, ID
 		EquipSlot draggedSlot = slotBox.GetComponent<EquipSlot>();
 		if (draggedSlot.GetEquipment().GetSlotType() == slotType)
 		{
-			inventory.SwapEquipment(draggedSlot.GetEquipment(), slotNumber);
+			inventory.SwapEquipment(draggedSlot.GetEquipment(), slotNumber, subslotNumber);
 			GetComponent<ShipSlot>().AddShipEquipment(draggedSlot.GetEquipment());
 			Debug.Log(SlotDragScript.slot.name);
 			Destroy(SlotDragScript.slot);

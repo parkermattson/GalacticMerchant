@@ -29,7 +29,7 @@ public class Slot : MonoBehaviour,  IPointerClickHandler{
 		stack = null;
 		
 		icon.sprite=null;
-		icon.enabled = false;
+		icon.gameObject.SetActive(false);
 	}
 	
 	public ItemStack GetStack()

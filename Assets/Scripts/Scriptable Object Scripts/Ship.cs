@@ -11,10 +11,10 @@ public class Ship : ScriptableObject {
 	public int price = 1000, maxHull = 10, currentHull = 10, maxFuel = 100, currentFuel = 100, maxCargo = 1000,  rawSensorRange = 20, rawWarpRange = 350;
 	public float rawFuelEff = 1, rawSpeed = 1;
 	public int[] equipCapacities = {1, 1, 1, 1};
-	public Command command;
-	public Sensor sensor;
-	public Engine engine;
-	public Weapon weapon;
+	public List<Command> commandList;
+	public List<Sensor> sensorList;
+	public List<Engine> engineList;
+	public List<Combat> combatList;
 	
 	public string GetName() {
 		return shipName;
@@ -54,31 +54,92 @@ public class Ship : ScriptableObject {
 	}
 	
 	public float GetNetFuelEff() {
-		float netEff = (rawFuelEff + engine.GetFuelEfficiency()) * (1 + GameControl.instance.GetFuelEfficiencyBonus() + command.GetBonus(CommandBonus.FuelEff));
+		float engineEff = 0, engineBonus = 0;
+		for (int i = 0; i < engineList.Count; i++)
+		{
+			engineEff += engineList[i].GetFuelEfficiency();
+		}
+		for (int i = 0; i < commandList.Count; i++)
+		{
+			engineBonus += commandList[i].GetBonus(CommandBonus.FuelEff);
+		}
+		float netEff = (rawFuelEff + engineEff) * (1 + GameControl.instance.GetFuelEfficiencyBonus() + engineBonus);
 		return netEff;
 	}
 	
 	public float GetNetSensorRange() {
-		float netRange = (rawSensorRange + sensor.GetSensorRange()) * (1 + GameControl.instance.GetSensorRangeBonus() + command.GetBonus(CommandBonus.SensorRange));
+		float sensorRange = 0, sensorBonus = 0;
+		for (int i = 0; i < sensorList.Count; i++)
+		{
+			sensorRange += sensorList[i].GetSensorRange();
+		}
+		for (int i = 0; i < commandList.Count; i++)
+		{
+			sensorBonus += commandList[i].GetBonus(CommandBonus.SensorRange);
+		}
+		float netRange = (rawSensorRange + sensorRange) * (1 + GameControl.instance.GetSensorRangeBonus() + sensorBonus);
 		return netRange;
 	}
 	
 	public int GetSensorLevel() {
-		int level = sensor.GetSensorLevel() + GameControl.instance.GetSensorLevelBonus();
+		int level = 0;
+		for (int i = 0; i < sensorList.Count; i++)
+		{
+			level = Mathf.Max(level, sensorList[i].GetSensorLevel() + GameControl.instance.GetSensorLevelBonus());
+		}
 		return level;
 	}
 	
 	public float GetNetWarpRange() {
-		float netWarpRange = (rawWarpRange + engine.GetWarpRange()) * (1 + GameControl.instance.GetWarpRangeBonus() + command.GetBonus(CommandBonus.WarpRange));
+		float engineRange = 0, warpBonus = 0;
+		for (int i = 0; i < engineList.Count; i++)
+		{
+			engineRange += engineList[i].GetWarpRange();
+		}
+		for (int i = 0; i < commandList.Count; i++)
+		{
+			warpBonus += commandList[i].GetBonus(CommandBonus.WarpRange);
+		}
+		
+		float netWarpRange = (rawWarpRange + engineRange) * (1 + GameControl.instance.GetWarpRangeBonus() + warpBonus);
 		return netWarpRange;
 	}
 	
 	public float GetNetSpeed() {
-		float netSpeed = (rawSpeed + engine.GetWarpSpeed()) * (1 +GameControl.instance.GetWarpSpeedBonus() + command.GetBonus(CommandBonus.WarpSpeed));
+		float engineSpeed = 0, speedBonus = 0;
+		for (int i = 0; i < engineList.Count; i++)
+		{
+			engineSpeed += engineList[i].GetWarpSpeed();
+		}
+		for (int i = 0; i < commandList.Count; i++)
+		{
+			speedBonus += commandList[i].GetBonus(CommandBonus.WarpSpeed);
+		}
+		float netSpeed = (rawSpeed + engineSpeed) * (1 + GameControl.instance.GetWarpSpeedBonus() + speedBonus);
 		return netSpeed;
 	}
 	
-	public int GetWeaponPower(WeaponType type) {
+	public List<Combat> GetWeapons() {
+		List<Combat> guns = new List<Combat>();
+		for (int i = 0; i < combatList.Count; i++)
+		{
+			if (combatList[i].isWeapon)
+				guns.Add(combatList[i]);
+		}
+		return guns;
+	}
+	
+	public List<Combat> GetDefenses() {
+		List<Combat> defenses = new List<Combat>();
+		for (int i = 0; i < combatList.Count; i++)
+		{
+			if (!combatList[i].isWeapon)
+				defenses.Add(combatList[i]);
+		}
+		return defenses;	
+	}
+	
+	/*public int GetWeaponPower(WeaponType type) {
 		int power = 0, numWeaps = 0;
 		for (int i = 0; i < weapon.weaponParts.Count; i++)
 			if (weapon.weaponParts[i] == type)
@@ -155,7 +216,7 @@ public class Ship : ScriptableObject {
 			return cooldown  * (1 + GameControl.instance.GetDefenseCooldownBonus() + command.GetBonus(CommandBonus.DefenseCooldown))/ numWeaps;
 		else return 0;
 	}
-	
+	*/
 	public void AddHealth(int hpAdded) {
 		currentHull += hpAdded;
 		if (currentHull > maxHull)
@@ -163,7 +224,7 @@ public class Ship : ScriptableObject {
 		
 		if (currentHull < 1)
 		{
-			currentHull = 0;
+			currentHull = maxHull;
 			Debug.Log("Game Over. Ran out of health");
 		}
 	}

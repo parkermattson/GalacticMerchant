@@ -18,16 +18,16 @@ public class GameControl : MonoBehaviour {
 	public string playerName;
 	public int playerMoney, playerRace, playerAvatar;
 	public int[] activeStats = {1,1,1,1};
-	public Crew[] crewMembs = new Crew[4], assignedCrew = new Crew[4];
+	public Crew[] crewMembs, assignedCrew;
     public Ship playerShip, defaultShip;
     public Location playerLocation;
 	public DateTime gameTime = new DateTime(3000, 1, 1, 9, 0, 0), lastHour = new DateTime(3000, 1, 1, 9, 0, 0), lastWeek = new DateTime(3000, 1, 1, 9, 0, 0);
 	public List<Station> initStations, stations;
-	public List<Mission> acceptedMissions = new List<Mission>();
+	public List<Mission> acceptedMissions;
 	public List<Location> initLocations, locations;
 	
-	public Sprite[] avatars = new Sprite[3];
-	public Sprite[] races = new Sprite[3];
+	public Sprite[] avatars;
+	public Sprite[] races;
 	
 	
 
@@ -66,6 +66,7 @@ public class GameControl : MonoBehaviour {
 		playerName = ccScript.GetPlayerName();
 		playerRace = ccScript.GetRace();
 		playerAvatar = ccScript.GetAvatar();
+		Debug.Log(playerName + ", " + playerRace.ToString());
 		playerMoney = 1000;
 		crewMembs[0] = ScriptableObject.CreateInstance<Crew>();
 		crewMembs[0].SetCrewName(playerName);

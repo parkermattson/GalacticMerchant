@@ -33,7 +33,7 @@ public class MechanicScreenScript : MonoBehaviour {
 	public GameObject equipBuyBox;
 	
 	public EquipmentStockTable equipStock;
-	List<Equipment> equipBuyList = new List<Equipment>();
+	List<Equipment> equipBuyList;
 	
 	void Awake()
 	{

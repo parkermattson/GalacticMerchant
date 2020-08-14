@@ -25,11 +25,7 @@ MonoBehaviour:
   rawFuelEff: 0.9
   rawSpeed: 1
   equipCapacities: 01000000010000000100000001000000
-  commandList:
-  - {fileID: 11400000, guid: 623da2f6327714a4c81c4c62b47f597a, type: 2}
-  sensorList:
-  - {fileID: 11400000, guid: d919f6dd2ffb6764cbe4ac1cb2a34ed5, type: 2}
-  engineList:
-  - {fileID: 11400000, guid: 06f3782a3117a124fb0b43ab48a9dd6a, type: 2}
-  weaponsList:
-  - {fileID: 11400000, guid: 06be020ae9feea945839bc00c927c470, type: 2}
+  commandList: []
+  sensorList: []
+  engineList: []
+  combatList: []

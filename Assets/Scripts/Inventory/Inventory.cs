@@ -10,8 +10,8 @@ public class Inventory : MonoBehaviour {
 	public OnItemChanged onEquipmentChangedCallback;
 
 	public int currentCargo = 0;
-	public List<ItemStack> items = new List<ItemStack>();
-	public List<Equipment> equipments = new List<Equipment>();
+	public List<ItemStack> items;
+	public List<Equipment> equipments;
 	
 	void Awake ()
 	{
@@ -61,54 +61,54 @@ public class Inventory : MonoBehaviour {
 			onEquipmentChangedCallback.Invoke();
 	}
 	
-	public void SwapEquipment(Equipment equipment, int slot)
+	public void SwapEquipment(Equipment equipment, int slot, int subslot)
 	{
 		switch (slot)
 		{
 			case 0:
-			if (GameControl.instance.playerShip.command != null)
+			if (GameControl.instance.playerShip.commandList[subslot] != null)
 			{
-				equipments.Add((Equipment)GameControl.instance.playerShip.command);
-				currentCargo += GameControl.instance.playerShip.command.GetWeight();
+				equipments.Add((Equipment)GameControl.instance.playerShip.commandList[subslot]);
+				currentCargo += GameControl.instance.playerShip.commandList[subslot].GetWeight();
 			}
 			
-			GameControl.instance.playerShip.command = (Command)equipment;
+			GameControl.instance.playerShip.commandList[subslot] = (Command)equipment;
 			equipments.Remove(equipment);
 			currentCargo -= equipment.GetWeight();
 			break;
 			
 			case 1:
-			if (GameControl.instance.playerShip.weapon != null)
+			if (GameControl.instance.playerShip.combatList[subslot] != null)
 			{
-				equipments.Add((Equipment)GameControl.instance.playerShip.weapon);
-				currentCargo += GameControl.instance.playerShip.weapon.GetWeight();
+				equipments.Add((Equipment)GameControl.instance.playerShip.combatList[subslot]);
+				currentCargo += GameControl.instance.playerShip.combatList[subslot].GetWeight();
 			}
 			
-			GameControl.instance.playerShip.weapon = (Weapon)equipment;
+			GameControl.instance.playerShip.combatList[subslot] = (Combat)equipment;
 			equipments.Remove(equipment);
 			currentCargo -= equipment.GetWeight();
 			break;
 			
 			case 2:
-			if (GameControl.instance.playerShip.sensor != null)
+			if (GameControl.instance.playerShip.sensorList[subslot] != null)
 			{
-				equipments.Add((Equipment)GameControl.instance.playerShip.sensor);
-				currentCargo += GameControl.instance.playerShip.sensor.GetWeight();
+				equipments.Add((Equipment)GameControl.instance.playerShip.sensorList[subslot]);
+				currentCargo += GameControl.instance.playerShip.sensorList[subslot].GetWeight();
 			}
 			
-			GameControl.instance.playerShip.sensor = (Sensor)equipment;
+			GameControl.instance.playerShip.sensorList[subslot] = (Sensor)equipment;
 			equipments.Remove(equipment);
 			currentCargo -= equipment.GetWeight();
 			break;
 			
 			case 3:
-			if (GameControl.instance.playerShip.engine != null)
+			if (GameControl.instance.playerShip.engineList[subslot] != null)
 			{
-				equipments.Add((Equipment)GameControl.instance.playerShip.engine);
-				currentCargo += GameControl.instance.playerShip.engine.GetWeight();
+				equipments.Add((Equipment)GameControl.instance.playerShip.engineList[subslot]);
+				currentCargo += GameControl.instance.playerShip.engineList[subslot].GetWeight();
 			}
 			
-			GameControl.instance.playerShip.engine = (Engine)equipment;
+			GameControl.instance.playerShip.engineList[subslot] = (Engine)equipment;
 			equipments.Remove(equipment);
 			currentCargo -= equipment.GetWeight();
 			break;

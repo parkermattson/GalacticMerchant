@@ -6,7 +6,7 @@ using TMPro;
 
 public class CrewScreenScript : MonoBehaviour {
 
-	public GameObject[] crewSlots = new GameObject[4];
+	public GameObject[] crewSlots;
 
 	void OnEnable()
 	{

@@ -15,7 +15,7 @@ public class ShipScreenScript : MonoBehaviour {
 	private Transform equipSlotBox;
 	
 	[SerializeField]
-	private ShipSlot[] shipSlots;
+	private ShipSlot[] commandSlots, combatSlots, sensorSlots, engineSlots;
 	
 	EquipSlot[] equipSlots;
 	
@@ -62,10 +62,28 @@ public class ShipScreenScript : MonoBehaviour {
 	}
 	
 	void SetShipSlots() {
-		shipSlots[0].AddShipEquipment(GameControl.instance.playerShip.command);
-		shipSlots[1].AddShipEquipment((Equipment)GameControl.instance.playerShip.weapon);
-		shipSlots[2].AddShipEquipment(GameControl.instance.playerShip.sensor);
-		shipSlots[3].AddShipEquipment(GameControl.instance.playerShip.engine);
+		List<Command> commandList = GameControl.instance.playerShip.commandList;
+		List<Sensor> sensorList = GameControl.instance.playerShip.sensorList;
+		List<Combat> combatList = GameControl.instance.playerShip.combatList;
+		List<Engine> engineList = GameControl.instance.playerShip.engineList;
+		for (int i = 0; i < commandList.Count; i++)
+		{
+			commandSlots[i].AddShipEquipment(commandList[i]);
+		}
+		for (int i = 0; i < combatList.Count; i++)
+		{
+			Debug.Log(combatList.Count);
+			Debug.Log(combatSlots.Length);
+			combatSlots[i].AddShipEquipment(combatList[i]);
+		}
+		for (int i = 0; i < sensorList.Count; i++)
+		{
+			sensorSlots[i].AddShipEquipment(sensorList[i]);
+		}
+		for (int i = 0; i < engineList.Count; i++)
+		{
+			engineSlots[i].AddShipEquipment(engineList[i]);
+		}
 	}
 	
 	void SetShipStatText()

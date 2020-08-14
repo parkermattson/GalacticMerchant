@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public enum SlotState {Ready, Charging, Cooling}
 
@@ -12,11 +13,10 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 	public CombatScreenScript combatScript;
 	public GameObject availableOverlay;
 	public Image cooldownImage;
+	public TextMeshProUGUI typeText;
 	public bool isAvailable = false, isAttack = true, isPlayer = false;
-	public WeaponType weapon = WeaponType.Kinetic;
-	public int power;
-	public float speed, cooldown;
-	float timer = 0, cooldownTime, speedTime;
+	public Combat currentCombat;
+	float timer, speedTime, cooldownTime;
 	
 	void Update()
 	{
@@ -33,9 +33,9 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 				{
 					if (isPlayer)
 					{
-						combatScript.playerAttack(power, weapon);
+						combatScript.playerAttack(currentCombat.power, currentCombat.weaponType);
 					}
-					else combatScript.enemyAttack(power, weapon);
+					else combatScript.enemyAttack(currentCombat.power, currentCombat.weaponType);
 				}
 			}
 		}
@@ -76,15 +76,34 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler {
 		cooldownImage.fillAmount = 0;
 		state = SlotState.Ready;
 		
-		if (newAvailability)
+	}
+	
+	public void SetCombat(Combat newCombat) {
+		currentCombat = newCombat;
+		cooldownTime = 4/Mathf.Pow(1.116f, currentCombat.cooldown-1);
+		speedTime = 2/Mathf.Pow(1.116f, currentCombat.speed-1);
+		if (!isAttack)
 		{
-			cooldownTime = 4/Mathf.Pow(1.116f, cooldown-1);
-			speedTime = 2/Mathf.Pow(1.116f, speed-1);
-			if (!isAttack)
-			{
-				cooldownTime/=2;
-				speedTime/=2;
-			}
+			cooldownTime/=2;
+			speedTime/=2;
+		}
+		switch (currentCombat.weaponType)
+		{
+			case WeaponType.Kinetic:
+				typeText.SetText("K");
+			break;
+			case WeaponType.Missile:
+				typeText.SetText("M");
+			break;
+			case WeaponType.Beam:
+				typeText.SetText("B");
+			break;
+			case WeaponType.Energy:
+				typeText.SetText("E");
+			break;
+			case WeaponType.Hybrid:
+				typeText.SetText("H");
+			break;
 		}
 	}
 	
