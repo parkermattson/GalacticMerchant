@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: MechanicEquipmentStock
   m_EditorClassIdentifier: 
   equipment:
-  - {fileID: 11400000, guid: d919f6dd2ffb6764cbe4ac1cb2a34ed5, type: 2}
-  - {fileID: 11400000, guid: 06f3782a3117a124fb0b43ab48a9dd6a, type: 2}
-  - {fileID: 11400000, guid: 623da2f6327714a4c81c4c62b47f597a, type: 2}
-  - {fileID: 11400000, guid: 40719176ca4025f4c9edc97ee016f393, type: 2}
-  - {fileID: 11400000, guid: 1e7d3d9941c8f01408987c28fc4969b2, type: 2}
+  - {fileID: 11400000, guid: 9d74384ec05741b4a9c804907637855d, type: 2}
+  - {fileID: 11400000, guid: 0017825e49c01b24eab8a99aca5b6344, type: 2}
+  - {fileID: 11400000, guid: b4e622bf0c5d54d468da8783c0129add, type: 2}
+  - {fileID: 11400000, guid: ad207c94097bf0044b6ea8c11a803ea7, type: 2}
+  - {fileID: 11400000, guid: be76bbae62fe21440989d72f5d99c645, type: 2}
   availableChance:
   - 1
   - 0.2
