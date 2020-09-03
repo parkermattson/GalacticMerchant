@@ -15,7 +15,7 @@ public class ShipScreenScript : MonoBehaviour {
 	private Transform equipSlotBox;
 	
 	[SerializeField]
-	private ShipSlot[] commandSlots, combatSlots, sensorSlots, engineSlots;
+	private ShipSlot[] commandSlots = new ShipSlot[4], combatSlots = new ShipSlot[4], sensorSlots = new ShipSlot[4], engineSlots = new ShipSlot[4];
 	
 	EquipSlot[] equipSlots;
 	
@@ -100,10 +100,10 @@ public class ShipScreenScript : MonoBehaviour {
 		float fuelPercent = (float)GameControl.instance.playerShip.currentFuel / (float)GameControl.instance.playerShip.maxFuel;
 		fuelBar.transform.localScale = new Vector3(fuelPercent, 1, 1);
 		cargoText.SetText("Cargo Space: {0} / {1}", Inventory.instance.currentCargo, GameControl.instance.playerShip.maxCargo);
-		fuelText.SetText("Fuel Efficiency: {0} CTU/FC", GameControl.instance.playerShip.GetNetFuelEff());
-		warpRangeText.SetText("Warp Range: {0} CTUs", GameControl.instance.playerShip.GetNetWarpRange());
-		warpSpeedText.SetText("Warp Speed: {0} CTU/h", GameControl.instance.playerShip.GetNetSpeed());
-		sensorRangeText.SetText("Sensor Range: {0} CTUs", GameControl.instance.playerShip.GetNetSensorRange());
-		sensorLevelText.SetText("Sensor Level: {0}", GameControl.instance.playerShip.GetSensorLevel());
+		fuelText.SetText("Fuel Efficiency: {0} CTU/FC", GameControl.instance.playerShip.GetNetFuelEff(true));
+		warpRangeText.SetText("Warp Range: {0} CTUs", GameControl.instance.playerShip.GetNetWarpRange(true));
+		warpSpeedText.SetText("Warp Speed: {0} CTU/h", GameControl.instance.playerShip.GetNetSpeed(true));
+		sensorRangeText.SetText("Sensor Range: {0} CTUs", GameControl.instance.playerShip.GetNetSensorRange(true));
+		sensorLevelText.SetText("Sensor Level: {0}", GameControl.instance.playerShip.GetSensorLevel(true));
 	}
 }

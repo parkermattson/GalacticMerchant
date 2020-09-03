@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//public enum ShipStatBuffs {MaxHull, MaxFuel, MaxCargo, SensorRange, WarpRange, FuelEff, Speed}
+
 [CreateAssetMenu(fileName = "New Ship", menuName = "Inventory/Ship")]
 public class Ship : ScriptableObject {
 
@@ -53,7 +55,7 @@ public class Ship : ScriptableObject {
 		return rawSpeed;
 	}
 	
-	public float GetNetFuelEff() {
+	public float GetNetFuelEff(bool isPlayer) {
 		float engineEff = 0, engineBonus = 0;
 		for (int i = 0; i < engineList.Count; i++)
 		{
@@ -63,11 +65,14 @@ public class Ship : ScriptableObject {
 		{
 			engineBonus += commandList[i].GetBonus(CommandBonus.FuelEff);
 		}
-		float netEff = (rawFuelEff + engineEff) * (1 + GameControl.instance.GetFuelEfficiencyBonus() + engineBonus);
+		if (isPlayer)
+			engineBonus += GameControl.instance.GetFuelEfficiencyBonus();
+		
+		float netEff = (rawFuelEff + engineEff) * (1 + engineBonus);
 		return netEff;
 	}
 	
-	public float GetNetSensorRange() {
+	public float GetNetSensorRange(bool isPlayer) {
 		float sensorRange = 0, sensorBonus = 0;
 		for (int i = 0; i < sensorList.Count; i++)
 		{
@@ -77,20 +82,26 @@ public class Ship : ScriptableObject {
 		{
 			sensorBonus += commandList[i].GetBonus(CommandBonus.SensorRange);
 		}
-		float netRange = (rawSensorRange + sensorRange) * (1 + GameControl.instance.GetSensorRangeBonus() + sensorBonus);
+		if (isPlayer)
+			sensorBonus += GameControl.instance.GetSensorRangeBonus();
+		
+		float netRange = (rawSensorRange + sensorRange) * (1 + sensorBonus);
 		return netRange;
 	}
 	
-	public int GetSensorLevel() {
+	public int GetSensorLevel(bool isPlayer) {
 		int level = 0;
 		for (int i = 0; i < sensorList.Count; i++)
 		{
-			level = Mathf.Max(level, sensorList[i].GetSensorLevel() + GameControl.instance.GetSensorLevelBonus());
+			if (isPlayer)
+				level = Mathf.Max(level, sensorList[i].GetSensorLevel() + GameControl.instance.GetSensorLevelBonus());
+			else
+				level = Mathf.Max(level, sensorList[i].GetSensorLevel());
 		}
 		return level;
 	}
 	
-	public float GetNetWarpRange() {
+	public float GetNetWarpRange(bool isPlayer) {
 		float engineRange = 0, warpBonus = 0;
 		for (int i = 0; i < engineList.Count; i++)
 		{
@@ -100,12 +111,14 @@ public class Ship : ScriptableObject {
 		{
 			warpBonus += commandList[i].GetBonus(CommandBonus.WarpRange);
 		}
+		if (isPlayer)
+			warpBonus += GameControl.instance.GetWarpRangeBonus();
 		
-		float netWarpRange = (rawWarpRange + engineRange) * (1 + GameControl.instance.GetWarpRangeBonus() + warpBonus);
+		float netWarpRange = (rawWarpRange + engineRange) * (1 + warpBonus);
 		return netWarpRange;
 	}
 	
-	public float GetNetSpeed() {
+	public float GetNetSpeed(bool isPlayer) {
 		float engineSpeed = 0, speedBonus = 0;
 		for (int i = 0; i < engineList.Count; i++)
 		{
@@ -115,7 +128,9 @@ public class Ship : ScriptableObject {
 		{
 			speedBonus += commandList[i].GetBonus(CommandBonus.WarpSpeed);
 		}
-		float netSpeed = (rawSpeed + engineSpeed) * (1 + GameControl.instance.GetWarpSpeedBonus() + speedBonus);
+		if (isPlayer)
+			speedBonus += GameControl.instance.GetWarpSpeedBonus();
+		float netSpeed = (rawSpeed + engineSpeed) * (1 + speedBonus);
 		return netSpeed;
 	}
 	

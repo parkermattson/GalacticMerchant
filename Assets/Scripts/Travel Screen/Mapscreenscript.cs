@@ -7,8 +7,8 @@ using TMPro;
 
 public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IScrollHandler {
 	
-	const float BASEFUELDRAIN = 0.1f;
-	const int BASESPEED = 3;
+	public const float BASEFUELDRAIN = 0.1f;
+	public const int BASESPEED = 3;
 	
 
     public Image mapImage, mapShipIcon, warpRangeImage;
@@ -19,26 +19,46 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	Vector3 mouseStart;
 	
 	bool pathTest = true;
-	public GameObject travelLinePrefab;
+	public GameObject travelLinePrefab, locationPrefab, npcSpritePrefab;
 	List<Location> travelPath = new List<Location>();
 	List<GameObject> travelLines = new List<GameObject>();
+	List<NpcSpriteScript> caravansOnMap = new List<NpcSpriteScript>();
 	int nextLocation;
 	
-	public GameObject hullBar, fuelBar, locationPrefab, hoverTooltip, locationTooltip, encounterBox, encounterBox2, combatScreen, selectedLocation = null;
+	public GameObject hullBar, fuelBar,  hoverTooltip, locationTooltip, encounterBox, encounterBox2, combatScreen, selectedLocation = null;
 
     public TextMeshProUGUI cargoText, moneyText, timeText, encounterNameText, encounterDescText, encounterText1, encounterText2, encounterText3 ,encounterText4, encounterSuccessText, encounterOutcomeText, encounterRewardsText;
 	
 	void Awake() {
+		
 		PlaceLocations();
+		foreach (CaravanNpc npc in GameControl.instance.caravans)
+		{
+			GameObject tempLocation;
+			tempLocation = Instantiate(npcSpritePrefab, mapImage.transform);
+			tempLocation.GetComponent<NpcSpriteScript>().Init(npc);
+			caravansOnMap.Add(tempLocation.GetComponent<NpcSpriteScript>());
+		}
+		mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
+		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
+		
+		mapShipIcon.transform.SetAsLastSibling();
+		hoverTooltip.transform.SetAsLastSibling();
+		locationTooltip.transform.SetAsLastSibling();
 	}
 	
     void Update() {
-        if (inTransit && !inEncounter) MoveShip();
+        if (inTransit && !inEncounter) 
+		{
+			MoveShip();
+			foreach (NpcSpriteScript caravan in caravansOnMap)
+			{
+				caravan.TakeTurn();
+			}
+		}
     }
 
 	void OnEnable() {
-		mapShipIcon.transform.localPosition = selectedLocation.transform.localPosition + new Vector3(0, selectedLocation.GetComponent<RectTransform>().sizeDelta.y/2,0);
-		warpRangeImage.transform.localPosition = GameControl.instance.playerLocation.GetMapPos();
 		SetStatusBox();
     }
 	
@@ -57,11 +77,11 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void MoveShip() {
         locationTooltip.SetActive(false);
-        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, travelPath[nextLocation].mapPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed());
+        mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, travelPath[nextLocation].mapPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed(true));
 		GameControl.instance.PassTime(.05f);
 		UpdateLocationColors();
 		SetTimeText();
-		fuelCounter+= BASEFUELDRAIN / GameControl.instance.playerShip.GetNetFuelEff();
+		fuelCounter+= BASEFUELDRAIN / GameControl.instance.playerShip.GetNetFuelEff(true);
 		if (fuelCounter >= 1)
 		{
 			fuelCounter = 0;
@@ -113,10 +133,10 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				{
 					float distance = Vector2.Distance(GameControl.instance.playerLocation.GetMapPos(), GetLocation(selectedLocation).GetMapPos());	
 					
-					locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\nFuel Cost: " + Mathf.CeilToInt(distance * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff())));
+					locationTooltip.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().SetText(GetLocation(selectedLocation).GetName() + "\n" + GetLocation(selectedLocation).GetDescription() + "\nDistance: " + distance + "\nFuel Cost: " + Mathf.CeilToInt(distance * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed(true) * GameControl.instance.playerShip.GetNetFuelEff(true))));
 					if ((int)(distance/50) > GameControl.instance.playerShip.currentFuel)
 						locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
-					else if (distance > GameControl.instance.playerShip.GetNetWarpRange())
+					else if (distance > GameControl.instance.playerShip.GetNetWarpRange(true))
 						locationTooltip.transform.GetComponentInChildren<Button>().interactable = false;
 					else
 						locationTooltip.transform.GetComponentInChildren<Button>().interactable=true;
@@ -125,7 +145,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				} 
 				else
 				{
-					travelPath = GameControl.instance.FindShortestPath(GameControl.instance.playerLocation, GetLocation(newSelected), GameControl.instance.playerShip.GetNetWarpRange());
+					travelPath = GameControl.instance.FindShortestPath(GameControl.instance.playerLocation, GetLocation(newSelected), GameControl.instance.playerShip.GetNetWarpRange(true));
 					nextLocation = 1;
 					if (travelPath != null)
 					{
@@ -135,7 +155,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 						for (int i = 1; i < travelPath.Count; i++)
 						{
 							pathCoords[i] = new Vector3(travelPath[i].mapPosition.x, travelPath[i].mapPosition.y,  0);
-							fuelCost += Vector2.Distance(travelPath[i-1].mapPosition, travelPath[i].mapPosition) * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed() * GameControl.instance.playerShip.GetNetFuelEff());
+							fuelCost += Vector2.Distance(travelPath[i-1].mapPosition, travelPath[i].mapPosition) * BASEFUELDRAIN / (BASESPEED * GameControl.instance.playerShip.GetNetSpeed(true) * GameControl.instance.playerShip.GetNetFuelEff(true));
 							if (i > travelLines.Count)
 								travelLines.Add(Instantiate(travelLinePrefab, mapImage.transform));
 							travelLines[i-1].transform.SetAsFirstSibling();
@@ -242,10 +262,6 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 			if (l == GameControl.instance.playerLocation)
 				selectedLocation = tempLocation;
 		}
-		
-		mapShipIcon.transform.SetAsLastSibling();
-		hoverTooltip.transform.SetAsLastSibling();
-		locationTooltip.transform.SetAsLastSibling();
 	}
 	
 	void UpdateLocationColors() {

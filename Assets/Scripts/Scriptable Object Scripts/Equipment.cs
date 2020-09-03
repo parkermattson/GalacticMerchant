@@ -19,10 +19,7 @@ public class Equipment : Item {
 	
 	public string GetTypeName()
 	{
-		if (equipSlot == EquipmentSlot.Command) return "Command";
-		else if (equipSlot == EquipmentSlot.Combat) return "Combat";
-		else if (equipSlot == EquipmentSlot.Sensors) return "Sensors";
-		else return "Engine";
+		return equipSlot.ToString();
 	}
 }
 

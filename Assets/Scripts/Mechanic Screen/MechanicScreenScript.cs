@@ -169,11 +169,11 @@ public class MechanicScreenScript : MonoBehaviour {
 	}
 	
 	void SetEffText() {
-		fuelText.SetText("{0:1}", displayShip.GetNetFuelEff());
+		fuelText.SetText("{0:1}", displayShip.GetNetFuelEff(true));
 	}
 	
 	void SetSpeedText() {
-		speedText.SetText("{0:1}", displayShip.GetNetSpeed());
+		speedText.SetText("{0:1}", displayShip.GetNetSpeed(true));
 	}
 	
 	void SetPriceText() {

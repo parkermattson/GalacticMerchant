@@ -18,13 +18,14 @@ public class GameControl : MonoBehaviour {
 	public string playerName;
 	public int playerMoney, playerRace, playerAvatar;
 	public int[] activeStats = {1,1,1,1};
-	public Crew[] crewMembs, assignedCrew;
+	public Crew[] crewMembs = new Crew[4], assignedCrew = new Crew[4];
     public Ship playerShip, defaultShip;
     public Location playerLocation;
 	public DateTime gameTime = new DateTime(3000, 1, 1, 9, 0, 0), lastHour = new DateTime(3000, 1, 1, 9, 0, 0), lastWeek = new DateTime(3000, 1, 1, 9, 0, 0);
 	public List<Station> initStations, stations;
 	public List<Mission> acceptedMissions;
 	public List<Location> initLocations, locations;
+	public List<CaravanNpc> initCaravans, caravans= new List<CaravanNpc>();
 	
 	public Sprite[] avatars;
 	public Sprite[] races;
@@ -54,6 +55,11 @@ public class GameControl : MonoBehaviour {
 		{
 			locations.Add(Instantiate(l));
 			locations.Last().RefreshType();
+		}
+		
+		foreach (CaravanNpc npc in initCaravans)
+		{
+			caravans.Add(Instantiate(npc));
 		}
 		
 		playerShip = Instantiate(defaultShip);
@@ -102,6 +108,7 @@ public class GameControl : MonoBehaviour {
 		saveData.items = inventory.items;
 		saveData.equipments = inventory.equipments;
 		saveData.stations = stations;
+		saveData.caravans = caravans;
 		
 		bf.Serialize(file, saveData);
 		file.Close();
@@ -130,6 +137,7 @@ public class GameControl : MonoBehaviour {
 				inventory.items = loadData.items;
 				inventory.equipments = loadData.equipments;
 				stations = loadData.stations;
+				caravans = loadData.caravans;
 			
 		}
 	}
@@ -399,5 +407,6 @@ public class GameControl : MonoBehaviour {
 		public List<ItemStack> items;
 		public List<Equipment> equipments;
 		public List<Station> stations;
+		public List<CaravanNpc> caravans;
 	}
 }
