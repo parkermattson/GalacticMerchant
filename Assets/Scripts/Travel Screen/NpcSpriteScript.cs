@@ -24,7 +24,13 @@ public class NpcSpriteScript : MonoBehaviour {
 	
 	public void TakeTurn()
 	{
-		spriteNpc.MovementAI();
+		if (spriteNpc.MovementAI())
+		{
+			Mapscreenscript.instance.caravansOnMap.Remove(this);
+			GameControl.instance.caravans.Remove((CaravanNpc)spriteNpc);
+			Destroy(spriteNpc);
+			Destroy(gameObject);
+		}
 		transform.localPosition = spriteNpc.currentCoordinates;
 	}
 }

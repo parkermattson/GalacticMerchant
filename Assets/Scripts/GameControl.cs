@@ -153,6 +153,11 @@ public class GameControl : MonoBehaviour {
 				l.RefreshType();
 			}
 			
+			foreach (Station s in stations)
+			{
+				s.RefreshStation();
+			}
+			
 			lastHour = gameTime;
 		}
 		

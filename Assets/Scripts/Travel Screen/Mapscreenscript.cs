@@ -7,6 +7,7 @@ using TMPro;
 
 public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IScrollHandler {
 	
+	public static Mapscreenscript instance;
 	public const float BASEFUELDRAIN = 0.1f;
 	public const int BASESPEED = 3;
 	
@@ -14,15 +15,14 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public Image mapImage, mapShipIcon, warpRangeImage;
 	public List<RandomEncounter> encountersStation, encountersEmpty, encountersAnomaly, encountersTransmission, encountersDistress, encountersConflict, encountersNatural;
 	RandomEncounter currentEncounter = null;
-	bool inTransit = false, encounterCombatTrigger = false, inEncounter = false;
+	bool inTransit = false, encounterCombatTrigger = false, inEncounter = false, pathTest = true;
 	float fuelCounter = 1;
 	Vector3 mouseStart;
-	
-	bool pathTest = true;
 	public GameObject travelLinePrefab, locationPrefab, npcSpritePrefab;
 	List<Location> travelPath = new List<Location>();
 	List<GameObject> travelLines = new List<GameObject>();
-	List<NpcSpriteScript> caravansOnMap = new List<NpcSpriteScript>();
+	public List<NpcSpriteScript> caravansOnMap = new List<NpcSpriteScript>();
+	public List<Ship> shipsForCaravans;
 	int nextLocation;
 	
 	public GameObject hullBar, fuelBar,  hoverTooltip, locationTooltip, encounterBox, encounterBox2, combatScreen, selectedLocation = null;
@@ -30,7 +30,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public TextMeshProUGUI cargoText, moneyText, timeText, encounterNameText, encounterDescText, encounterText1, encounterText2, encounterText3 ,encounterText4, encounterSuccessText, encounterOutcomeText, encounterRewardsText;
 	
 	void Awake() {
-		
+		instance = this;
 		PlaceLocations();
 		foreach (CaravanNpc npc in GameControl.instance.caravans)
 		{
@@ -79,6 +79,10 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         locationTooltip.SetActive(false);
         mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, travelPath[nextLocation].mapPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed(true));
 		GameControl.instance.PassTime(.05f);
+		foreach (NpcSpriteScript caravanSprite in caravansOnMap)
+		{
+			caravanSprite.TakeTurn();
+		}
 		UpdateLocationColors();
 		SetTimeText();
 		fuelCounter+= BASEFUELDRAIN / GameControl.instance.playerShip.GetNetFuelEff(true);
@@ -297,7 +301,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	}
 	
 	void RollEncounter(Location loc) {
-		
+		/*
 		float rng = UnityEngine.Random.value;
 		
 		switch (loc.locationType)
@@ -359,6 +363,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 		}
+		*/
 	}
 	
 	public void ChooseEncounter(int choice) {
@@ -433,6 +438,15 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
 	public void SetInEncounter(bool newState) {
 		inEncounter = newState;
+	}
+	
+	public void CreateNewCaravan(NpcFaction caravanFaction, int caravanMoney, Station startStation, Station endStation, List<ItemStack> buyList, List<ItemStack> sellList) {
+		GameObject tempCaravan = Instantiate(npcSpritePrefab, mapImage.transform);
+		CaravanNpc tempNpc = CaravanNpc.CreateInstance<CaravanNpc>();
+		tempNpc.Init(caravanFaction, caravanMoney, shipsForCaravans[0], startStation, endStation, buyList, sellList);
+		tempCaravan.GetComponent<NpcSpriteScript>().Init(tempNpc);
+		caravansOnMap.Add(tempCaravan.GetComponent<NpcSpriteScript>());
+		GameControl.instance.caravans.Add(tempNpc);
 	}
 	
     public void SetStatusBox() {

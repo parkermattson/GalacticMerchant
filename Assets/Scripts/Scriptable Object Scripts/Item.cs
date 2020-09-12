@@ -47,6 +47,14 @@ public class Item : ScriptableObject {
 		return itemWeight;
 	}
 	
+	public int GetQuantFromList(List<ItemStack> itemList)
+	{
+		int index = itemList.FindIndex(x => x.GetItem() == this);
+		if (index != -1)
+			return itemList[index].GetQuantity();
+		else return 0;
+	}
+	
 	public float CalculatePrice(int quantity, int startQuantity)
 	{
 		int newPriceRange = Mathf.CeilToInt(itemValue *.5f);
@@ -62,5 +70,5 @@ public class Item : ScriptableObject {
 		
 		float price = (priceB-priceA)/(float)quantity;
 		return price;
-	} 
+	}
 }

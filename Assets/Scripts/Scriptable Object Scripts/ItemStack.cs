@@ -6,8 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New ItemStack", menuName = "Inventory/ItemStack")]
 public class ItemStack : ScriptableObject {
 
-	Item item;
-	int quantity;
+	public Item item;
+	public int quantity;
 	
 	public Item GetItem()
 	{

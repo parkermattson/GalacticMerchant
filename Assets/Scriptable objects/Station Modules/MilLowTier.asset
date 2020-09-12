@@ -11,17 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: MilLowTier
   m_EditorClassIdentifier: 
-  initLevel: 0
+  initLevel: 1
+  moduleLevel: 1
   moneyBase: -14500
-  moneyInc: -1450
   drainItems:
   - {fileID: 11400000, guid: 952aa6ffd089f404a985caa52aa95f0c, type: 2}
   - {fileID: 11400000, guid: 7e858ad1034af604db87c59246827a22, type: 2}
   gainItems:
   - {fileID: 11400000, guid: 30ffa0c0b87090b47a22c547b55f5629, type: 2}
   drainBase: 6400000014000000
-  drainInc: 0a00000002000000
   gainBase: f4010000
-  gainInc: 32000000
-  eqBase: d0070000
-  eqInc: c8000000

@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: RawMatsLowTier
   m_EditorClassIdentifier: 
-  initLevel: 0
+  initLevel: 1
+  moduleLevel: 1
   moneyBase: -1700
-  moneyInc: -170
   drainItems:
   - {fileID: 11400000, guid: 6478c21bdb04b394fa883ac5ec2af684, type: 2}
   - {fileID: 11400000, guid: 4ef05eded9983cd4091a8271dfaf1c3b, type: 2}
@@ -22,8 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d6d7dcc586e73bb458694939f2d1de91, type: 2}
   - {fileID: 11400000, guid: c95ffe90d54aab44dabcb7504a55bf4c, type: 2}
   drainBase: 640000000a000000
-  drainInc: 0a00000001000000
   gainBase: e80300008403000020030000
-  gainInc: 640000005a00000050000000
-  eqBase: 8813000094110000a00f0000
-  eqInc: 26020000f4010000c2010000

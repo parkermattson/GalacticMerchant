@@ -6807,6 +6807,9 @@ MonoBehaviour:
     type: 2}
   npcSpritePrefab: {fileID: 1122708908563764, guid: 73ce0d52287833a468ed59526e6bbd85,
     type: 2}
+  caravansOnMap: []
+  shipsForCaravans:
+  - {fileID: 11400000, guid: eca5bedb494c11d49ae25ca2844c1cd6, type: 2}
   hullBar: {fileID: 1801211268}
   fuelBar: {fileID: 1377673010}
   hoverTooltip: {fileID: 492863001}
@@ -13091,9 +13094,9 @@ MonoBehaviour:
   activeStats: 01000000010000000100000001000000
   crewMembs:
   - {fileID: 0}
-  - {fileID: 11400000, guid: 27da841ba5b3b7042a8aa0800ad044b4, type: 2}
-  - {fileID: 11400000, guid: 848cc93f824030343991214b68ccd906, type: 2}
-  - {fileID: 11400000, guid: 4df98c0842eeeef40a9acde7ce07c319, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   assignedCrew:
   - {fileID: 0}
   - {fileID: 0}
@@ -13149,10 +13152,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f0d1789351e01a5458a08144d418c2e4, type: 2}
   - {fileID: 11400000, guid: e4bdb4a499432744aa13feb99b396fce, type: 2}
   locations: []
-  initCaravans:
-  - {fileID: 11400000, guid: a53d888b394c7824e830d76804b28ae3, type: 2}
-  - {fileID: 11400000, guid: 191182cb5ac179a49bbda46961525eed, type: 2}
-  - {fileID: 11400000, guid: 72200a71a9dbb2b409eda9eae9e7973f, type: 2}
+  initCaravans: []
   caravans: []
   avatars:
   - {fileID: 21300000, guid: 78039e0c301f55b4da5b06c05f2fb1b6, type: 3}

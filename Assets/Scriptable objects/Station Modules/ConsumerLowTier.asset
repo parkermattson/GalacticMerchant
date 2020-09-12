@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: ConsumerLowTier
   m_EditorClassIdentifier: 
-  initLevel: 0
+  initLevel: 1
+  moduleLevel: 1
   moneyBase: -10150
-  moneyInc: -1015
   drainItems:
   - {fileID: 11400000, guid: f897050b35b45b84492344f8d7e13857, type: 2}
   - {fileID: 11400000, guid: 86f4d3ef8e5a2554980b3e3fb8f050e1, type: 2}
@@ -24,8 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
   - {fileID: 11400000, guid: 2cf43bc5f0538ca4facdf7ad3d8aa642, type: 2}
   drainBase: 64000000c8000000640000002c010000
-  drainInc: 0a000000140000000a0000001e000000
   gainBase: 640000006400000032000000
-  gainInc: 0a0000000a00000005000000
-  eqBase: f4010000dc050000b80b0000
-  eqInc: 32000000960000002c010000

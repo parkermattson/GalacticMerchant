@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: RefLowTier
   m_EditorClassIdentifier: 
-  initLevel: 0
+  initLevel: 1
+  moduleLevel: 1
   moneyBase: -16980
-  moneyInc: -1698
   drainItems:
   - {fileID: 11400000, guid: 0fe653fcf9eb4a149a44d7209203c080, type: 2}
   - {fileID: 11400000, guid: d6d7dcc586e73bb458694939f2d1de91, type: 2}
@@ -25,8 +25,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5629ae2d382d5944eaf291b2c5202a7b, type: 2}
   - {fileID: 11400000, guid: 16bd0e942e95491499df897e686a2378, type: 2}
   drainBase: b0040000e8030000580200008c000000
-  drainInc: 78000000640000003c0000000e000000
   gainBase: 84030000ee020000f401000028000000
-  gainInc: 64000000500000003200000004000000
-  eqBase: 88130000a00f0000c4090000e2040000
-  eqInc: f401000090010000fa0000007d000000

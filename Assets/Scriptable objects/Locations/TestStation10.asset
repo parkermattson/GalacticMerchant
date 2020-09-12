@@ -22,11 +22,14 @@ MonoBehaviour:
   initCrewPool: {fileID: 11400000, guid: 9ac8ecfa595877143812805a48f4d8e8, type: 2}
   crewPool: {fileID: 0}
   race: 0
+  faction: 0
   initFactories: []
   factories: []
   marketInv: []
+  gains: []
+  drains: []
   stationMoney: 250000
   modules:
-  - {fileID: 11400000, guid: 7171f2974bd75f941aeaf14d770f07b4, type: 2}
-  - {fileID: 11400000, guid: 3194dbb67be91c744aaa782d7c559ca0, type: 2}
   - {fileID: 11400000, guid: e12a2fa37e713b94fa0877febb5a1f9b, type: 2}
+  - {fileID: 11400000, guid: 3194dbb67be91c744aaa782d7c559ca0, type: 2}
+  stationCaravans: []

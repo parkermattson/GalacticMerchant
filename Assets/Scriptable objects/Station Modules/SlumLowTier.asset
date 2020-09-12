@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: SlumLowTier
   m_EditorClassIdentifier: 
-  initLevel: 0
+  initLevel: 1
+  moduleLevel: 1
   moneyBase: -14500
-  moneyInc: -1450
   drainItems:
   - {fileID: 11400000, guid: 877770a1799e483488887a2272dd74ce, type: 2}
   - {fileID: 11400000, guid: 18baf29d95ba5f942805725208f05556, type: 2}
@@ -26,8 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f897050b35b45b84492344f8d7e13857, type: 2}
   - {fileID: 11400000, guid: 86f4d3ef8e5a2554980b3e3fb8f050e1, type: 2}
   drainBase: 68010000960000002c010000580200002c010000
-  drainInc: 240000000f0000001e0000003c0000001e000000
   gainBase: 64000000140000006400000096000000
-  gainInc: 0a000000020000000a0000000f000000
-  eqBase: f4010000fa000000f4010000ee020000
-  eqInc: 3200000019000000320000004b000000

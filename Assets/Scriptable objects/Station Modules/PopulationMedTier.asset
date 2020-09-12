@@ -11,15 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: PopulationMedTier
   m_EditorClassIdentifier: 
-  initLevel: 0
+  initLevel: 1
+  moduleLevel: 1
   moneyBase: -5500
-  moneyInc: -500
   drainItems:
   - {fileID: 11400000, guid: ab22b8ce1d0492341817dde008cccde6, type: 2}
   gainItems: []
   drainBase: 64000000
-  drainInc: 0a000000
   gainBase: 
-  gainInc: 
-  eqBase: 2c010000
-  eqInc: 21000000

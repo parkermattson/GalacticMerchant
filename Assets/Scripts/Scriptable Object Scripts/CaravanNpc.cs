@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Caravan", menuName = "NPCs/Caravan")]
 public class CaravanNpc : Npc {
-	
+	/*
 	List<Station> route = new List<Station>();
 	public List<int> routeStationNums;
 	int routePosition = 0;
@@ -17,9 +16,29 @@ public class CaravanNpc : Npc {
 		}
 		currentLocation = route[0];
 		currentCoordinates = currentLocation.mapPosition;
+	}*/
+	
+	public Station startStation, endStation;
+	public List<ItemStack> buying = new List<ItemStack>(), selling = new List<ItemStack>();
+	bool reachedEnd = false;
+	
+	public CaravanNpc Init(NpcFaction newNpcFaction, int newMoney, Ship newNpcShip, Station newStartStation, Station newEndStation, List<ItemStack> buyList, List<ItemStack> sellList) {
+		//Generate Name Here
+		npcType = NpcType.Caravan;
+		faction = newNpcFaction;
+		npcShip = newNpcShip;
+		npcMoney = newMoney;
+		startStation = newStartStation;
+		endStation = newEndStation;
+		buying = buyList;
+		selling = sellList;
+		
+		currentCoordinates = startStation.mapPosition;
+		currentLocation = startStation;
+		return this;
 	}
 	
-	public override void MovementAI() {
+	public override bool MovementAI() {
 		if (moveState == MoveState.Waiting)
 		{
 			if (waitTimer > 0)
@@ -28,14 +47,6 @@ public class CaravanNpc : Npc {
 			}
 			else 
 			{
-				waitTimer = 1440;
-				if (currentLocation == route[routePosition])
-				{
-					TradeAtStation();
-					if (routePosition < route.Count)
-						routePosition++;
-					else routePosition = 0;
-				}
 				FindNextDestination();
 				moveState = MoveState.Moving;
 			}
@@ -46,10 +57,20 @@ public class CaravanNpc : Npc {
 			{
 				currentCoordinates = destination.mapPosition;
 				currentLocation = destination;
-				if (currentLocation == route[routePosition])
+				if (currentLocation == endStation)
 				{
 					TradeAtStation();
-				}
+					reachedEnd = true;
+					waitTimer = 1440;
+				} else if (currentLocation == startStation && reachedEnd == true)
+				{
+					foreach (ItemStack stack in cargo)
+					{
+						stack.AddToList(startStation.marketInv);
+					}
+					startStation.stationMoney += npcMoney;
+					return true;
+				} else waitTimer = 60;
 				moveState = MoveState.Waiting;
 			}
 			else
@@ -57,15 +78,18 @@ public class CaravanNpc : Npc {
 				currentCoordinates = Vector2.MoveTowards(currentCoordinates, destination.mapPosition, Mapscreenscript.BASESPEED * npcShip.GetNetSpeed(false));
 			}
 		}
+		return false;
 		
 	}
 	
 	public override void FindNextDestination() {
-		destination = GameControl.instance.FindShortestPath(currentLocation, (Location)route[routePosition], npcShip.GetNetWarpRange(false))[1];
+		if (!reachedEnd)
+			destination = GameControl.instance.FindShortestPath(currentLocation, (Location)endStation, npcShip.GetNetWarpRange(false))[1];
+		else destination = GameControl.instance.FindShortestPath(currentLocation, (Location)startStation, npcShip.GetNetWarpRange(false))[1];
 	}
 	
 	void TradeAtStation(){
-		Debug.Log(npcName + " is trading at " + currentLocation.GetName());
+		Debug.Log("Caravan is trading at " + currentLocation.GetName());
 	}
 	
 }

@@ -11,17 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b9d08a40f5744f8e65fe19eec82ec, type: 3}
   m_Name: SupplierAgriLowTier
   m_EditorClassIdentifier: 
-  initLevel: 5
+  initLevel: 1
+  moduleLevel: 1
   moneyBase: 2600
-  moneyInc: 260
   drainItems: []
   gainItems:
   - {fileID: 11400000, guid: fc3639da09bd62743b551f7f914b0707, type: 2}
   - {fileID: 11400000, guid: 587d4db674abbd547adb5736f78bf9c9, type: 2}
   - {fileID: 11400000, guid: 7a00eac79d99bdf44b0d83cd2b218ee5, type: 2}
   drainBase: 
-  drainInc: 
   gainBase: 960000003200000064000000
-  gainInc: 140000000a0000000a000000
-  eqBase: e8030000f4010000e8030000
-  eqInc: 640000003200000064000000

@@ -6,14 +6,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57daac6f0a08adf4c8967704f2e84e79, type: 3}
   m_Name: TestCaravan3
   m_EditorClassIdentifier: 
   moveState: 0
   npcName: Test Caravan 1
-  npcDesc: Description
   npcType: 0
   faction: 1
   npcShip: {fileID: 11400000, guid: eca5bedb494c11d49ae25ca2844c1cd6, type: 2}
@@ -23,5 +22,8 @@ MonoBehaviour:
   currentCoordinates: {x: 0, y: 750}
   destination: {fileID: 0}
   currentLocation: {fileID: 0}
-  routeStationNums: 05000000090000000200000003000000
-  routePosition: 0
+  npcImage: {fileID: 0}
+  startStation: {fileID: 0}
+  endStation: {fileID: 0}
+  buying: []
+  selling: []

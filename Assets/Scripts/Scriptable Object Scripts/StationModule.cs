@@ -7,21 +7,20 @@ using UnityEngine;
 public class StationModule : ScriptableObject {
 
 	public float initLevel = 1f;
-	float moduleLevel = 1f;
+	public float moduleLevel = 1f;
 	public int moneyBase;
 	public List<Item> drainItems, gainItems;
 	public List<int> drainBase, gainBase;
 	
-	public void Init()
-	{
+	public void Init() {
 		moduleLevel = initLevel;
 	}
 
-	public void Refresh(Station station)
-	{		
+	public bool Refresh(Station station) {		
 		bool enoughRes = true;
 		int moneyNeeded = (int)(moneyBase * (1 + (int)moduleLevel*.1f));
 		int productValue = 0, productCost = 0;
+		float oldLevel = moduleLevel;
 		ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
 		for (int i =0; i < drainItems.Count; i++)
 		{
@@ -91,7 +90,13 @@ public class StationModule : ScriptableObject {
 				moduleLevel -=.25f;
 		}
 		
-		Debug.Log("Module Level " + moduleLevel.ToString());
+		//Debug.Log("Module Level " + moduleLevel.ToString());
+		
+		if (Mathf.Floor(moduleLevel) - Mathf.Floor(oldLevel) != 0)
+			return true;
+		
+		return false;
+		
 	}
 	
 	
