@@ -9,7 +9,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	
 	public static Mapscreenscript instance;
 	public const float BASEFUELDRAIN = 0.1f;
-	public const int BASESPEED = 3;
+	public const int BASESPEED = 2;
 	
 
     public Image mapImage, mapShipIcon, warpRangeImage;
@@ -51,9 +51,9 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (inTransit && !inEncounter) 
 		{
 			MoveShip();
-			foreach (NpcSpriteScript caravan in caravansOnMap)
+			for (int i = caravansOnMap.Count - 1; i >= 0; i--)
 			{
-				caravan.TakeTurn();
+				caravansOnMap[i].TakeTurn();
 			}
 		}
     }
@@ -79,10 +79,6 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         locationTooltip.SetActive(false);
         mapShipIcon.transform.localPosition = Vector2.MoveTowards(mapShipIcon.transform.localPosition, travelPath[nextLocation].mapPosition, BASESPEED * GameControl.instance.playerShip.GetNetSpeed(true));
 		GameControl.instance.PassTime(.05f);
-		foreach (NpcSpriteScript caravanSprite in caravansOnMap)
-		{
-			caravanSprite.TakeTurn();
-		}
 		UpdateLocationColors();
 		SetTimeText();
 		fuelCounter+= BASEFUELDRAIN / GameControl.instance.playerShip.GetNetFuelEff(true);

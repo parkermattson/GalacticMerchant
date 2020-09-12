@@ -53,7 +53,7 @@ public class Station : Location {
 			for (int i = 0; i < m.drainItems.Count; i++)
 			{
 				ItemStack tempStack = ItemStack.CreateInstance<ItemStack>();
-				tempStack.Init(m.drainItems[i], Mathf.CeilToInt(m.drainBase[i]*(1+3* UnityEngine.Random.value)));
+				tempStack.Init(m.drainItems[i], Mathf.CeilToInt(m.drainBase[i]*(3+7* UnityEngine.Random.value)));
 				tempStack.AddToList(marketInv);
 				priceTable.AddDrain(m.drainItems[i]);
 				tempStack = ItemStack.CreateInstance<ItemStack>();
@@ -63,7 +63,7 @@ public class Station : Location {
 			for (int i = 0; i < m.gainItems.Count; i++)
 			{
 				ItemStack tempStack = ItemStack.CreateInstance<ItemStack>();
-				tempStack.Init(m.gainItems[i], Mathf.CeilToInt(m.gainBase[i]*(1+5* UnityEngine.Random.value)));
+				tempStack.Init(m.gainItems[i], Mathf.CeilToInt(m.gainBase[i]*(3+7* UnityEngine.Random.value)));
 				tempStack.AddToList(marketInv);
 				priceTable.AddGain(m.gainItems[i]);
 				tempStack = ItemStack.CreateInstance<ItemStack>();
@@ -87,7 +87,7 @@ public class Station : Location {
 			f.Refresh(deltaTime);
 		}
 		
-		//if (deltaTime/24 >= 1)
+		if (deltaTime/24 >= 1)
 		{
 			foreach (StationModule m in modules)
 			{
@@ -135,7 +135,7 @@ public class Station : Location {
 		
 		if (needCaravan)
 		{
-			Debug.Log(locationName + " needs a caravan");
+			//Debug.Log(locationName + " needs a caravan");
 			MakeCaravans(neededItems);
 		}
 		

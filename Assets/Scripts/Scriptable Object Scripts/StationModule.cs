@@ -27,7 +27,7 @@ public class StationModule : ScriptableObject {
 			tempStack.Init(drainItems[i], (int)(drainBase[i] * (1+(int)moduleLevel*.1f)));
 			if (!tempStack.FindInList(station.marketInv))
 			{
-				Debug.Log("Not enough of " + drainItems[i].GetName());
+				//Debug.Log("Not enough of " + drainItems[i].GetName());
 				enoughRes = false;
 			} //else Debug.Log("Enough of " + drainItems[i].GetName());
 			

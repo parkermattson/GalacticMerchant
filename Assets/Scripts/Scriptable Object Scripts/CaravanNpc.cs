@@ -59,7 +59,7 @@ public class CaravanNpc : Npc {
 				currentLocation = destination;
 				if (currentLocation == endStation)
 				{
-					TradeAtStation();
+					TradeAtStation(endStation);
 					reachedEnd = true;
 					waitTimer = 1440;
 				} else if (currentLocation == startStation && reachedEnd == true)
@@ -67,6 +67,7 @@ public class CaravanNpc : Npc {
 					foreach (ItemStack stack in cargo)
 					{
 						stack.AddToList(startStation.marketInv);
+						Debug.Log("Adding " + stack.GetItem().GetName() + " to " + startStation.GetName());
 					}
 					startStation.stationMoney += npcMoney;
 					return true;
@@ -88,8 +89,33 @@ public class CaravanNpc : Npc {
 		else destination = GameControl.instance.FindShortestPath(currentLocation, (Location)startStation, npcShip.GetNetWarpRange(false))[1];
 	}
 	
-	void TradeAtStation(){
-		Debug.Log("Caravan is trading at " + currentLocation.GetName());
+	void TradeAtStation(Station station){
+		foreach (ItemStack buy in buying) 
+		{
+			int index = station.marketInv.FindIndex(x => x.GetItem() == buy.GetItem());
+			if (index != -1 && station.marketInv[index].GetPrice(-1) < buy.GetItem().GetValue())
+			{
+				int buyQuant = Mathf.Min(buy.GetQuantity(), station.marketInv[index].GetQuantity())/2;
+				while ((station.marketInv[index].GetPrice(-buyQuant) < buy.GetItem().GetValue()*.95 && station.marketInv[index].GetPrice(-buyQuant) > buy.GetItem().GetValue()) || (station.marketInv[index].GetPrice(-buyQuant)*buyQuant < npcMoney && station.marketInv[index].GetPrice(-buyQuant)*buyQuant > npcMoney*.9))
+				{
+					if (station.marketInv[index].GetPrice(-buyQuant) > buy.GetItem().GetValue() || station.marketInv[index].GetPrice(-buyQuant)*buyQuant > npcMoney)
+					{
+						buyQuant/=2;
+					} else if (station.marketInv[index].GetPrice(-buyQuant) < buy.GetItem().GetValue()*.95)
+					{
+						buyQuant=(int)(buyQuant*1.5);
+					}
+				}
+				int price = Mathf.CeilToInt(station.marketInv[index].GetPrice(-buyQuant));
+				buy.quantity = buyQuant;
+				buy.RemoveFromList(station.marketInv);
+				buy.AddToList(cargo);
+				station.stationMoney += price;
+				npcMoney -= price;
+				
+				Debug.Log("Caravan traded " + buy.GetQuantity() + " " + buy.GetItem().GetName() + " at " + station.GetName());
+			}
+		}
 	}
 	
 }

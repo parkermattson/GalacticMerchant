@@ -39,9 +39,10 @@ public class ItemStack : ScriptableObject {
 	
 	public void AddToList(List<ItemStack> itemList)
 	{
-		if (itemList.Exists(x => x.GetItem() == item))
+		int index = itemList.FindIndex(x => x.GetItem() == item);
+		if (index != -1)
 		{
-			itemList.Find(x => x.GetItem() == item).AddQuantity(quantity);
+			itemList[index].AddQuantity(quantity);
 		}
 		else {
 			ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
