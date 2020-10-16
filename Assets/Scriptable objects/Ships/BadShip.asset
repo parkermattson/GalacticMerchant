@@ -15,8 +15,8 @@ MonoBehaviour:
   shipDesc: Ship description
   graphic: {fileID: 21300000, guid: d5d434a759b9c074c80253e0d963296f, type: 3}
   price: 1000
-  maxHull: 5
-  currentHull: 5
+  maxHull: 10
+  currentHull: 10
   maxFuel: 100
   currentFuel: 100
   maxCargo: 1000
@@ -33,3 +33,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad207c94097bf0044b6ea8c11a803ea7, type: 2}
   combatList:
   - {fileID: 11400000, guid: 9d74384ec05741b4a9c804907637855d, type: 2}
+  - {fileID: 11400000, guid: 0017825e49c01b24eab8a99aca5b6344, type: 2}
+  - {fileID: 11400000, guid: a731082dd1336454882807006f745d4b, type: 2}
+  - {fileID: 11400000, guid: 724bd9099c28f61489c95298763925b5, type: 2}
+  - {fileID: 11400000, guid: 7d8607e7407710344b2c389fefd78f88, type: 2}
+  - {fileID: 11400000, guid: 50f543979632e0b45af69bc771d3d6c3, type: 2}

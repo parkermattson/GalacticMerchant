@@ -134,6 +134,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &939698
 RectTransform:
   m_ObjectHideFlags: 0
@@ -393,7 +399,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: H
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2005,7 +2011,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: E
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2164,7 +2170,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: M
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4147,7 +4153,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: H
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5420,7 +5426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &161150494
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5495,6 +5501,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0017825e49c01b24eab8a99aca5b6344, type: 2}
   lootList:
   - {fileID: 11400000, guid: 97faef51b92892f47a86f3f83a1a1c8a, type: 2}
+  aiState: 0
 --- !u!1 &161909436
 GameObject:
   m_ObjectHideFlags: 0
@@ -5599,6 +5606,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1 &172277920
 GameObject:
   m_ObjectHideFlags: 0
@@ -5725,7 +5738,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: M
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10325,6 +10338,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &327264295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11319,6 +11338,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &377087786
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11893,6 +11918,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1 &392063380
 GameObject:
   m_ObjectHideFlags: 0
@@ -12396,12 +12427,12 @@ Prefab:
     - target: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 444.23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 100.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224691788689278556, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -12456,17 +12487,17 @@ Prefab:
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 444.23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50.215
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 100.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -12476,7 +12507,7 @@ Prefab:
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -12486,7 +12517,7 @@ Prefab:
     - target: {fileID: 224307865624724596, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114973002268911446, guid: b0e05aa444b211c429a3d619abcdc033,
         type: 2}
@@ -14344,7 +14375,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: E
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16507,6 +16538,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &547699821
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18825,6 +18862,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1 &635011655
 GameObject:
   m_ObjectHideFlags: 0
@@ -20564,6 +20607,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1 &680803172
 GameObject:
   m_ObjectHideFlags: 0
@@ -22388,6 +22437,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &733332485
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25127,6 +25182,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1 &828524789
 GameObject:
   m_ObjectHideFlags: 0
@@ -25452,6 +25513,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1001 &837578588
 Prefab:
   m_ObjectHideFlags: 0
@@ -27613,7 +27680,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: E
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -27772,7 +27839,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: L
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -31038,7 +31105,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: M
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -31197,7 +31264,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: L
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -31356,7 +31423,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: K
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -31650,7 +31717,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: H
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -35240,6 +35307,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &1112274655
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37401,7 +37474,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: K
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37855,7 +37928,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: H
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -39889,6 +39962,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &1274501276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41713,6 +41792,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &1331817964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41862,7 +41947,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: M
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -44693,7 +44778,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: E
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -44899,6 +44984,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &1443513875
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45505,7 +45596,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: L
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -48471,6 +48562,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &1524183980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52724,7 +52821,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: K
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -56108,6 +56205,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1 &1801211268
 GameObject:
   m_ObjectHideFlags: 0
@@ -57448,7 +57551,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: L
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -58519,7 +58622,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: K
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -60534,6 +60637,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 1
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!1 &1989757019
 GameObject:
   m_ObjectHideFlags: 0
@@ -60844,6 +60953,12 @@ MonoBehaviour:
   isAttack: 1
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &1991587397
 RectTransform:
   m_ObjectHideFlags: 0
@@ -63141,6 +63256,12 @@ MonoBehaviour:
   isAttack: 0
   isPlayer: 0
   currentCombat: {fileID: 0}
+  timer: 0
+  timerMax: 2
+  speedMult: 1
+  cooldownMult: 1
+  enemyDelay: 0
+  mouseDown: 0
 --- !u!224 &2071459148
 RectTransform:
   m_ObjectHideFlags: 0

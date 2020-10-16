@@ -23,8 +23,12 @@ MonoBehaviour:
   medianQuant: 0
   quantityRange: 0
   equipSlot: 1
-  isWeapon: 1
   weaponType: 1
-  power: 2
-  speed: 2
-  cooldown: 2
+  combatType: 0
+  boostTypes: 
+  chargeType: 0
+  shieldTypes: 
+  boostAmt: 
+  power: 1
+  speed: 1
+  cooldown: 1

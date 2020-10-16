@@ -95,16 +95,18 @@ public class CaravanNpc : Npc {
 			int index = station.marketInv.FindIndex(x => x.GetItem() == buy.GetItem());
 			if (index != -1 && station.marketInv[index].GetPrice(-1) < buy.GetItem().GetValue())
 			{
-				int buyQuant = Mathf.Min(buy.GetQuantity(), station.marketInv[index].GetQuantity())/2;
+				int buyQuant = Mathf.Min(buy.GetQuantity(), station.marketInv[index].GetQuantity());
+				float addQuant = buyQuant/2;
 				while ((station.marketInv[index].GetPrice(-buyQuant) < buy.GetItem().GetValue()*.95 && station.marketInv[index].GetPrice(-buyQuant) > buy.GetItem().GetValue()) || (station.marketInv[index].GetPrice(-buyQuant)*buyQuant < npcMoney && station.marketInv[index].GetPrice(-buyQuant)*buyQuant > npcMoney*.9))
 				{
 					if (station.marketInv[index].GetPrice(-buyQuant) > buy.GetItem().GetValue() || station.marketInv[index].GetPrice(-buyQuant)*buyQuant > npcMoney)
 					{
-						buyQuant/=2;
+						buyQuant=(int)(buyQuant-addQuant);
 					} else if (station.marketInv[index].GetPrice(-buyQuant) < buy.GetItem().GetValue()*.95)
 					{
-						buyQuant=(int)(buyQuant*1.5);
+						buyQuant=(int)(buyQuant+addQuant);
 					}
+					addQuant/=2;
 				}
 				int price = Mathf.CeilToInt(station.marketInv[index].GetPrice(-buyQuant));
 				buy.quantity = buyQuant;

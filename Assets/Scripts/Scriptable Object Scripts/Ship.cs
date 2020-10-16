@@ -138,7 +138,7 @@ public class Ship : ScriptableObject {
 		List<Combat> guns = new List<Combat>();
 		for (int i = 0; i < combatList.Count; i++)
 		{
-			if (combatList[i].isWeapon)
+			if (combatList[i].combatType == CombatType.Weapon)
 				guns.Add(combatList[i]);
 		}
 		return guns;
@@ -148,10 +148,55 @@ public class Ship : ScriptableObject {
 		List<Combat> defenses = new List<Combat>();
 		for (int i = 0; i < combatList.Count; i++)
 		{
-			if (!combatList[i].isWeapon)
+			if (combatList[i].combatType != CombatType.Weapon)
 				defenses.Add(combatList[i]);
 		}
 		return defenses;	
+	}
+	
+	public float GetWeaponPowerMult(bool isPlayer) {
+		int weapPower = 0;
+		foreach (Combat combat in combatList)
+		{
+			weapPower += combat.GetPassiveBoost(CombatBoostType.Power);
+		}
+		if (isPlayer)
+		{
+			
+		}
+		return weapPower;
+	}
+	
+	public float GetWeaponCooldownMult(bool isPlayer) {
+		float weapCooldown = 0;
+		foreach (Combat combat in combatList)
+		{
+			weapCooldown += combat.GetPassiveBoost(CombatBoostType.Cooldown);
+		}
+		if (isPlayer)
+		{
+			foreach (Command command in commandList)
+			{
+				weapCooldown += command.GetBonus(CommandBonus.WeaponCooldown);
+			}
+		}
+		return weapCooldown;
+	}
+	
+	public float GetWeaponSpeedMult(bool isPlayer) {
+		float weapSpeed = 0;
+		foreach (Combat combat in combatList)
+		{
+			weapSpeed += combat.GetPassiveBoost(CombatBoostType.Speed);
+		}
+		if (isPlayer)
+		{
+			foreach (Command command in commandList)
+			{
+				weapSpeed += command.GetBonus(CommandBonus.WeaponSpeed);
+			}
+		}
+		return weapSpeed;
 	}
 	
 	/*public int GetWeaponPower(WeaponType type) {
