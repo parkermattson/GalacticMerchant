@@ -9,7 +9,7 @@ public class AcademyScreenScript : MonoBehaviour {
 	public GameObject missionPrefab;
 	public GameObject playerMissionBox;
 	public GameObject playerMissionPrefab;
-	public MissionTable allMissions;
+	public List<MissionTemplate> missionTemplates;
 	public List<Mission> availableMissions;
 	
 	public Item testItem1, testItem2, testItem3;
@@ -18,16 +18,21 @@ public class AcademyScreenScript : MonoBehaviour {
 	public GameObject crewPrefab;
 	Station station;
 	
-	void OnEnable()
-	{
+	void OnEnable() {
 		station = (Station)GameControl.instance.playerLocation;
 		GenerateMissionList();
 		UpdateMissionList();
 		UpdateRecruitmentList();
 	}
 	
-	void GenerateMissionList()
-	{
+	void GenerateMissionList() {
+		availableMissions = new List<Mission>();
+		
+		for (int i =0; i < 3; i++)
+		{
+			availableMissions.Add(missionTemplates[(int)(Random.value * missionTemplates.Count)].GenerateMission(station));
+		}
+		/*
 		MissionCourier mission1 = ScriptableObject.CreateInstance<MissionCourier>();
 		ItemStack tempStack = ScriptableObject.CreateInstance<ItemStack>();
 		mission1.missionName = "Courier Mission 1";
@@ -55,11 +60,11 @@ public class AcademyScreenScript : MonoBehaviour {
 		mission2.source = station;
 		mission2.destination = station;
 		availableMissions.Add(mission2);
+		*/
 	}
 	
 
-	public void UpdateMissionList()
-	{
+	public void UpdateMissionList() {
 		GameObject tempBox;
 		
 		for (int i = 0; i < missionBox.transform.childCount; i++)
@@ -86,8 +91,7 @@ public class AcademyScreenScript : MonoBehaviour {
 		
 	}
 	
-	public void UpdateRecruitmentList()
-	{
+	public void UpdateRecruitmentList() {
 		Debug.Log("Updating recruitment list");
 		GameObject tempBox;
 		List<Crew> availableCrew = station.GetAvailableCrew();

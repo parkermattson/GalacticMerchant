@@ -23,6 +23,7 @@ public class GameControl : MonoBehaviour {
     public Location playerLocation;
 	public DateTime gameTime = new DateTime(3000, 1, 1, 9, 0, 0), lastHour = new DateTime(3000, 1, 1, 9, 0, 0), lastWeek = new DateTime(3000, 1, 1, 9, 0, 0);
 	public List<Station> initStations, stations;
+	public List<int> factionRep = new List<int>(){0,0,0};
 	public List<Mission> acceptedMissions;
 	public List<Location> initLocations, locations;
 	public List<CaravanNpc> initCaravans, caravans= new List<CaravanNpc>();
@@ -105,9 +106,15 @@ public class GameControl : MonoBehaviour {
 		saveData.assignedCrew = assignedCrew;
 		saveData.playerShip = playerShip;
 		saveData.playerLocation = playerLocation;
+		saveData.gameTime = gameTime;
+		saveData.lastHour = lastHour;
+		saveData.lastWeek = lastWeek;
 		saveData.items = inventory.items;
 		saveData.equipments = inventory.equipments;
+		saveData.locations = locations;
 		saveData.stations = stations;
+		saveData.factionRep = factionRep;
+		saveData.acceptedMissions = acceptedMissions;
 		saveData.caravans = caravans;
 		
 		bf.Serialize(file, saveData);
@@ -134,9 +141,14 @@ public class GameControl : MonoBehaviour {
 				assignedCrew = loadData.assignedCrew;
 				playerShip = loadData.playerShip;
 				playerLocation = loadData.playerLocation;
+				gameTime = loadData.gameTime;
+				lastHour = loadData.lastHour;
+				lastWeek = loadData.lastWeek;
 				inventory.items = loadData.items;
 				inventory.equipments = loadData.equipments;
 				stations = loadData.stations;
+				factionRep = loadData.factionRep;
+				acceptedMissions = loadData.acceptedMissions;
 				caravans = loadData.caravans;
 			
 		}
@@ -145,6 +157,14 @@ public class GameControl : MonoBehaviour {
 	public void PassTime(float hours)
 	{
 		gameTime = gameTime.AddHours(hours);
+		
+		foreach (Mission m in acceptedMissions)
+		{
+			if (m.expireDate < gameTime)
+			{
+				FailMission(m);
+			}
+		}
 		
 		if (gameTime > lastHour.AddHours(1))
 		{
@@ -187,6 +207,75 @@ public class GameControl : MonoBehaviour {
 				Debug.Log("Crew couldnt be hired");
 			}
 		}
+	}
+	
+	public void AddMissionLocation(Mission newMission, float hoursToComplete) {
+		List<int> nearbyLocs = new List<int>();
+		int maxDistance = 500, newMissionLoc = 0;
+		while (nearbyLocs.Count < 5)
+		{
+			for (int i = 0; i < locations.Count; i++)
+			{
+				if (locations[i].locationType == LocationType.Empty && Vector2.Distance(locations[i].mapPosition, playerLocation.mapPosition) < 500)
+				{
+					nearbyLocs.Add(i);
+				}
+			}
+			maxDistance+=100;
+		}
+		newMissionLoc = Mathf.FloorToInt(UnityEngine.Random.value * nearbyLocs.Count);
+		locations[newMissionLoc].locationType = LocationType.Mission;
+		locations[newMissionLoc].encounterEnd = gameTime.AddHours(hoursToComplete);
+		locations[newMissionLoc].locationMission = newMission;
+	}
+	
+	public void FailMission(Mission failedMission) {
+		
+		/*switch (failedMission.missionType)
+		{
+			case MissionType.Combat:
+				
+			break;
+			
+			case MissionType.Courier:
+			
+			break;
+			
+			case MissionType.Procurement:
+			
+			break;
+			
+			case MissionType.Mining:
+			
+			break;
+			
+			case MissionType.Research:
+			
+			break;
+		}*/
+		
+		AddRep(-5, failedMission.source.faction);
+		acceptedMissions.Remove(failedMission);
+		Destroy(failedMission);
+	}
+	
+	public void CombatQuestCheck(Npc destroyedNpc)
+	{
+		foreach (Mission m in acceptedMissions)
+		{
+			if (m.missionType == MissionType.Bounty)
+			{
+				MissionBounty bounty = (MissionBounty)m;
+				if (bounty.targetNpc == destroyedNpc)
+				{
+					bounty.ProgObj();
+				}
+			}
+		}
+	}
+	
+	public void AddRep(int amount, NpcFaction faction) {
+		factionRep[(int)faction] += amount;
 	}
 	
 	public void AddMoney(int amount) {
@@ -409,9 +498,13 @@ public class GameControl : MonoBehaviour {
 		public Crew[] crewMembs, assignedCrew;
 		public Ship playerShip;
 		public Location playerLocation;
+		public DateTime gameTime, lastHour, lastWeek;
 		public List<ItemStack> items;
 		public List<Equipment> equipments;
+		public List<Location> locations;
 		public List<Station> stations;
+		public List<int> factionRep;
+		public List<Mission> acceptedMissions;
 		public List<CaravanNpc> caravans;
 	}
 }

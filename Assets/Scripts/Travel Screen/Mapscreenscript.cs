@@ -297,13 +297,13 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	}
 	
 	void RollEncounter(Location loc) {
-		/*
+		
 		float rng = UnityEngine.Random.value;
 		
 		switch (loc.locationType)
 		{
 			case LocationType.Station:
-				if (rng < .25f)
+				if (rng < .1f)
 				{
 					rng = UnityEngine.Random.value * encountersStation.Count;
 					inEncounter = true;
@@ -311,7 +311,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 			case LocationType.Empty:
-				if (rng < .25f)
+				if (rng < 0)
 				{
 					rng = UnityEngine.Random.value * encountersEmpty.Count;
 					inEncounter = true;
@@ -359,7 +359,7 @@ public class Mapscreenscript : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 				}
 				break;
 		}
-		*/
+		
 	}
 	
 	public void ChooseEncounter(int choice) {

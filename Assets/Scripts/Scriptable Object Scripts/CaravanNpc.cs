@@ -67,7 +67,6 @@ public class CaravanNpc : Npc {
 					foreach (ItemStack stack in cargo)
 					{
 						stack.AddToList(startStation.marketInv);
-						Debug.Log("Adding " + stack.GetItem().GetName() + " to " + startStation.GetName());
 					}
 					startStation.stationMoney += npcMoney;
 					return true;

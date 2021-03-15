@@ -44,7 +44,7 @@ public class MissionSlot : MonoBehaviour {
 		}
 		rewardText.text = rewardString;
 		
-		if (GameControl.instance.acceptedMissions.Count >= 5)
+		if (GameControl.instance.acceptedMissions.Count >= 5 || !CourierCargoCheck())
 			acceptButton.interactable = false;
 	}
 	
@@ -56,8 +56,34 @@ public class MissionSlot : MonoBehaviour {
 	public void AcceptMission()
 	{
 		GameControl.instance.acceptedMissions.Add(mission);
+		if (mission.missionType == MissionType.Courier)
+		{
+			MissionCourier cMission = (MissionCourier)mission;
+			foreach (ItemStack stack in cMission.cargoList)
+			{
+				Inventory.instance.AddItem(stack);
+			}
+		}
 		GetComponentInParent<AcademyScreenScript>().availableMissions.Remove(mission);
 		GetComponentInParent<AcademyScreenScript>().UpdateMissionList();
+	}
+	
+	bool CourierCargoCheck()
+	{
+		int cargoTotal = 0;
+		if (mission.missionType == MissionType.Courier)
+		{
+			MissionCourier cMission = (MissionCourier)mission;
+			foreach (ItemStack stack in cMission.cargoList)
+			{
+				cargoTotal+=stack.GetWeight();
+			}
+			if (cargoTotal <= GameControl.instance.playerShip.GetCargoMax() - Inventory.instance.currentCargo)
+			{
+				return true;
+			}
+			else return false;
+		} else return true;
 	}
 	
 }

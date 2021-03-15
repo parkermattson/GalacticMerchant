@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum NpcType {Caravan, Military, Bandit}
-public enum NpcFaction {Fac1, Fac2}
+public enum NpcFaction {Fac1, Fac2, Fac3}
 public enum MoveState {Waiting, Moving}
 
 public class Npc : ScriptableObject {

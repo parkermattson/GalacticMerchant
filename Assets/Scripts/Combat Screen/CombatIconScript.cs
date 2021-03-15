@@ -190,7 +190,7 @@ public class CombatIconScript : MonoBehaviour, IPointerClickHandler, IPointerDow
 		timer = 0;
 		cooldownImage.fillAmount = 0;
 		state = SlotState.Ready;
-		
+		typeText.SetText("X");
 	}
 	
 	public void SetCombat(Combat newCombat) {

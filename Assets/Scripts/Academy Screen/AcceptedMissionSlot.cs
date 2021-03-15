@@ -53,17 +53,44 @@ public class AcceptedMissionSlot : MonoBehaviour {
 		if (mission.completed) turnInButton.interactable = true;
 		else turnInButton.interactable = false;
 		
+		bool ready = true;
 		switch (mission.missionType)
 		{
 			case MissionType.Courier:
 				MissionCourier courMission = (MissionCourier)mission;
-				bool ready = true;
-				foreach (ItemStack stack in courMission.cargoList)
-				{
-					if (!Inventory.instance.FindItem(stack))
-						ready = false;
+				if (courMission.destination != (Station)GameControl.instance.playerLocation)
+					ready=false;
+				else {
+					foreach (ItemStack stack in courMission.cargoList)
+					{
+						if (!Inventory.instance.FindItem(stack))
+							ready = false;
+					}
 				}
 				if (!ready)
+				{
+					deliverButton.gameObject.SetActive(true);
+					deliverButton.interactable = false;
+				}
+				break;
+			case MissionType.Procurement:
+				MissionProcurement procMission = (MissionProcurement)mission;
+				
+				if (procMission.destination != (Station)GameControl.instance.playerLocation)
+					ready=false;
+				else {
+					foreach (ItemStack stack in procMission.cargoList)
+					{
+						if (!Inventory.instance.FindItem(stack))
+							ready = false;
+					}
+				}
+				if (!ready)
+				{
+					deliverButton.gameObject.SetActive(true);
+					deliverButton.interactable = false;
+				}
+				else
 				{
 					deliverButton.gameObject.SetActive(true);
 					deliverButton.interactable = false;
